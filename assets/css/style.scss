@@ -12,6 +12,9 @@
   font-size: 0.9em;
 }
 
-footer, .footer, .site-footer {
+footer.site-footer.h-card,
+footer.site-footer,
+.site-footer.h-card,
+.footer {
   display: none !important;
 }
