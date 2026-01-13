@@ -29,11 +29,12 @@
   justify-content: space-between;
   max-width: 900px;
   margin: 0 auto;
+  gap: 2rem; /* spacing between columns */
 }
 
 .footer-column {
-  flex: 1 1 300px;
-  margin: 0.5rem;
+  flex: 1 1 250px;
+  min-width: 200px;
 }
 
 .footer-column h3 {
@@ -70,7 +71,8 @@
 }
 
 .icon {
-  width: 20px;
-  height: 20px;
-  filter: invert(30%); /* subtle gray icons */
+  width: 18px;
+  height: 18px;
+  fill: #555; /* subtle gray for icons */
+  flex-shrink: 0;
 }
