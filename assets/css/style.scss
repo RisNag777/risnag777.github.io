@@ -24,17 +24,11 @@
 }
 
 .footer-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
   max-width: 900px;
   margin: 0 auto;
-  gap: 2rem; /* spacing between columns */
-}
-
-.footer-column {
-  flex: 1 1 250px;
-  min-width: 200px;
 }
 
 .footer-column h3 {
@@ -71,8 +65,8 @@
 }
 
 .icon {
-  width: 18px;
-  height: 18px;
-  fill: #555; /* subtle gray for icons */
+  width: 18px;  /* fixed small size */
+  height: 18px; /* fixed small size */
   flex-shrink: 0;
+  fill: #555;   /* subtle gray color */
 }
