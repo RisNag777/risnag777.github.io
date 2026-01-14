@@ -5,7 +5,7 @@ layout: default
 <div class="home">
 
   {{ content }}
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  {% include custom-css.html %}
 
   {% if site.posts.size > 0 %}
     <h2 class="post-list-heading">Posts</h2>
