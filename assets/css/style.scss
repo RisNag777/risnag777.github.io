@@ -17,14 +17,14 @@
 
 .site-footer {
   border-top: 1px solid #eee;
-  padding: 1.5rem 1rem;
-  font-size: 0.85rem;
+  padding: 1.25rem 1rem;
+  font-size: 0.75rem;      // smaller font
   color: #666;
   text-align: center;
 }
 
 .footer-wrapper {
-  max-width: 640px;
+  max-width: 520px;        // tighter column = feels centered
   margin: 0 auto;
 }
 
@@ -45,6 +45,8 @@
   text-decoration: none;
   color: #555;
   font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;  // subtle polish
 }
 
 .footer-links a:hover {
@@ -54,4 +56,8 @@
 .footer-sep {
   color: #bbb;
   user-select: none;
+}
+
+.footer-about {
+  opacity: 0.85;
 }
