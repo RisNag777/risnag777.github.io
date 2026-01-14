@@ -71,8 +71,15 @@
 }
 
 .footer-icon {
-  width: 16px;   /* small, consistent size */
-  height: 16px;
-  display: inline-block;
+  width: 14px !important;
+  height: 14px !important;
+  min-width: 14px;
+  min-height: 14px;
+  max-width: 14px;
+  max-height: 14px;
+
+  flex-shrink: 0;
+  line-height: 1;
   vertical-align: middle;
 }
+
