@@ -21,20 +21,20 @@
   padding: 2rem 1rem;
   font-size: 0.9rem;
   color: #555;
+  text-align: center; // center everything
 }
 
 .footer-wrapper {
   display: flex;
-  flex-wrap: wrap;          /* wrap on small screens */
-  justify-content: space-between;
-  max-width: 900px;
-  margin: 0 auto;           /* center the footer */
-  gap: 2rem;                /* spacing between columns */
+  flex-direction: column; // stack columns for center alignment
+  align-items: center;    // center horizontally
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .footer-col {
-  flex: 1 1 250px;          /* responsive column width */
-  min-width: 200px;         /* prevent columns from shrinking too much */
+  flex: none; // no flex growth, just center
 }
 
 .footer-col h3 {
@@ -47,21 +47,34 @@
   color: #666;
 }
 
-.footer-col ul {
+.footer-links {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column; // vertical stacking
+  gap: 0.5rem;
 }
 
-.footer-col ul li {
-  margin: 0.5rem 0;
+.footer-links li {
+  margin: 0;
 }
 
-.footer-col ul li a {
-  color: #555;
+.footer-links a {
   text-decoration: none;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center; // center horizontally
 }
 
-.footer-col ul li a:hover {
+.footer-links a:hover {
   text-decoration: underline;
+}
+
+.footer-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
 }
