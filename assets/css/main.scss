@@ -2,19 +2,63 @@
 ---
 @import "minima";
 
-/* =========================
-   Custom injections
-   ========================= */
+.post-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.post-list li {
+  margin-bottom: 0.6rem;
+}
+
+.post-date {
+  color: #666;
+  font-size: 0.9em;
+}
 
 .site-footer {
+  border-top: 1px solid #eee;
+  padding: 1.25rem 1rem;
+  font-size: 0.75rem;      // smaller font
+  color: #666;
   text-align: center;
-  font-size: 0.75rem;
-  padding: 1rem 0;
+}
+
+.footer-wrapper {
+  max-width: 520px;        // tighter column = feels centered
+  margin: 0 auto;
+}
+
+.footer-about {
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
 }
 
 .footer-links {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #555;
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;  // subtle polish
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-sep {
+  color: #bbb;
+  user-select: none;
+}
+
+.footer-about {
+  opacity: 0.85;
 }
