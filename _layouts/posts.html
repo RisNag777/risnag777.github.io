@@ -2,10 +2,11 @@
 layout: default
 ---
 
-{% include custom-css.html %}
+<div class="post">
 
-<main class="post">
-  {{ content }}
-</main>
-
-{% include footer.html %}
+  <main class="post">
+    {{ content }}
+  </main>
+  {% include custom-css.html %}
+  {% include footer.html %}
+</div>
