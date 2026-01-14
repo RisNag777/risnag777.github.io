@@ -2,8 +2,10 @@
 layout: default
 ---
 
-<div class="home">
-  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+{% include custom-css.html %}
+
+<main class="post">
   {{ content }}
-</div>
+</main>
+
 {% include footer.html %}
