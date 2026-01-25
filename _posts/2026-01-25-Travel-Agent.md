@@ -232,3 +232,44 @@ Includes basic tests like:
 
 ## 9. main.py
 ingest -> build memory -> plan -> write -> export
+
+# Canonical Travel Memory Schema
+## Design goals
+1. Modality-agnostic
+2. Time & location aware
+3. Easy to retrieve + write from
+4. Stable even if models change
+
+## 1. days[] is the natural narrative spine
+Travel blogs are chronological by default. This lets the planner agent do:
+1. Day-by-day blogs
+2. Thematic reshuffles
+
+## 2. summary is helpful for retrievak
+One-line summaries make vector search much better.  
+Example:  
+"A slow, rainy morning wandering through Kyoto temples"  
+This is embedded  
+
+## 3. memory_item is deliberately loose
+This is key for flexibility.  
+The key design choice - content is opaque to the canonical layer  
+Each modality defines its own structure inside content.
+
+## How agents use this
+### Planner Agent
+1. Reads summary, tags, importance_score
+2. Chooses which memories anchor each section
+
+### Writer Agent
+1. Never sees raw files
+2. Only sees retrieved memory items
+3. Produces cohesive prose
+
+## Intentional omissions
+Schema excludes:
+1. Model names
+2. Prompt text
+3. Embeddings
+4. UI concepts
+Because these can change but the schema shouldn't
