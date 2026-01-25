@@ -120,7 +120,7 @@ travel-blog-agent/
 ├── agents/
 │   ├── ingestion_agent.py
 │   ├── memory_agent.py
-│   ├── planner_agent.py *
+│   ├── planner_agent.py
 │   └── writer_agent.py *
 │
 ├── config/
@@ -181,6 +181,7 @@ travel-blog-agent/
 │   ├── embeddings.py
 │   ├── file_router.py
 │   ├── image_parser.py
+│   ├── planner_prompts.py
 │   ├── prompts.py *
 │   ├── tabular_parser.py
 │   ├── text_parser.py
@@ -301,3 +302,30 @@ This agent will:
 2. Creates semantic representations - \[DAY\] + \[LOCATION\] + \[SUMMARY\] + \[TAGS\] + \[MODALITY\]
 3. Stores them in a vector store (FAISS)
 4. Enables natural-language retrieval across all modalities
+
+# Build Planner Agent
+This agent decides what story to tell and why, using the semantic memory
+Given:
+1. A blog goal
+2. Access to semantic memory
+It produces:
+1. A structured outline
+2. With explicit memory references per section
+3. And a tone plan
+4. No vibes. No randomness.
+
+## Planner ≠ Retriever
+The Planner:
+1. does not retrieve memories
+2. does not write paragraphs
+3. It only decides - "What should be talked about, and in what order?"
+The Writer Agent will later:
+1. Execute each section
+2. Retrieve memories
+3. Generate prose
+This separation is what prevents:
+1. repetitive blogs
+2. info dumps
+3. hallucinated structure
+
+This system separates narrative planning from semantic retrieval and prose generation.
