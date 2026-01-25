@@ -14,7 +14,7 @@ The agent should:
 4. Write a cohesive travel blog using those representations
 
 ## The Architecture
-Multimodal ingestion -> Semantic memory -> Planning agent -> Writing agent  
+```Multimodal ingestion -> Semantic memory -> Planning agent -> Writing agent```
 
 ## The Inputs
 Everything is converted into one unified schema making the agent modality-agnostic.  
@@ -115,6 +115,7 @@ Prompted with:
 3. One speech-to-text
 
 # Project Folder Structure
+```
 travel-blog-agent/
 │
 ├── agents/
@@ -197,6 +198,7 @@ travel-blog-agent/
 ├── main.py *
 ├── requirements.txt
 └── README.md *
+```
 
 ## 1. data/raw/
 1. Dumb storage only
@@ -245,7 +247,9 @@ Includes basic tests like:
 2. "Canonical schema validates"
 
 ## 9. main.py
+```
 ingest -> build memory -> plan -> write -> export
+```
 
 # Canonical Travel Memory Schema
 ## Design goals
@@ -261,9 +265,6 @@ Travel blogs are chronological by default. This lets the planner agent do:
 
 ## 2. summary is helpful for retrievak
 One-line summaries make vector search much better.  
-Example:  
-"A slow, rainy morning wandering through Kyoto temples"  
-This is embedded  
 
 ## 3. memory_item is deliberately loose
 This is key for flexibility.  
@@ -294,14 +295,16 @@ This agent will:
 2. Detect modality
 3. Parse text + CSV/XLSX + images + videos
 4. Emit:
+```
 data/processed/*.json
 data/canonical/travel_memory.json
+```
 Vision and video are kept as pluggable stubs to allow for future model swaps
 
 # Build Memory Builder Agent
 This agent will:
 1. Read canonical/travel_memory.json
-2. Creates semantic representations - \[DAY\] + \[LOCATION\] + \[SUMMARY\] + \[TAGS\] + \[MODALITY\]
+2. Creates semantic representations - ```[DAY] + [LOCATION] + [SUMMARY] + [TAGS] + [MODALITY]```
 3. Stores them in a vector store (FAISS)
 4. Enables natural-language retrieval across all modalities
 
@@ -353,7 +356,7 @@ This Writer Agent is good because it is:
 3. Non-repetitive - Each section has different retrieval queries.
 
 # Full blog generation loop
-'''
+```
 blog = f"# {plan['title']}\n\n"
 
 for section in plan["sections"]:
@@ -363,6 +366,6 @@ for section in plan["sections"]:
         length="medium"
     )
     blog += "\n\n"
-'''
+```
 
 This system ingests multimodal travel data, builds semantic memory, plans narrative structure, and generates grounded long-form content using retrieval-augmented agents.
