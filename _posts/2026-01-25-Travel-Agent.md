@@ -119,7 +119,7 @@ travel-blog-agent/
 │
 ├── agents/
 │   ├── ingestion_agent.py
-│   ├── memory_agent.py *
+│   ├── memory_agent.py
 │   ├── planner_agent.py *
 │   └── writer_agent.py *
 │
@@ -178,7 +178,7 @@ travel-blog-agent/
 │
 ├── utils/
 │   ├── chunking.py *
-│   ├── embeddings.py *
+│   ├── embeddings.py
 │   ├── file_router.py
 │   ├── image_parser.py
 │   ├── prompts.py *
@@ -294,3 +294,10 @@ This agent will:
 data/processed/*.json
 data/canonical/travel_memory.json
 Vision and video are kept as pluggable stubs to allow for future model swaps
+
+# Build Memory Builder Agent
+This agent will:
+1. Read canonical/travel_memory.json
+2. Creates semantic representations - \[DAY\] + \[LOCATION\] + \[SUMMARY\] + \[TAGS\] + \[MODALITY\]
+3. Stores them in a vector store (FAISS)
+4. Enables natural-language retrieval across all modalities
