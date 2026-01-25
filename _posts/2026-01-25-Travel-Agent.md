@@ -117,72 +117,83 @@ Prompted with:
 # Project Folder Structure
 travel-blog-agent/
 │
-├── data/
-│   ├── raw/
-│   │   ├── text/
-│   │   ├── images/
-│   │   ├── videos/
-│   │   └── tabular/
-│   │
-│   ├── processed/
-│   │   ├── text.json
-│   │   ├── images.json
-│   │   ├── videos.json
-│   │   └── tabular.json
-│   │
-│   └── canonical/
-│       └── travel_memory.json
-│
 ├── agents/
 │   ├── ingestion_agent.py
-│   ├── memory_agent.py
-│   ├── planner_agent.py
-│   └── writer_agent.py
-│
-├── pipelines/
-│   ├── ingest.py
-│   ├── build_memory.py
-│   ├── generate_outline.py
-│   └── write_blog.py
-│
-├── schemas/
-│   ├── text_schema.json
-│   ├── image_schema.json
-│   ├── video_schema.json
-│   ├── tabular_schema.json
-│   └── canonical_schema.json
-│
-├── utils/
-│   ├── file_router.py
-│   ├── chunking.py
-│   ├── embeddings.py
-│   ├── vision.py
-│   ├── video.py
-│   └── prompts.py
-│
-├── vectorstore/
-│   └── faiss_index/
-│
-├── outputs/
-│   ├── drafts/
-│   ├── final/
-│   │   ├── blog.md
-│   │   └── blog.html
-│   └── assets/
+│   ├── memory_agent.py *
+│   ├── planner_agent.py *
+│   └── writer_agent.py *
 │
 ├── config/
+│   ├── blog_stle.yml
 │   ├── models.yml
-│   ├── paths.yml
-│   └── blog_style.yml
+│   └── paths.yml
+│
+├── data/
+│   ├── canonical/
+│   │   └── travel_memory.json
+│   │
+│   ├── processed/
+│   │   ├── images.json
+│   │   ├── tabular.json
+│   │   ├── text.json
+│   │   └── videos.json
+│   │
+│   ├── raw/
+│   │   ├── images/
+│   │   ├── tabular/
+│   │   ├── text/
+│   │   └── videos/
+│   │
+│   ├── processed/
+│   │   ├── images.json *
+│   │   ├── processed_memories.json
+│   │   ├── tabular.json *
+│   │   ├── text.json *
+│       └── videos.json *
+│
+├── outputs/
+│   ├── assets/ *
+│   ├── drafts/ *
+│   ├── final/ *
+│   │   ├── blog.html *
+│       └── blog.md *
+│
+├── pipelines/
+│   ├── build_memory.py *
+│   ├── generate_outline.py *
+│   ├── ingest.py
+│   └── write_blog.py *
+│
+├── schemas/
+│   ├── canonical_schema.json
+│   ├── image_schema.json *
+│   ├── tabular_schema.json *
+│   ├── text_schema.json *
+│   └── video_schema.json *
 │
 ├── tests/
-│   ├── test_ingestion.py
-│   ├── test_memory.py
-│   └── test_writer.py
+│   ├── test_ingestion.py *
+│   ├── test_memory.py *
+│   └── test_writer.py *
 │
-├── main.py
+├── utils/
+│   ├── chunking.py *
+│   ├── embeddings.py *
+│   ├── file_router.py
+│   ├── image_parser.py
+│   ├── prompts.py *
+│   ├── tabular_parser.py
+│   ├── text_parser.py
+│   ├── video.py *
+│   ├── video_parser.py
+│   └── vision.py *
+│
+├── vectorstore/
+│   └── faiss_index/ *
+│
+├── main.py *
 ├── requirements.txt
-└── README.md
+└── README.md *
 
 ## 1. data/raw/
 1. Dumb storage only
@@ -273,3 +284,13 @@ Schema excludes:
 3. Embeddings
 4. UI concepts
 Because these can change but the schema shouldn't
+
+# Build Ingestion Agent
+This agent will:
+1. Scan data/raw/
+2. Detect modality
+3. Parse text + CSV/XLSX + images + videos
+4. Emit:
+data/processed/*.json
+data/canonical/travel_memory.json
+Vision and video are kept as pluggable stubs to allow for future model swaps
