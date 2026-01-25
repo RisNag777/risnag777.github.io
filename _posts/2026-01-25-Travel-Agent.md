@@ -14,30 +14,20 @@ The agent should:
 4. Write a cohesive travel blog using those representations
 
 ## The Architecture
-Multimodal ingestion → semantic memory → planning agent → writing agent  
+Multimodal ingestion → Semantic memory → Planning agent → Writing agent  
 
 ## The Inputs
 Everything is converted into one unified schema making the agent modality-agnostic.  
 
-### Text
+### 1. Text
 1. The main text input is WhatsApp messages I share with my family back home to keep them up-to-date with our daily activities.
 2. Another text input is reviews of hotels, activities and restaurants from Google, GetYourGuide, Booking.com, etc.
 
 #### Processing
 1. Chunk text
 2. Extract entities (locations, date, emotions, activities)
-3. Convert into a json object
-eg:
-{  
-  "type": "text",  
-  "location": "Venice",  
-  "day": 1,  
-  "themes": \["architecture", "history"\],  
-  "sentiment": "excited",  
-  "raw": "We absolutely loved Venice! First, we took a..."  
-}  
 
-### CSV/XLSX Files
+### 2. CSV/XLSX Files
 1. Flight details
 2. Hotel details
 3. Activity details
@@ -47,21 +37,8 @@ eg:
 1. Pandas to read the data
 2. Normalize dates
 3. Summarize patterns
-4. Convert into a json object
-eg:  
-{  
-  "type": "tabular",  
-  "summary": {  
-    "total_days": 10,  
-    "cities": \["Venice", "Milan", "Rome"\],  
-  },  
-  "highlights": \[  
-    "Cheapest stay: Venice",  
-    "Best restaurant: Pizza AM"  
-  \]  
-}  
 
-### Photos
+### 3. Photos
 1. Landmarks
 2. Food
 3. Street shots
@@ -72,16 +49,8 @@ The tool won't embed raw images but will embed their descriptions
 2. Scene classification
 3. Object detection
 4. Mood inference
-5. Convert into a json object
-eg:  
-{  
-  "type": "image",  
-  "location_guess": "Colosseum",  
-  "tags": \["history", "architecture", "morning"\],  
-  "suggested_caption": "Sunny morning view of the Colosseum"  
-}  
 
-### Videos
+### 4. Videos
 1. Panoramic videos
 2. Activity Recordings
 
@@ -89,16 +58,6 @@ eg:
 1. Extract frames (every N seconds)
 2. Transcribe audio (Whisper-style)
 3. Summarize scenes
-4. Convert into a json object
-eg:  
-{  
-  "type": "video",  
-  "key_moments": \[  
-    "Bird flying over the Colosseum",  
-    "Pan from Colosseum to the Roman Forum"  
-  ],  
-  "tone": "amazed"  
-}  
 
 ## The Agent Stack
 ### Agent 1: Ingestion Agent
