@@ -14,7 +14,7 @@ The agent should:
 4. Write a cohesive travel blog using those representations
 
 ## The Architecture
-Multimodal ingestion → Semantic memory → Planning agent → Writing agent  
+Multimodal ingestion -> Semantic memory -> Planning agent -> Writing agent  
 
 ## The Inputs
 Everything is converted into one unified schema making the agent modality-agnostic.  
@@ -113,3 +113,122 @@ Prompted with:
 1. One strong LLM
 2. One vision-capable model
 3. One speech-to-text
+
+# Project Folder Structure
+travel-blog-agent/
+│
+├── data/
+│   ├── raw/
+│   │   ├── text/
+│   │   ├── images/
+│   │   ├── videos/
+│   │   └── tabular/
+│   │
+│   ├── processed/
+│   │   ├── text.json
+│   │   ├── images.json
+│   │   ├── videos.json
+│   │   └── tabular.json
+│   │
+│   └── canonical/
+│       └── travel_memory.json
+│
+├── agents/
+│   ├── ingestion_agent.py
+│   ├── memory_agent.py
+│   ├── planner_agent.py
+│   └── writer_agent.py
+│
+├── pipelines/
+│   ├── ingest.py
+│   ├── build_memory.py
+│   ├── generate_outline.py
+│   └── write_blog.py
+│
+├── schemas/
+│   ├── text_schema.json
+│   ├── image_schema.json
+│   ├── video_schema.json
+│   ├── tabular_schema.json
+│   └── canonical_schema.json
+│
+├── utils/
+│   ├── file_router.py
+│   ├── chunking.py
+│   ├── embeddings.py
+│   ├── vision.py
+│   ├── video.py
+│   └── prompts.py
+│
+├── vectorstore/
+│   └── faiss_index/
+│
+├── outputs/
+│   ├── drafts/
+│   ├── final/
+│   │   ├── blog.md
+│   │   └── blog.html
+│   └── assets/
+│
+├── config/
+│   ├── models.yml
+│   ├── paths.yml
+│   └── blog_style.yml
+│
+├── tests/
+│   ├── test_ingestion.py
+│   ├── test_memory.py
+│   └── test_writer.py
+│
+├── main.py
+├── requirements.txt
+└── README.md
+
+## 1. data/raw/
+1. Dumb storage only
+2. No logic
+3. No assumptions
+4. Just files dropped in
+
+## 2. data/processed/
+Each modality gets normalized before mixing:
+1. Images -> captions, tags
+2. Videos -> transcripts, summaries
+3. CSV -> insights
+This prevents cross-modal leakage bugs.
+
+## 3. data/canonical/
+Everything ends up here in one json format  
+If models are later changed? - Canonical format stays the same.  
+
+## 4. agents/ vs pipelines/
+Agents = intelligence  
+Pipelines = orchestration  
+Example:  
+1. ingestion_agent.py knows how to parse images
+2. ingest.py decides when and in what order
+
+## 5. schemas/
+All inter-agent communication is schema-validated
+
+## 6. utils/
+Reusable, boring, critical stuff:
+1. chunking
+2. embeddings
+3. ffmpeg wrappers
+4. prompt templates
+The agents stay clean and readable.
+
+## 7. outputs/
+Split drafts vs final so you can:
+1. regenerate sections
+2. compare tone changes
+3. iterate safely
+
+## 8. tests/
+Includes basic tests like:
+1. "Image -> caption exists"
+2. "Canonical schema validates"
+
+## 9. main.py
+ingest -> build memory -> plan -> write -> export
