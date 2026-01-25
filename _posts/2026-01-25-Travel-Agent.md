@@ -121,7 +121,7 @@ travel-blog-agent/
 │   ├── ingestion_agent.py
 │   ├── memory_agent.py
 │   ├── planner_agent.py
-│   └── writer_agent.py *
+│   └── writer_agent.py
 │
 ├── config/
 │   ├── blog_stle.yml
@@ -183,11 +183,13 @@ travel-blog-agent/
 │   ├── image_parser.py
 │   ├── planner_prompts.py
 │   ├── prompts.py *
+│   ├── retrieval.py
 │   ├── tabular_parser.py
 │   ├── text_parser.py
 │   ├── video.py *
 │   ├── video_parser.py
-│   └── vision.py *
+│   ├── vision.py *
+│   └── writer_prompts.py
 │
 ├── vectorstore/
 │   └── faiss_index/ *
@@ -329,3 +331,38 @@ This separation is what prevents:
 3. hallucinated structure
 
 This system separates narrative planning from semantic retrieval and prose generation.
+
+# Build Writer Agent
+The agent will:
+1. Take one planned section
+2. Retrieve relevant memories semantically
+3. Ground the prose in actual moments
+4. Write cohesive, non-generic travel writing
+
+The Writer Agent works section-by-section so it can:
+1. Maintain focus
+2. Avoid repetition
+3. Adapt tone per section
+
+This Writer Agent is good because it is:
+1. Grounded- It writes only from retrieved memories
+2. Modular -
+   i. Rewrite one section
+   ii. Change tone halfway through
+   iii. Regenerate without touching others
+3. Non-repetitive - Each section has different retrieval queries.
+
+# Full blog generation loop
+'''
+blog = f"# {plan['title']}\n\n"
+
+for section in plan["sections"]:
+    blog += writer.write_section(
+        section=section,
+        tone=["introspective", "warm"],
+        length="medium"
+    )
+    blog += "\n\n"
+'''
+
+This system ingests multimodal travel data, builds semantic memory, plans narrative structure, and generates grounded long-form content using retrieval-augmented agents.
