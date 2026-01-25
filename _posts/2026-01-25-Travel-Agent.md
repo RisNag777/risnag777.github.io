@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Wordle Solver"
+title: "Travel Blog Agent"
 ---
 
 # The Inspiration
