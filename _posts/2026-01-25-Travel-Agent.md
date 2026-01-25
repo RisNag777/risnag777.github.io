@@ -97,8 +97,8 @@ It explicitly decides:
 Prompted with:
 1. Section goal
 2. Retrieved memories
-3. Desired tone (personal / poetic / practical)
-   Example:
+3. Desired tone (personal / poetic / practical)  
+   Example:  
    "Write a reflective paragraph about Venice evenings using serene images and low-spend insights."
 
 ## Minimal tech stack
@@ -220,7 +220,7 @@ If models are later changed? - Canonical format stays the same.
 ## 4. agents/ vs pipelines/
 Agents = intelligence  
 Pipelines = orchestration  
-Example:  
+Example:
 1. ingestion_agent.py knows how to parse images
 2. ingest.py decides when and in what order
 
@@ -286,7 +286,7 @@ Schema excludes:
 1. Model names
 2. Prompt text
 3. Embeddings
-4. UI concepts
+4. UI concepts  
 Because these can change but the schema shouldn't
 
 # Build Ingestion Agent
@@ -312,7 +312,7 @@ This agent will:
 This agent decides what story to tell and why, using the semantic memory
 Given:
 1. A blog goal
-2. Access to semantic memory
+2. Access to semantic memory  
 It produces:
 1. A structured outline
 2. With explicit memory references per section
@@ -323,11 +323,11 @@ It produces:
 The Planner:
 1. does not retrieve memories
 2. does not write paragraphs
-3. It only decides - "What should be talked about, and in what order?"
+3. It only decides - "What should be talked about, and in what order?"  
 The Writer Agent will later:
 1. Execute each section
 2. Retrieve memories
-3. Generate prose
+3. Generate prose  
 This separation is what prevents:
 1. repetitive blogs
 2. info dumps
@@ -349,9 +349,9 @@ The Writer Agent works section-by-section so it can:
 
 This Writer Agent is good because it is:
 1. Grounded- It writes only from retrieved memories
-2. Modular -
-   i. Rewrite one section
-   ii. Change tone halfway through
+2. Modular -  
+   i. Rewrite one section  
+   ii. Change tone halfway through  
    iii. Regenerate without touching others
 3. Non-repetitive - Each section has different retrieval queries.
 
