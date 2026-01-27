@@ -29,6 +29,7 @@ The game can be reimagined as:
 | Belief state | All words consistent with feedback |  
 | Action       | Choosing the next guess            |  
 | Observation  | Feedback (0,1,2 per letter)        |  
+
 This reframes Wordle as a sequential inference problem, and not a language task.  
 
 ### Architecture
