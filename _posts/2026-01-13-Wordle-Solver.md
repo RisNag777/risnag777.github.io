@@ -9,18 +9,8 @@ During those moments, I started thinking about what it would actually mean for a
 
 Naturally, I decided to build an agentic Wordle solver! My goal was to have a system inspired by Wordle's own WordleBot, an algorithm that evaluates guesses based on how effectively they shrink the remaining solution space. Rather than hard-coding heuristics, I wanted to explore whether an agent could reason its way into selecting the next best guess at each step.  
 
-## Wordle Is a Belief-State Search Problem  
-A good Wordle solver is not guessing. It is updating beliefs.  
-The game can be reimagined as:  
-| Concept      | Wordle meaning                     |  
-| ------------ | ---------------------------------- |  
-| Hidden state | The true solution word             |  
-| Belief state | All words consistent with feedback |  
-| Action       | Choosing the next guess            |  
-| Observation  | Feedback (0,1,2 per letter)        |  
-This reframes Wordle as a sequential inference problem, and not a language task.  
-
 ## System Design
+Wordle Is a Belief-State Search Problem. A good Wordle solver is not guessing. It is updating beliefs.  
 At a high level, the system follows this loop:  
 1. Make a guess (5-letter word)  
 2. Receive feedback:  
@@ -30,6 +20,16 @@ At a high level, the system follows this loop:
 3. Trim the solution space  
 4. Choose the next guess  
 5. Repeat until solved (≤ 6 guesses)
+
+The game can be reimagined as:  
+
+| Concept      | Wordle meaning                     |  
+| ------------ | ---------------------------------- |  
+| Hidden state | The true solution word             |  
+| Belief state | All words consistent with feedback |  
+| Action       | Choosing the next guess            |  
+| Observation  | Feedback (0,1,2 per letter)        |  
+This reframes Wordle as a sequential inference problem, and not a language task.  
 
 ### Architecture
 <svg xmlns="http://www.w3.org/2000/svg" width="680" height="780" viewBox="0 0 680 780">
@@ -125,11 +125,12 @@ Words containing letters that are truly absent (i.e., not bulls or cows anywhere
 For the false reasoning, it seemed like the LLM would generate a plausible guess (either right or wrong) and then try to give an explanation for why it picked that word (which would be wholly incorrect).  
 For example, the guess was 'naled' (yeah, a real word accepted by Wordle) and the feedback was \[1,2,0,0,0\]  
 The agent suggested the next guess to be 'nasty' and gave the reasoning as below:  
-reason = This guess satisfies the feedback rules as follows:  
+This guess satisfies the feedback rules as follows:  
 - The letter 'a' is in the correct position (index 1), which is maintained in this guess.  
 - The letter 'n' is included but in a different position (index 0), which is required since it received a feedback of 1 in the previous guess.  
 - The letters 'l', 'e', and 'd' are not included in this guess, as they received a feedback of 0, indicating they are not in the solution.  
-- The guess contains common letters like 's' and 't', which may help in identifying the solution.  
+- The guess contains common letters like 's' and 't', which may help in identifying the solution.
+
 The agent is confident about its answer but the letter 'n' is in the same position it was before.  
 The model wasn’t reasoning, it was choosing a guess first and fabricating justification afterward.  
 This showed me that the LLM must never own the game logic. Deterministic code must enforce rules, otherwise correctness becomes probabilistic.
@@ -215,19 +216,17 @@ The architectural roles of each module:
 This is the agent structure.  
 At this point, the system has all the components of a classical AI agent:
 - an internal state (candidate list)
-- a perception-update loop (feedback → trim)
-- a policy for action selection.
+- a perception-update loop (feedback -> trim)
+- a policy for action selection  
 The intelligence emerges from the architecture, not any single component.
 
 ## The Real Role of the LLM
-LLMs operate on probability, not symbolic rules. They’re excellent at proposing linguistically plausible guesses, but they don’t reliably enforce hard constraints — which is why deterministic validation must remain in our control.  
-So in this system, the LLM acts as a:  
+LLMs operate on probability, not symbolic rules. They’re excellent at proposing linguistically plausible guesses, but they don’t reliably enforce hard constraints, which is why deterministic validation must remain in our control. So in this system, the LLM acts as a:  
 - Heuristic ranker
 - Proposal generator
 
 ## What This Project Really Shows  
-This work is not primarily about using an LLM to solve Wordle. Rather, it illustrates an agent architecture in which language models provide heuristic guidance while symbolic reasoning enforces correctness.  
-The type of reasoning contributed by each component:  
+This work is not primarily about using an LLM to solve Wordle. Rather, it illustrates an agent architecture in which language models provide heuristic guidance while symbolic reasoning enforces correctness. The type of reasoning contributed by each component:  
 
 | Component     | Type            |
 | ------------- | --------------- |
@@ -239,15 +238,15 @@ The type of reasoning contributed by each component:
 If the LLM is removed, the system still works but it simply becomes fully rule-based. However, if the reasoning engine is removed, the agent loses the ability to operate meaningfully at all.
 
 ## Lessons Learned Building Agents
-The biggest lesson from this project is that agentic behavior isn’t magic — it’s architecture. Once you separate the system into:
+The biggest lesson from this project is that agentic behavior isn’t magic, it’s architecture. Once you separate the system into:
 1. A deterministic world model
 2. A belief state
-3. A policy that chooses actions
+3. A policy that chooses actions  
 you get something that behaves like an agent almost automatically.
 
-The second lesson is less comfortable: LLMs are not rule engines. They're powerful heuristic guides, but they will confidently suggest illegal actions unless the system makes those actions impossible. The safest and most reliable pattern (used across mature AI systems) is simple: the model proposes, and deterministic code verifies.
+The second lesson is less comfortable, LLMs are not rule engines. They're powerful heuristic guides, but they will confidently suggest illegal actions unless the system makes those actions impossible. The safest and most reliable pattern (used across mature AI systems) is simple. The model proposes and deterministic code verifies.
 
-Finally, debugging Wordle reinforced a lesson that applies to building agents in general: most of the real difficulty lies in the "boring" parts, i.e., state representation, edge cases, and constraint enforcement. Once those foundations are correct, you can layer in heuristic scoring, stochastic policies, or LLM-based ranking, and everything else becomes easier because the system has a solid base to stand on.
+Finally, debugging Wordle reinforced a lesson that applies to building agents in general. Most of the real difficulty lies in the "boring" parts, i.e., state representation, edge cases, and constraint enforcement. Once those foundations are correct, you can layer in heuristic scoring, stochastic policies, or LLM-based ranking, and everything else becomes easier because the system has a solid base to stand on.
 
 ## Conclusion
-Wordle turned out to be a small, controlled version of a much bigger story in AI. Language models are extraordinary at generating possibilities, but reliable systems are built on structure: world models, state, and rules that don't bend. The intelligence of an agent doesn't live in any single component, it emerges from how deterministic reasoning and probabilistic models are combined. Wordle just made that lesson impossible to ignore.
+Wordle turned out to be a small, controlled version of a much bigger story in AI. Language models are extraordinary at generating possibilities, but reliable systems are built on structure, i.e., world models, state, and rules that don't bend. The intelligence of an agent doesn't live in any single component, it emerges from how deterministic reasoning and probabilistic models are combined. Wordle just made that lesson impossible to ignore.
