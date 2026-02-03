@@ -156,59 +156,60 @@ This reframes Wordle as a sequential inference problem rather than a language ta
   <text x="400" y="940" class="component-text" text-anchor="middle">Repeat for up to 6 turns or until solution found</text>
 
   <!-- Data Flow Arrows -->
-  <!-- Data Source to Game Logic (guess, solution) -->
+  <!-- Data Source to Game Logic -->
   <path class="arrow-data" d="M 230 250 L 300 250"/>
   <text x="265" y="245" class="data-label">guess, solution</text>
 
-  <!-- Game Logic to Belief Update (feedback) -->
+  <!-- Game Logic to Belief Update -->
   <path class="arrow-data" d="M 500 290 L 550 290"/>
   <text x="520" y="285" class="data-label">feedback</text>
 
-  <!-- Belief Update to Internal State (filtered candidates) -->
+  <!-- Belief Update to Internal State -->
   <path class="arrow-data" d="M 650 380 L 650 420"/>
   <text x="665" y="400" class="data-label">filtered candidates</text>
 
-  <!-- Internal State to Policy Sampling (candidates) -->
-  <path class="arrow-data" d="M 300 460 Q 225 500 150 540"/>
-  <text x="220" y="500" class="data-label">candidates</text>
+  <!-- Internal State to Policy Sampling -->
+  <path class="arrow-data" d="M 300 460 L 300 520 L 250 520 L 250 590"/>
+  <text x="275" y="525" class="data-label">candidates</text>
 
-  <!-- Internal State to Policy Formatting (history, feedback) -->
+  <!-- Internal State to Policy Formatting -->
   <path class="arrow-data" d="M 400 500 L 400 540"/>
   <text x="405" y="520" class="data-label">history, feedback</text>
 
-  <!-- Policy Sampling to LLM (20 examples) -->
-  <path class="arrow" d="M 250 590 Q 400 600 550 610"/>
-  <text x="390" y="600" class="data-label">20 examples</text>
+  <!-- Policy Sampling to LLM -->
+  <path class="arrow" d="M 250 590 L 550 610"/>
+  <text x="400" y="600" class="data-label">20 examples</text>
 
-  <!-- Policy Formatting to LLM (formatted prompt) -->
+  <!-- Policy Formatting to LLM -->
   <path class="arrow" d="M 500 590 L 550 590"/>
   <text x="520" y="585" class="data-label">formatted prompt</text>
 
-  <!-- LLM to Validation (LLM response) -->
+  <!-- LLM to Validation -->
   <path class="arrow" d="M 550 680 L 500 680 L 500 740"/>
   <text x="520" y="710" class="data-label">LLM response</text>
 
-  <!-- Validation to Retry Loop (invalid path) -->
+  <!-- Validation to Retry Loop (invalid) -->
   <path class="arrow-error" d="M 500 750 L 550 750"/>
   <text x="520" y="748" class="data-label">invalid guess</text>
 
-  <!-- Retry Loop back to LLM (error feedback) -->
+  <!-- Retry Loop back to LLM -->
   <path class="arrow-error" d="M 550 740 L 550 680"/>
   <text x="555" y="710" class="data-label">error feedback</text>
 
-  <!-- Validation to Agent Loop (valid path) -->
+  <!-- Validation to Agent Loop (valid) -->
   <path class="arrow-data" d="M 400 800 L 400 840"/>
   <text x="405" y="820" class="data-label">valid guess</text>
 
-  <!-- Agent Loop back to Game Logic (next guess) - path around left side -->
+  <!-- Agent Loop back to Game Logic -->
   <path class="arrow-data" d="M 50 900 L 50 290 L 300 290"/>
   <text x="175" y="595" class="data-label">next guess</text>
 
-  <!-- Fallback path from Retry Loop to Agent Loop -->
-  <path class="arrow-error" d="M 550 800 Q 475 820 400 840"/>
+  <!-- Retry Loop to Agent Loop (fallback) -->
+  <path class="arrow-error" d="M 550 800 L 400 840"/>
   <text x="470" y="820" class="data-label">fallback</text>
 
 </svg>
+
 
 
 
