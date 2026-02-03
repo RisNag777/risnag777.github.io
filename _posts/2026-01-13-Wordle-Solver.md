@@ -110,7 +110,7 @@ This reframes Wordle as a sequential inference problem rather than a language ta
 
 ### Step 1
 **Find a list of all the possible solutions for Wordle.**  
-I used the list provided here - [https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b](https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b). A solution was picked at random from the above list of 14,855 words. These were taken from the game's source code.
+I used the list provided here - [https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b](https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b). A solution was picked at random from the above list of 2,315 words. These were taken from the game's source code.
 
 ### Step 2
 **After each guess, track the Bulls, Cows and Absent letters.**  
