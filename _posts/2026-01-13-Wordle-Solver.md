@@ -215,16 +215,16 @@ This reframes Wordle as a sequential inference problem rather than a language ta
 
 
 ### Step 1
-**Find a list of all the possible solutions for Wordle.**  
+**Find a list of all the possible solutions for Wordle**  
 I used the list provided here - [https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b](https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b). A solution was picked at random from the above list of 2,315 words. These were taken from the game's source code.
 
 ### Step 2
-**After each guess, track the Bulls, Cows and Absent letters.**  
+**Handling Duplicate Letters and Position Constraints**  
 One of the most subtle bugs I encountered was handling duplicate letters correctly. Consider guessing "ALLEY" against solution "BALKS". The first 'L' at position 2 gets feedback 0 (gray), while the second 'L' at position 3 gets feedback 2 (green). This doesn't mean 'L' is absent, but means 'L' cannot be at position 2, but must be at position 3. The system tracks these as `excluded_positions`: letters that are in the word but forbidden at specific positions. Without this, the belief update would incorrectly eliminate valid candidates like "BALKS" because it saw a gray 'L' and assumed the letter was completely absent.
 
 
 ### Step 3
-**The solution space is then reduced.**  
+**Two-Pass Feedback and Deterministic Constraint Enforcement**  
 The get_feedback() function processes feedback in two critical passes. First, it identifies bulls (exact matches) and decrements the solution's letter count for each match. Only then does it process cows (correct letter, wrong position). This ordering is important because if cows are processed first, duplicate letters can be double-counted.  
 For example, guessing "EERIE" against "CRANE" would incorrectly mark both E's as cows, even though only one E exists in the solution. The two-pass approach ensures each letter in the solution is matched at most once.
 
