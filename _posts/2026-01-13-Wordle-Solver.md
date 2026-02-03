@@ -10,7 +10,7 @@ During those moments, I started thinking about what it would actually mean for a
 Naturally, I decided to build an agentic Wordle solver! My goal was to have a system inspired by Wordle's own WordleBot, an algorithm that evaluates guesses based on how effectively they shrink the remaining solution space. Rather than hard-coding heuristics, I wanted to explore whether an agent could reason its way into selecting the next best guess at each step.  
 
 ## System Design
-Wordle Is a Belief-State Search Problem. A good Wordle solver is not guessing. It is updating beliefs.  
+Wordle Is a Belief-State Search Problem. A good Wordle solver does not gues. It updates beliefs.  
 At a high level, the system follows this loop:  
 1. Make a guess (5-letter word)  
 2. Receive feedback:  
@@ -30,7 +30,7 @@ The game can be reimagined as:
 | Action       | Choosing the next guess            |  
 | Observation  | Feedback (0,1,2 per letter)        |  
 
-This reframes Wordle as a sequential inference problem, and not a language task.  
+This reframes Wordle as a sequential inference problem rather than a language task.  
 
 ### Architecture
 <svg xmlns="http://www.w3.org/2000/svg" width="680" height="780" viewBox="0 0 680 780">
@@ -132,7 +132,7 @@ The model would generate a plausible guess first, then fabricate an explanation 
 - "n" is included but in a different position
 - "k", "e", "d" are absent
 
-But "n" is still in the same position as before, violating the constraint it claimed to follow. The model wasn’t reasoning. It was choosing a guess first and inventing a justification afterward. This made one thing clear to me - the LLM must never own the game logic. Deterministic code must enforce rules, otherwise correctness becomes probabilistic.
+But "n" is still in the same position as before, violating the constraint it claimed to follow. The model wasn’t reasoning. It was choosing a guess first and inventing a justification afterward. This made one thing clear to me. The LLM must never own the game logic. Deterministic code must enforce rules, otherwise correctness becomes probabilistic.
 
 ## The Agent Loop
 Here’s the core system loop:  
@@ -226,7 +226,7 @@ while valid_guess:
             # Feed error back to LLM and retry
             invalid_guess_prompt = f"""Your guess {tmp_guess} is not valid..."""
 ```
-This loop is where the deterministic validation layer enforces correctness. The LLM might confidently suggest "NATSY" (not a real word) or "NASTY" with letters in forbidden positions. Even with temperature=0, constraint violations could still occur. This shows that the model is consistent, but not rule-aware. The system catches these violations and forces correction. If the model cannot produce a valid action after multiple attempts, control reverts to the deterministic layer via a guaranteed-valid fallback.
+This loop is where the deterministic validation layer enforces correctness. The LLM might confidently suggest "NATSY" (not a real word) or "NASTY" with letters in forbidden positions. Even with temperature=0, constraint violations could still occur. The model is consistent, but not rule-aware. The system catches these violations and forces correction. If the model cannot produce a valid action after multiple attempts, control reverts to the deterministic layer via a guaranteed-valid fallback.
 
 The architectural roles of each module:  
 
