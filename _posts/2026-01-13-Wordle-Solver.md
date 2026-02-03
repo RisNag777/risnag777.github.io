@@ -33,79 +33,181 @@ The game can be reimagined as:
 This reframes Wordle as a sequential inference problem rather than a language task.  
 
 ### Architecture
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="780" viewBox="0 0 680 780">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1000" viewBox="0 0 900 1000">
   <defs>
     <style>
-      .box { fill: #ffffff; stroke: #111827; stroke-width: 2; rx: 14; ry: 14; }
-      .accent { fill: #EEF2FF; stroke: #6366F1; stroke-width: 2; rx: 14; ry: 14; }
-      .note { fill: #FFFBEB; stroke: #F59E0B; stroke-width: 2; rx: 14; ry: 14; }
-      .title { font: 700 22px ui-sans-serif; fill: #111827; }
-      .text { font: 600 16px ui-sans-serif; fill: #111827; }
-      .muted { font: 500 14px ui-sans-serif; fill: #374151; }
-      .arrow { stroke: #111827; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .title { font: 700 24px ui-sans-serif; fill: #111827; }
+      .subtitle { font: 500 14px ui-sans-serif; fill: #6B7280; }
+      .component-title { font: 600 16px ui-sans-serif; fill: #111827; }
+      .component-text { font: 500 13px ui-sans-serif; fill: #374151; }
+      .function-name { font: 600 14px ui-mono, monospace; fill: #1E40AF; }
+      .data-label { font: 500 12px ui-sans-serif; fill: #059669; }
+      .deterministic { fill: #EEF2FF; stroke: #4F46E5; stroke-width: 2.5; rx: 12; ry: 12; }
+      .stochastic { fill: #FFF7ED; stroke: #F59E0B; stroke-width: 2.5; stroke-dasharray: 5,3; rx: 12; ry: 12; }
+      .data-box { fill: #F0FDF4; stroke: #10B981; stroke-width: 2; rx: 8; ry: 8; }
+      .arrow { stroke: #111827; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
+      .arrow-data { stroke: #059669; stroke-width: 2; fill: none; marker-end: url(#arrowhead-green); }
+      .arrow-error { stroke: #DC2626; stroke-width: 2; fill: none; stroke-dasharray: 3,3; marker-end: url(#arrowhead-red); }
+      .loop-box { fill: #FEF3C7; stroke: #F59E0B; stroke-width: 2; rx: 10; ry: 10; }
     </style>
-    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M 0 0 L 12 6 L 0 12 z" fill="#111827"/>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#111827"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#DC2626"/>
     </marker>
   </defs>
 
-  <text x="40" y="50" class="title">Wordle Agent Architecture</text>
-  <text x="40" y="80" class="muted">Belief-state reasoning + policy + LLM proposal + deterministic validation</text>
+  <!-- Title -->
+  <text x="450" y="40" class="title" text-anchor="middle">Wordle Agent System Architecture</text>
+  <text x="450" y="65" class="subtitle" text-anchor="middle">Deterministic Core + Stochastic Policy Layer</text>
 
-  <!-- Row 1 -->
-  <rect x="40" y="120" width="260" height="110" class="box"/>
-  <text x="60" y="155" class="text">Wordle Environment</text>
-  <text x="60" y="180" class="muted">Hidden solution</text>
-  <text x="60" y="200" class="muted">Returns feedback</text>
+  <!-- Legend -->
+  <rect x="50" y="90" width="200" height="80" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1" rx="8"/>
+  <text x="60" y="115" class="component-title">Legend</text>
+  <rect x="60" y="125" width="60" height="20" class="deterministic"/>
+  <text x="130" y="140" class="component-text">Deterministic</text>
+  <rect x="60" y="150" width="60" height="20" class="stochastic"/>
+  <text x="130" y="165" class="component-text">Stochastic/LLM</text>
 
-  <rect x="360" y="120" width="260" height="110" class="box"/>
-  <text x="380" y="155" class="text">Game Logic</text>
-  <text x="380" y="180" class="muted">get_feedback()</text>
-  <text x="380" y="200" class="muted">Bulls, cows, duplicates</text>
+  <!-- Data Source -->
+  <rect x="50" y="200" width="180" height="100" class="data-box"/>
+  <text x="140" y="230" class="component-title" text-anchor="middle">Data Source</text>
+  <text x="140" y="255" class="function-name" text-anchor="middle">retrieve_word_list()</text>
+  <text x="140" y="275" class="component-text" text-anchor="middle">words.txt (2,315 words)</text>
+  <text x="140" y="290" class="component-text" text-anchor="middle">Initial candidates</text>
 
-  <path class="arrow" d="M 300 175 L 360 175"/>
+  <!-- Game Logic Module -->
+  <rect x="300" y="200" width="200" height="180" class="deterministic"/>
+  <text x="400" y="230" class="component-title" text-anchor="middle">Game Logic Module</text>
+  <text x="400" y="255" class="function-name" text-anchor="middle">get_feedback()</text>
+  <text x="400" y="275" class="component-text" text-anchor="middle">Two-pass algorithm:</text>
+  <text x="400" y="290" class="component-text" text-anchor="middle">1. Process bulls (2)</text>
+  <text x="400" y="305" class="component-text" text-anchor="middle">2. Process cows (1)</text>
+  <text x="400" y="320" class="component-text" text-anchor="middle">3. Mark absent (0)</text>
+  <text x="400" y="345" class="function-name" text-anchor="middle">cow_bull_absent()</text>
+  <text x="400" y="365" class="component-text" text-anchor="middle">Categorize feedback</text>
 
-  <!-- Row 2 -->
-  <rect x="40" y="290" width="260" height="130" class="box"/>
-  <text x="60" y="325" class="text">Belief-State Update</text>
-  <text x="60" y="350" class="muted">trim_list()</text>
-  <text x="60" y="370" class="muted">Remove impossible words</text>
+  <!-- Belief Update Module -->
+  <rect x="550" y="200" width="200" height="180" class="deterministic"/>
+  <text x="650" y="230" class="component-title" text-anchor="middle">Belief Update Module</text>
+  <text x="650" y="255" class="function-name" text-anchor="middle">trim_list()</text>
+  <text x="650" y="275" class="component-text" text-anchor="middle">Filters candidates by:</text>
+  <text x="650" y="290" class="component-text" text-anchor="middle">• Absent letters</text>
+  <text x="650" y="305" class="component-text" text-anchor="middle">• Bull positions</text>
+  <text x="650" y="320" class="component-text" text-anchor="middle">• Cow constraints</text>
+  <text x="650" y="335" class="component-text" text-anchor="middle">• Excluded positions</text>
+  <text x="650" y="360" class="function-name" text-anchor="middle">filter_candidates()</text>
+  <text x="650" y="375" class="component-text" text-anchor="middle">Generic filter helper</text>
 
-  <rect x="360" y="290" width="260" height="130" class="accent"/>
-  <text x="380" y="325" class="text">Internal State</text>
-  <text x="380" y="350" class="muted">Candidate words</text>
-  <text x="380" y="370" class="muted">Guess history</text>
+  <!-- Internal State -->
+  <rect x="300" y="420" width="450" height="80" class="data-box"/>
+  <text x="525" y="450" class="component-title" text-anchor="middle">Internal State (Belief State)</text>
+  <text x="525" y="475" class="component-text" text-anchor="middle">candidates: List[str] - Words consistent with all feedback</text>
+  <text x="525" y="495" class="component-text" text-anchor="middle">history: Dict[str, List[int]] - Guess → Feedback mapping</text>
 
-  <!-- Diagonal: Game Logic → Belief Update -->
-  <path class="arrow" d="M 490 230 L 170 290"/>
+  <!-- Policy Layer - Sampling -->
+  <rect x="50" y="540" width="200" height="100" class="deterministic"/>
+  <text x="150" y="570" class="component-title" text-anchor="middle">Policy: Sampling</text>
+  <text x="150" y="595" class="function-name" text-anchor="middle">random_word_select()</text>
+  <text x="150" y="615" class="component-text" text-anchor="middle">Sample 20 candidates</text>
+  <text x="150" y="630" class="component-text" text-anchor="middle">for LLM context</text>
 
-  <path class="arrow" d="M 300 355 L 360 355"/>
+  <!-- Policy Layer - Formatting -->
+  <rect x="300" y="540" width="200" height="100" class="deterministic"/>
+  <text x="400" y="570" class="component-title" text-anchor="middle">Policy: Formatting</text>
+  <text x="400" y="595" class="function-name" text-anchor="middle">feedback_explanation()</text>
+  <text x="400" y="615" class="component-text" text-anchor="middle">Structure game state</text>
+  <text x="400" y="630" class="component-text" text-anchor="middle">for LLM consumption</text>
 
-  <!-- Row 3 -->
-  <rect x="40" y="490" width="260" height="120" class="box"/>
-  <text x="60" y="525" class="text">Policy Layer</text>
-  <text x="60" y="550" class="muted">Heuristic scoring +</text>
-  <text x="60" y="570" class="muted">optional stochastic selection</text>
+  <!-- LLM Layer -->
+  <rect x="550" y="540" width="200" height="140" class="stochastic"/>
+  <text x="650" y="570" class="component-title" text-anchor="middle">LLM Policy</text>
+  <text x="650" y="595" class="function-name" text-anchor="middle">OpenAI GPT-4o-mini</text>
+  <text x="650" y="615" class="component-text" text-anchor="middle">Temperature: 0</text>
+  <text x="650" y="635" class="component-text" text-anchor="middle">Role: Heuristic ranker</text>
+  <text x="650" y="655" class="component-text" text-anchor="middle">Proposes next guess</text>
+  <text x="650" y="675" class="component-text" text-anchor="middle">from valid candidates</text>
 
-  <rect x="360" y="490" width="260" height="120" class="box"/>
-  <text x="380" y="525" class="text">LLM (Optional)</text>
-  <text x="380" y="550" class="muted">Ranks valid guesses</text>
-  <text x="380" y="570" class="muted">Language priors</text>
+  <!-- Validation Layer -->
+  <rect x="300" y="680" width="200" height="120" class="deterministic"/>
+  <text x="400" y="710" class="component-title" text-anchor="middle">Validation Layer</text>
+  <text x="400" y="735" class="function-name" text-anchor="middle">extract_guess()</text>
+  <text x="400" y="755" class="component-text" text-anchor="middle">Parse LLM response</text>
+  <text x="400" y="775" class="component-text" text-anchor="middle">(regex patterns)</text>
+  <text x="400" y="790" class="function-name" text-anchor="middle">if guess in candidates</text>
 
-  <!-- Diagonal: Internal State → Policy -->
-  <path class="arrow" d="M 490 420 L 170 490"/>
+  <!-- Retry Loop -->
+  <rect x="550" y="680" width="200" height="120" class="loop-box"/>
+  <text x="650" y="710" class="component-title" text-anchor="middle">Retry Loop</text>
+  <text x="650" y="735" class="component-text" text-anchor="middle">Max 5 attempts</text>
+  <text x="650" y="755" class="component-text" text-anchor="middle">Feed error back to LLM</text>
+  <text x="650" y="775" class="component-text" text-anchor="middle">Fallback: random choice</text>
+  <text x="650" y="790" class="component-text" text-anchor="middle">if all retries fail</text>
 
-  <path class="arrow" d="M 300 550 L 360 550"/>
+  <!-- Main Agent Loop -->
+  <rect x="50" y="840" width="700" height="120" class="deterministic"/>
+  <text x="400" y="870" class="component-title" text-anchor="middle">Main Agent Loop (wordle_agent)</text>
+  <text x="400" y="895" class="component-text" text-anchor="middle">1. Get feedback → 2. Trim candidates → 3. Sample examples → 4. Format prompt →</text>
+  <text x="400" y="915" class="component-text" text-anchor="middle">5. LLM proposes → 6. Extract & validate → 7. Retry if invalid → 8. Next turn</text>
+  <text x="400" y="940" class="component-text" text-anchor="middle">Repeat for up to 6 turns or until solution found</text>
 
-  <!-- Validation -->
-  <rect x="180" y="650" width="320" height="90" class="note"/>
-  <text x="200" y="690" class="text">Validity Check</text>
-  <text x="200" y="710" class="muted">Ensure guess ∈ candidates</text>
+  <!-- Data Flow Arrows -->
+  <!-- Data Source to Game Logic -->
+  <path class="arrow-data" d="M 230 250 L 300 290"/>
+  <text x="260" y="265" class="data-label">guess, solution</text>
 
-  <!-- Diagonal: LLM → Validation -->
-  <path class="arrow" d="M 490 610 L 360 650"/>
+  <!-- Game Logic to Belief Update -->
+  <path class="arrow-data" d="M 500 290 L 550 290"/>
+  <text x="520" y="280" class="data-label">feedback</text>
+
+  <!-- Belief Update to Internal State -->
+  <path class="arrow-data" d="M 650 380 L 650 420"/>
+  <text x="660" y="400" class="data-label">filtered candidates</text>
+
+  <!-- Internal State to Policy Sampling -->
+  <path class="arrow-data" d="M 350 460 L 150 540"/>
+  <text x="240" y="500" class="data-label">candidates</text>
+
+  <!-- Internal State to Policy Formatting -->
+  <path class="arrow-data" d="M 400 500 L 400 540"/>
+  <text x="410" y="520" class="data-label">history, feedback</text>
+
+  <!-- Policy to LLM -->
+  <path class="arrow" d="M 250 590 L 550 610"/>
+  <text x="380" y="595" class="data-label">20 examples</text>
+  <path class="arrow" d="M 500 590 L 550 610"/>
+  <text x="520" y="595" class="data-label">formatted prompt</text>
+
+  <!-- LLM to Validation -->
+  <path class="arrow" d="M 650 680 L 500 740"/>
+  <text x="570" y="710" class="data-label">LLM response</text>
+
+  <!-- Validation to Retry Loop (invalid path) -->
+  <path class="arrow-error" d="M 500 750 L 550 750"/>
+  <text x="520" y="745" class="data-label">invalid guess</text>
+
+  <!-- Retry Loop back to LLM -->
+  <path class="arrow-error" d="M 550 740 L 550 680"/>
+  <text x="560" y="710" class="data-label">error feedback</text>
+
+  <!-- Validation to Agent Loop (valid path) -->
+  <path class="arrow-data" d="M 400 800 L 400 840"/>
+  <text x="410" y="820" class="data-label">valid guess</text>
+
+  <!-- Agent Loop back to Game Logic -->
+  <path class="arrow-data" d="M 400 840 L 400 380"/>
+  <text x="410" y="610" class="data-label">next guess</text>
+
+  <!-- Fallback path -->
+  <path class="arrow-error" d="M 650 800 L 400 840"/>
+  <text x="520" y="820" class="data-label">fallback</text>
+
 </svg>
->
+
 
 
 ### Step 1
