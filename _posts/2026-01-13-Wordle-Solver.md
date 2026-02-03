@@ -124,29 +124,29 @@ This reframes Wordle as a sequential inference problem rather than a language ta
   <text x="400" y="630" class="component-text" text-anchor="middle">for LLM consumption</text>
 
   <!-- LLM Layer -->
-  <rect x="550" y="540" width="200" height="140" class="stochastic"/>
-  <text x="650" y="570" class="component-title" text-anchor="middle">LLM Policy</text>
-  <text x="650" y="595" class="function-name" text-anchor="middle">OpenAI GPT-4o-mini</text>
-  <text x="650" y="615" class="component-text" text-anchor="middle">Temperature: 0</text>
-  <text x="650" y="635" class="component-text" text-anchor="middle">Role: Heuristic ranker</text>
-  <text x="650" y="655" class="component-text" text-anchor="middle">Proposes next guess</text>
-  <text x="650" y="675" class="component-text" text-anchor="middle">from valid candidates</text>
+  <rect x="550" y="520" width="200" height="140" class="stochastic"/>
+  <text x="650" y="550" class="component-title" text-anchor="middle">LLM Policy</text>
+  <text x="650" y="575" class="function-name" text-anchor="middle">OpenAI GPT-4o-mini</text>
+  <text x="650" y="595" class="component-text" text-anchor="middle">Temperature: 0</text>
+  <text x="650" y="615" class="component-text" text-anchor="middle">Role: Heuristic ranker</text>
+  <text x="650" y="635" class="component-text" text-anchor="middle">Proposes next guess</text>
+  <text x="650" y="655" class="component-text" text-anchor="middle">from valid candidates</text>
 
   <!-- Validation Layer -->
-  <rect x="300" y="680" width="200" height="120" class="deterministic"/>
-  <text x="400" y="710" class="component-title" text-anchor="middle">Validation Layer</text>
-  <text x="400" y="735" class="function-name" text-anchor="middle">extract_guess()</text>
-  <text x="400" y="755" class="component-text" text-anchor="middle">Parse LLM response</text>
-  <text x="400" y="775" class="component-text" text-anchor="middle">(regex patterns)</text>
-  <text x="400" y="790" class="function-name" text-anchor="middle">if guess in candidates</text>
+  <rect x="300" y="670" width="200" height="120" class="deterministic"/>
+  <text x="400" y="700" class="component-title" text-anchor="middle">Validation Layer</text>
+  <text x="400" y="725" class="function-name" text-anchor="middle">extract_guess()</text>
+  <text x="400" y="745" class="component-text" text-anchor="middle">Parse LLM response</text>
+  <text x="400" y="765" class="component-text" text-anchor="middle">(regex patterns)</text>
+  <text x="400" y="780" class="function-name" text-anchor="middle">if guess in candidates</text>
 
   <!-- Retry Loop -->
-  <rect x="550" y="680" width="200" height="120" class="loop-box"/>
-  <text x="650" y="710" class="component-title" text-anchor="middle">Retry Loop</text>
-  <text x="650" y="735" class="component-text" text-anchor="middle">Max 5 attempts</text>
-  <text x="650" y="755" class="component-text" text-anchor="middle">Feed error back to LLM</text>
-  <text x="650" y="775" class="component-text" text-anchor="middle">Fallback: random choice</text>
-  <text x="650" y="790" class="component-text" text-anchor="middle">if all retries fail</text>
+  <rect x="550" y="700" width="200" height="120" class="loop-box"/>
+  <text x="650" y="730" class="component-title" text-anchor="middle">Retry Loop</text>
+  <text x="650" y="755" class="component-text" text-anchor="middle">Max 5 attempts</text>
+  <text x="650" y="775" class="component-text" text-anchor="middle">Feed error back to LLM</text>
+  <text x="650" y="795" class="component-text" text-anchor="middle">Fallback: random choice</text>
+  <text x="650" y="810" class="component-text" text-anchor="middle">if all retries fail</text>
 
   <!-- Main Agent Loop -->
   <rect x="50" y="840" width="700" height="120" class="deterministic"/>
@@ -158,59 +158,60 @@ This reframes Wordle as a sequential inference problem rather than a language ta
   <!-- Data Flow Arrows -->
   <!-- Data Source to Game Logic -->
   <path class="arrow-data" d="M 230 250 L 300 250"/>
-  <text x="265" y="245" class="data-label">guess, solution</text>
+  <text x="240" y="245" class="data-label">guess +</text>
+  <text x="240" y="265" class="data-label">solution</text>
 
   <!-- Game Logic to Belief Update -->
   <path class="arrow-data" d="M 500 290 L 550 290"/>
-  <text x="520" y="285" class="data-label">feedback</text>
+  <text x="502" y="280" class="data-label">feedback</text>
 
   <!-- Belief Update to Internal State -->
   <path class="arrow-data" d="M 650 380 L 650 420"/>
   <text x="665" y="400" class="data-label">filtered candidates</text>
 
   <!-- Internal State to Policy Sampling -->
-  <path class="arrow-data" d="M 300 460 L 300 520 L 250 520 L 250 590"/>
-  <text x="275" y="525" class="data-label">candidates</text>
+  <path class="arrow-data" d="M 300 460 L 200 460 L 200 520 L 200 540"/>
+  <text x="220" y="450" class="data-label">candidates</text>
 
   <!-- Internal State to Policy Formatting -->
   <path class="arrow-data" d="M 400 500 L 400 540"/>
   <text x="405" y="520" class="data-label">history, feedback</text>
 
   <!-- Policy Sampling to LLM -->
-  <path class="arrow" d="M 250 590 L 550 610"/>
-  <text x="400" y="600" class="data-label">20 examples</text>
+  <path class="arrow" d="M 200 640 L 200 650 L 550 650"/>
+  <text x="225" y="665" class="data-label">20 examples</text>
 
   <!-- Policy Formatting to LLM -->
   <path class="arrow" d="M 500 590 L 550 590"/>
-  <text x="520" y="585" class="data-label">formatted prompt</text>
+  <text x="501" y="580" class="data-label">formatted</text>
+  <text x="510" y="605" class="data-label">prompt</text>
 
   <!-- LLM to Validation -->
-  <path class="arrow" d="M 550 680 L 500 680 L 500 740"/>
-  <text x="520" y="710" class="data-label">LLM response</text>
+  <path class="arrow" d="M 650 660 L 650 680 L 500 680"/>
+  <text x="540" y="675" class="data-label">LLM response</text>
 
   <!-- Validation to Retry Loop (invalid) -->
   <path class="arrow-error" d="M 500 750 L 550 750"/>
-  <text x="520" y="748" class="data-label">invalid guess</text>
+  <text x="505" y="740" class="data-label">invalid</text>
+  <text x="505" y="760" class="data-label">guess</text>
 
   <!-- Retry Loop back to LLM -->
-  <path class="arrow-error" d="M 550 740 L 550 680"/>
-  <text x="555" y="710" class="data-label">error feedback</text>
+  <path class="arrow-error" d="M 680 700 L 680 660"/>
+  <text x="690" y="685" class="data-label">error feedback</text>
 
   <!-- Validation to Agent Loop (valid) -->
-  <path class="arrow-data" d="M 400 800 L 400 840"/>
-  <text x="405" y="820" class="data-label">valid guess</text>
+  <path class="arrow-data" d="M 400 790 L 400 840"/>
+  <text x="405" y="810" class="data-label">valid guess</text>
 
   <!-- Agent Loop back to Game Logic -->
-  <path class="arrow-data" d="M 50 900 L 50 290 L 300 290"/>
-  <text x="175" y="595" class="data-label">next guess</text>
+  <path class="arrow-data" d="M 50 900 L 20 900 L 20 350 L 300 350"/>
+  <text x="30" y="700" class="data-label">next guess</text>
 
   <!-- Retry Loop to Agent Loop (fallback) -->
-  <path class="arrow-error" d="M 550 800 L 400 840"/>
-  <text x="470" y="820" class="data-label">fallback</text>
+  <path class="arrow-error" d="M 750 800 L 800 800 L 800 900 L 750 900"/>
+  <text x="810" y="850" class="data-label">fallback</text>
 
 </svg>
-
-
 
 
 
