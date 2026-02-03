@@ -12,7 +12,7 @@ Naturally, I decided to build an agentic Wordle solver! My goal was to have a sy
 ## System Design
 Wordle is a Belief-State Search Problem. A good Wordle solver is not making guesses. It is updating its beliefs.  
 At a high level, the system follows this loop:  
-1. Make a guess (5-letter word)  
+1. Pick a word at random (5-letter word)  
 2. Receive feedback:  
     Green (2): correct letter, correct position (I refer to these as Bulls)  
     Yellow (1): correct letter, wrong position (I refer to these as Cows)  
