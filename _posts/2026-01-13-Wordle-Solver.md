@@ -156,57 +156,60 @@ This reframes Wordle as a sequential inference problem rather than a language ta
   <text x="400" y="940" class="component-text" text-anchor="middle">Repeat for up to 6 turns or until solution found</text>
 
   <!-- Data Flow Arrows -->
-  <!-- Data Source to Game Logic -->
-  <path class="arrow-data" d="M 230 250 L 300 290"/>
-  <text x="260" y="265" class="data-label">guess, solution</text>
+  <!-- Data Source to Game Logic (guess, solution) -->
+  <path class="arrow-data" d="M 230 250 L 300 250"/>
+  <text x="265" y="245" class="data-label">guess, solution</text>
 
-  <!-- Game Logic to Belief Update -->
+  <!-- Game Logic to Belief Update (feedback) -->
   <path class="arrow-data" d="M 500 290 L 550 290"/>
-  <text x="520" y="280" class="data-label">feedback</text>
+  <text x="520" y="285" class="data-label">feedback</text>
 
-  <!-- Belief Update to Internal State -->
+  <!-- Belief Update to Internal State (filtered candidates) -->
   <path class="arrow-data" d="M 650 380 L 650 420"/>
-  <text x="660" y="400" class="data-label">filtered candidates</text>
+  <text x="665" y="400" class="data-label">filtered candidates</text>
 
-  <!-- Internal State to Policy Sampling -->
-  <path class="arrow-data" d="M 350 460 L 150 540"/>
-  <text x="240" y="500" class="data-label">candidates</text>
+  <!-- Internal State to Policy Sampling (candidates) -->
+  <path class="arrow-data" d="M 300 460 Q 225 500 150 540"/>
+  <text x="220" y="500" class="data-label">candidates</text>
 
-  <!-- Internal State to Policy Formatting -->
+  <!-- Internal State to Policy Formatting (history, feedback) -->
   <path class="arrow-data" d="M 400 500 L 400 540"/>
-  <text x="410" y="520" class="data-label">history, feedback</text>
+  <text x="405" y="520" class="data-label">history, feedback</text>
 
-  <!-- Policy to LLM -->
-  <path class="arrow" d="M 250 590 L 550 610"/>
-  <text x="380" y="595" class="data-label">20 examples</text>
-  <path class="arrow" d="M 500 590 L 550 610"/>
-  <text x="520" y="595" class="data-label">formatted prompt</text>
+  <!-- Policy Sampling to LLM (20 examples) -->
+  <path class="arrow" d="M 250 590 Q 400 600 550 610"/>
+  <text x="390" y="600" class="data-label">20 examples</text>
 
-  <!-- LLM to Validation -->
-  <path class="arrow" d="M 650 680 L 500 740"/>
-  <text x="570" y="710" class="data-label">LLM response</text>
+  <!-- Policy Formatting to LLM (formatted prompt) -->
+  <path class="arrow" d="M 500 590 L 550 590"/>
+  <text x="520" y="585" class="data-label">formatted prompt</text>
+
+  <!-- LLM to Validation (LLM response) -->
+  <path class="arrow" d="M 550 680 L 500 680 L 500 740"/>
+  <text x="520" y="710" class="data-label">LLM response</text>
 
   <!-- Validation to Retry Loop (invalid path) -->
   <path class="arrow-error" d="M 500 750 L 550 750"/>
-  <text x="520" y="745" class="data-label">invalid guess</text>
+  <text x="520" y="748" class="data-label">invalid guess</text>
 
-  <!-- Retry Loop back to LLM -->
+  <!-- Retry Loop back to LLM (error feedback) -->
   <path class="arrow-error" d="M 550 740 L 550 680"/>
-  <text x="560" y="710" class="data-label">error feedback</text>
+  <text x="555" y="710" class="data-label">error feedback</text>
 
   <!-- Validation to Agent Loop (valid path) -->
   <path class="arrow-data" d="M 400 800 L 400 840"/>
-  <text x="410" y="820" class="data-label">valid guess</text>
+  <text x="405" y="820" class="data-label">valid guess</text>
 
-  <!-- Agent Loop back to Game Logic -->
-  <path class="arrow-data" d="M 400 840 L 400 380"/>
-  <text x="410" y="610" class="data-label">next guess</text>
+  <!-- Agent Loop back to Game Logic (next guess) - path around left side -->
+  <path class="arrow-data" d="M 50 900 L 50 290 L 300 290"/>
+  <text x="175" y="595" class="data-label">next guess</text>
 
-  <!-- Fallback path -->
-  <path class="arrow-error" d="M 650 800 L 400 840"/>
-  <text x="520" y="820" class="data-label">fallback</text>
+  <!-- Fallback path from Retry Loop to Agent Loop -->
+  <path class="arrow-error" d="M 550 800 Q 475 820 400 840"/>
+  <text x="470" y="820" class="data-label">fallback</text>
 
 </svg>
+
 
 
 
