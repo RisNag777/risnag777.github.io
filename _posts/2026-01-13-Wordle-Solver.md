@@ -220,12 +220,13 @@ I used the list provided here - [https://gist.github.com/cfreshman/a03ef2cba789d
 
 ### Step 2
 **Handling Duplicate Letters and Position Constraints**  
-One of the most subtle bugs I encountered was handling duplicate letters correctly. Consider guessing "ALLEY" against solution "BALKS". The first 'L' at position 2 gets feedback 0 (gray), while the second 'L' at position 3 gets feedback 2 (green). This doesn't mean 'L' is absent, but means 'L' cannot be at position 2, but must be at position 3. The system tracks these as `excluded_positions`: letters that are in the word but forbidden at specific positions. Without this, the belief update would incorrectly eliminate valid candidates like "BALKS" because it saw a gray 'L' and assumed the letter was completely absent.
+One of the most subtle bugs I encountered was handling duplicate letters correctly. Consider guessing "ALLEY" against solution "BALKS". The first 'L' at position 2 gets feedback 0 (gray), while the second 'L' at position 3 gets feedback 2 (green). This doesn't mean 'L' is absent, just that it cannot be at position 2, but at position 3. The system tracks these as `excluded_positions`: letters that are in the word but forbidden at specific positions. Without this, the belief update would incorrectly eliminate valid candidates like "BALKS" because it saw a gray 'L' and assumed the letter was completely absent.
 
 
 ### Step 3
 **Two-Pass Feedback and Deterministic Constraint Enforcement**  
-The get_feedback() function processes feedback in two critical passes. First, it identifies bulls (exact matches) and decrements the solution's letter count for each match. Only then does it process cows (correct letter, wrong position). This ordering is important because if cows are processed first, duplicate letters can be double-counted.  
+The `get_feedback()` function processes feedback in two critical passes. First, it identifies bulls (exact matches) and decrements the solution's letter count for each match. Only then does it process cows (correct letter, wrong position). This ordering is important because if cows are processed first, duplicate letters can be double-counted.  
+
 For example, guessing "EERIE" against "CRANE" would incorrectly mark both E's as cows, even though only one E exists in the solution. The two-pass approach ensures each letter in the solution is matched at most once.
 
 Once feedback is computed correctly, the solution space is reduced. Words containing letters that are truly absent (i.e., not bulls or cows anywhere) are removed. I enforced Hard Mode-style constraints to simplify the reasoning system. The remaining candidates must keep bulls in their exact positions and not place cows in the same positions as before. This logic was necessary because when the LLM was allowed to propose guesses directly from feedback, it would:  
@@ -245,12 +246,14 @@ Here’s the core system loop:
 ```
 candidates = retrieve_word_list()
 solution = random.choice(candidates)
-
+...
 for turn in range(6):
+    ...
     feedback = get_feedback(guess, solution)
+    ...
     candidates = trim_list(guess, feedback, candidates)
     ...
-    guess = LLM_policy(candidates)
+    tmp_guess = extract_guess(ai_response_content)
 ```
 
 <svg xmlns="http://www.w3.org/2000/svg" width="680" height="820" viewBox="0 0 680 820">
@@ -348,7 +351,7 @@ This is what makes the system a true agent rather than a generative script. It h
 - an internal state (candidate list)
 - a perception-update loop (feedback -> trim)
 - a policy for proposing actions
-- a verification layer that enforces rules before actions are executed
+- a verification layer that enforces rules before actions are executed  
 The intelligence emerges from the architecture, not from the LLM alone.
 
 ## The Real Role of the LLM
@@ -356,7 +359,7 @@ LLMs operate on probability, not symbolic rules. They’re excellent at proposin
 - Heuristic ranker
 - Proposal generator
 
-But there's another layer of reality to deal with. LLMs don't speak in APIs, they speak in language. Even with explicit instructions, the model doesn't always return clean structured data. A guess might appear as "guess: baker" or "'guess': 'baker'" either buried inside a paragraph or wrapped in a code block. The extract_guess() function uses multiple regex patterns to parse these variations and recover the intended word. This parsing step is itself a form of validation. It accepts that model outputs are probabilistic language artifacts, not guaranteed structured responses.  
+But there's another layer of reality to deal with. LLMs don't speak in APIs, they speak in language. Even with explicit instructions, the model doesn't always return clean structured data. A guess might appear as "guess: baker" or "'guess': 'baker'" either buried inside a paragraph or wrapped in a code block. The `extract_guess()` function uses multiple regex patterns to parse these variations and recover the intended word. This parsing step is itself a form of validation. It accepts that model outputs are probabilistic language artifacts, not guaranteed structured responses.  
 
 So the system has to be robust in two ways:  
 - Format robustness: correctly extracting the intended action from messy language
@@ -378,13 +381,18 @@ If the LLM is removed, the system still works but it simply becomes fully rule-b
 
 ## Implementation Details
 **Candidate Sampling Strategy**  
-Rather than sending the entire candidate list to the LLM (which could be thousands of words), the system samples 20 random candidates to provide context. This serves two purposes: it keeps the prompt manageable, and it gives the LLM examples of valid words without overwhelming it. The LLM uses these examples to understand the style and constraints, then generates its own guess from the full candidate space.
+Rather than sending the entire candidate list to the LLM (which could be thousands of words), the system samples 20 random candidates to provide context. This serves two purposes:
+- it keeps the prompt manageable
+- it gives the LLM examples of valid words without overwhelming it  
+The LLM uses these examples to understand the style and constraints, then generates its own guess from the full candidate space.
 
 **Feedback Explanation Formatting**  
-The `feedback_explanation()` function structures the game state into a human-readable format for the LLM. It categorizes letters into bulls, cows, and absent, and explicitly states position constraints. This formatting is crucial. Raw feedback arrays like `[1, 2, 0, 0, 0]` are opaque, but structured explanations help the LLM reason about constraints. The system is essentially translating between two representations: the internal state (arrays, sets, dictionaries) and the language representation (natural language explanations) that the LLM can process.
+The `feedback_explanation()` function structures the game state into a human-readable format for the LLM. It categorizes letters into bulls, cows, and absent, and explicitly states position constraints. This formatting is crucial. Raw feedback arrays like `[1, 2, 0, 0, 0]` are opaque, but structured explanations help the LLM reason about constraints. The system is essentially translating between two representations:
+- the internal state (arrays, sets, dictionaries)
+- the language representation (natural language explanations) that the LLM can process
 
 **Hard Mode Enforcement**  
-The system enforces Hard Mode-style constraints: once a letter is identified as a bull or cow, all future guesses must respect those constraints. This simplifies the reasoning system by making the constraints cumulative and explicit. Without this, the LLM might suggest guesses that ignore previous feedback, requiring even more complex validation logic.
+The system enforces Hard Mode-style constraints. Once a letter is identified as a bull or cow, all future guesses must respect those constraints. This simplifies the reasoning system by making the constraints cumulative and explicit. Without this, the LLM might suggest guesses that ignore previous feedback, requiring even more complex validation logic.
 
 ## Lessons Learned Building Agents
 The biggest lesson from this project is that agentic behavior isn't magic, it's architecture. Once you separate the system into:
@@ -393,17 +401,18 @@ The biggest lesson from this project is that agentic behavior isn't magic, it's 
 - A policy that chooses actions  
 
 you get something that behaves like an agent almost automatically.  
-The second lesson is less comfortable: LLMs are not rule engines. They're powerful heuristic guides, but they will confidently suggest illegal actions unless the system makes those actions impossible. The safest and most reliable pattern, used across mature AI systems, is simple: the model proposes, and deterministic code verifies.
+
+The second lesson is less comfortable - LLMs are not rule engines. They're powerful heuristic guides, but they will confidently suggest illegal actions unless the system makes those actions impossible. The safest and most reliable pattern, used across mature AI systems, is simple. The model proposes, and deterministic code verifies.
 
 In this project, that principle shows up directly in the retry loop. When the LLM violates constraints, the system doesn't accept the guess or fail silently. Instead, it:
-- Catches the violation deterministically (if tmp_guess in candidates)
+- Catches the violation deterministically (if `tmp_guess` is in candidates)
 - Provides feedback to the LLM about what went wrong
 - Gives the model another chance to correct itself
 - Falls back to a random valid guess if correction fails
 
-This propose -> validate -> retry -> fallback pattern is what makes the system reliable. The LLM's role is to suggest good guesses, but the system's role is to ensure those guesses are valid. Without this separation, every LLM mistake becomes a system failure.  
+This `propose -> validate -> retry -> fallback` pattern is what makes the system reliable. The LLM's role is to suggest good guesses, but the system's role is to ensure those guesses are valid. Without this separation, every LLM mistake becomes a system failure.  
 
-Finally, debugging Wordle reinforced a lesson that applies to building agents in general: most of the real difficulty lies in the "boring" parts, i.e., state representation, edge cases, and constraint enforcement. Once those foundations are correct, you can layer in heuristic scoring, stochastic policies, or LLM-based ranking, and everything else becomes easier because the system has a solid base to stand on.
+Finally, debugging Wordle reinforced a lesson that applies to building agents in general. Most of the real difficulty lies in the "boring" parts, i.e., state representation, edge cases, and constraint enforcement. Once those foundations are correct, you can layer in heuristic scoring, stochastic policies, or LLM-based ranking, and everything else becomes easier because the system has a solid base to stand on.
 
 ## Conclusion
 Wordle turned out to be a small, controlled version of a much bigger story in AI. Language models are extraordinary at generating possibilities, but reliable systems are built on structure i.e., world models, state, and rules that don't bend. The code itself reflects this architecture. The deterministic components (`get_feedback`, `trim_list`) contain no randomness and are fully testable. The LLM interaction (`wordle_agent`) sits on top of those functions inside a retry loop that handles uncertainty and constraint violations. The intelligence isn't in any single function but it's in how these components are composed. The system works because the foundation is solid, not because any individual piece is particularly clever.
