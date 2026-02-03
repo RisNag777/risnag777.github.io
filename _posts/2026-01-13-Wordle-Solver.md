@@ -10,7 +10,7 @@ During those moments, I started thinking about what it would actually mean for a
 Naturally, I decided to build an agentic Wordle solver! My goal was to have a system inspired by Wordle's own WordleBot, an algorithm that evaluates guesses based on how effectively they shrink the remaining solution space. Rather than hard-coding heuristics, I wanted to explore whether an agent could reason its way into selecting the next best guess at each step.  
 
 ## System Design
-Wordle Is a Belief-State Search Problem. A good Wordle solver does not gues. It updates beliefs.  
+Wordle is a Belief-State Search Problem. A good Wordle solver is not making guesses. It is updating its beliefs.  
 At a high level, the system follows this loop:  
 1. Make a guess (5-letter word)  
 2. Receive feedback:  
