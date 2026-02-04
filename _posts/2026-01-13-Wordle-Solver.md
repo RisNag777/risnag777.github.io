@@ -257,7 +257,7 @@ for turn in range(6):
     tmp_guess = extract_guess(ai_response_content)
 ```
 
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="900" viewBox="0 0 1000 900">
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1200" viewBox="0 0 1000 900">
   <defs>
     <style>
       .title { font: 700 28px ui-sans-serif; fill: #111827; }
@@ -357,27 +357,27 @@ for turn in range(6):
 
   <!-- Row 3: Step 6 (3,0), Step 7 (3,1), Step 8 (3,2) -->
   <!-- Step 6: LLM Generation (3,0) -->
-  <rect x="50" y="650" width="180" height="120" class="llm-box"/>
-  <text x="140" y="680" class="step-title" text-anchor="middle">Step 6: LLM Generation</text>
-  <text x="140" y="705" class="function-name" text-anchor="middle">OpenAI GPT-4o-mini</text>
-  <text x="140" y="725" class="step-text" text-anchor="middle">Temperature: 0</text>
-  <text x="140" y="735" class="step-text" text-anchor="middle">Proposes next guess</text>
-  <text x="140" y="765" class="step-text" text-anchor="middle">from valid candidates</text>
+  <rect x="50" y="650" width="200" height="120" class="llm-box"/>
+  <text x="150" y="680" class="step-title" text-anchor="middle">Step 6: LLM Generation</text>
+  <text x="150" y="705" class="function-name" text-anchor="middle">OpenAI GPT-4o-mini</text>
+  <text x="150" y="725" class="step-text" text-anchor="middle">Temperature: 0</text>
+  <text x="150" y="745" class="step-text" text-anchor="middle">Proposes next guess</text>
+  <text x="150" y="755" class="step-text" text-anchor="middle">from valid candidates</text>
 
   <!-- Step 7: Extract & Validate (3,1) -->
-  <rect x="290" y="650" width="220" height="120" class="step-box"/>
-  <text x="400" y="680" class="step-title" text-anchor="middle">Step 7: Extract &amp; Validate</text>
-  <text x="400" y="705" class="function-name" text-anchor="middle">extract_guess()</text>
-  <text x="400" y="725" class="step-text" text-anchor="middle">Parse LLM response</text>
-  <text x="400" y="735" class="step-text" text-anchor="middle">Check: guess in candidates?</text>
-  <text x="400" y="755" class="step-text" text-anchor="middle">If invalid: retry (max 5x)</text>
+  <rect x="310" y="650" width="220" height="120" class="step-box"/>
+  <text x="420" y="680" class="step-title" text-anchor="middle">Step 7: Extract &amp; Validate</text>
+  <text x="420" y="705" class="function-name" text-anchor="middle">extract_guess()</text>
+  <text x="420" y="725" class="step-text" text-anchor="middle">Parse LLM response</text>
+  <text x="420" y="740" class="step-text" text-anchor="middle">Check: guess in candidates?</text>
+  <text x="420" y="755" class="step-text" text-anchor="middle">If invalid: retry (max 5x)</text>
 
   <!-- Step 8: Next Turn (3,2) -->
-  <rect x="560" y="650" width="180" height="120" class="step-box"/>
-  <text x="650" y="680" class="step-title" text-anchor="middle">Step 8: Next Turn</text>
-  <text x="650" y="705" class="step-text" text-anchor="middle">Valid guess obtained</text>
-  <text x="650" y="725" class="step-text" text-anchor="middle">Update guess variable</text>
-  <text x="650" y="755" class="step-text" text-anchor="middle">Continue to Step 1</text>
+  <rect x="600" y="650" width="180" height="120" class="step-box"/>
+  <text x="690" y="680" class="step-title" text-anchor="middle">Step 8: Next Turn</text>
+  <text x="690" y="705" class="step-text" text-anchor="middle">Valid guess obtained</text>
+  <text x="690" y="725" class="step-text" text-anchor="middle">Update guess variable</text>
+  <text x="690" y="745" class="step-text" text-anchor="middle">Continue to Step 1</text>
 
   <!-- Row 4: Retry (4,0) -->
   <!-- Retry Loop (4,0) -->
@@ -417,9 +417,9 @@ for turn in range(6):
   <path class="arrow" d="M 140 580 L 140 650"/>
   
   <!-- Step 6 to Step 7 -->
-  <path class="arrow" d="M 230 700 L 290 700"/>
-  <text x="240" y="690" class="data-label">LLM</text>
-  <text x="240" y="720" class="data-label">response</text>
+  <path class="arrow" d="M 250 700 L 310 700"/>
+  <text x="255" y="690" class="data-label">LLM</text>
+  <text x="255" y="720" class="data-label">response</text>
   
   <!-- Step 7 to Retry -->
   <path class="arrow-error" d="M 400 770 L 400 900 L 230 900"/>
@@ -430,19 +430,20 @@ for turn in range(6):
   <text x="150" y="810" class="data-label">error feedback</text>
   
   <!-- Step 7 to Step 8 -->
-  <path class="arrow-data" d="M 510 700 L 560 700"/>
-  <text x="515" y="690" class="data-label">valid</text>
-  <text x="515" y="715" class="data-label">guess</text>
+  <path class="arrow-data" d="M 530 700 L 600 700"/>
+  <text x="540" y="690" class="data-label">valid</text>
+  <text x="540" y="715" class="data-label">guess</text>
   
   <!-- Retry to Step 8 -->
   <path class="arrow-error" d="M 230 920 L 650 920 L 650 770/>
   <text x="515" y="910" class="data-label">fallback</text>
   
   <!-- Step 8 to Main Loop -->
-  <path class="arrow-loop" d="M 230 940 L 450 480 L 340 480 L 340 220"/>
-  <text x="395" y="500" class="data-label">next turn</text>
+  <path class="arrow-loop" d="M 230 940 L 1000 940 L 1000 160 L 300 160"/>
+  <text x="800" y="990" class="data-label">next turn</text>
 
 </svg>
+
 
 
 The agent implements a retry mechanism that perfectly illustrates the "propose and verify" pattern. When the LLM suggests a guess, the system doesn't trust it blindly. Instead, it:  
