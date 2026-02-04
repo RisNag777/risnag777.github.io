@@ -257,59 +257,193 @@ for turn in range(6):
     tmp_guess = extract_guess(ai_response_content)
 ```
 
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="820" viewBox="0 0 680 820">
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="900" viewBox="0 0 1000 900">
   <defs>
     <style>
-      .box { fill: #ffffff; stroke: #111827; stroke-width: 2; rx: 14; ry: 14; }
-      .accent { fill: #EEF2FF; stroke: #6366F1; stroke-width: 2; rx: 14; ry: 14; }
-      .warn { fill: #FFFBEB; stroke: #F59E0B; stroke-width: 2; rx: 14; ry: 14; }
-      .title { font: 700 22px ui-sans-serif; fill: #111827; }
-      .text { font: 600 16px ui-sans-serif; fill: #111827; }
-      .muted { font: 500 14px ui-sans-serif; fill: #374151; }
-      .arrow { stroke: #111827; stroke-width: 1.8; fill: none; marker-end: url(#arrowhead); }
+      .title { font: 700 28px ui-sans-serif; fill: #111827; }
+      .subtitle { font: 500 16px ui-sans-serif; fill: #6B7280; }
+      .step-title { font: 600 18px ui-sans-serif; fill: #111827; }
+      .step-text { font: 500 14px ui-sans-serif; fill: #374151; }
+      .function-name { font: 600 14px ui-mono, monospace; fill: #1E40AF; }
+      .data-label { font: 500 12px ui-sans-serif; fill: #059669; }
+      .decision { font: 600 14px ui-sans-serif; fill: #DC2626; }
+      .step-box { fill: #EEF2FF; stroke: #4F46E5; stroke-width: 2.5; rx: 12; ry: 12; }
+      .decision-box { fill: #FEE2E2; stroke: #DC2626; stroke-width: 2.5; rx: 12; ry: 12; }
+      .llm-box { fill: #FFF7ED; stroke: #F59E0B; stroke-width: 2.5; stroke-dasharray: 5,3; rx: 12; ry: 12; }
+      .loop-box { fill: #FEF3C7; stroke: #F59E0B; stroke-width: 3; rx: 10; ry: 10; }
+      .arrow { stroke: #111827; stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+      .arrow-data { stroke: #059669; stroke-width: 2; fill: none; marker-end: url(#arrowhead-green); }
+      .arrow-error { stroke: #DC2626; stroke-width: 2; fill: none; stroke-dasharray: 3,3; marker-end: url(#arrowhead-red); }
+      .arrow-loop { stroke: #F59E0B; stroke-width: 3; fill: none; marker-end: url(#arrowhead-orange); }
     </style>
-    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#111827"/>
+    </marker>
+    <marker id="arrowhead-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+    </marker>
+    <marker id="arrowhead-red" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#DC2626"/>
+    </marker>
+    <marker id="arrowhead-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#F59E0B"/>
     </marker>
   </defs>
 
-  <text x="40" y="50" class="title">Agent Turn Loop</text>
-  <text x="40" y="80" class="muted">Guess → Feedback → Trim → LLM Suggestion → Validate → Next Guess</text>
+  <!-- Title -->
+  <text x="500" y="40" class="title" text-anchor="middle">Wordle Agent Loop</text>
+  <text x="500" y="70" class="subtitle" text-anchor="middle">Iterative Decision-Making Process</text>
 
-  <!-- Guess -->
-  <rect x="180" y="120" width="320" height="90" class="accent"/>
-  <text x="205" y="160" class="text">Guess</text>
+  <!-- Row 0: Initialization (0,0), Main Loop (0,1) -->
+  <!-- Initialization (0,0) -->
+  <rect x="50" y="100" width="180" height="130" class="step-box"/>
+  <text x="140" y="130" class="step-title" text-anchor="middle">Initialization</text>
+  <text x="140" y="155" class="step-text" text-anchor="middle">1. Load word list</text>
+  <text x="140" y="175" class="function-name" text-anchor="middle">retrieve_word_list()</text>
+  <text x="140" y="195" class="step-text" text-anchor="middle">2. Pick random solution</text>
+  <text x="140" y="215" class="step-text" text-anchor="middle">3. Pick initial guess</text>
 
-  <!-- Feedback -->
-  <rect x="180" y="240" width="320" height="90" class="box"/>
-  <text x="205" y="280" class="text">Feedback</text>
+  <!-- Main Loop (0,1) -->
+  <rect x="300" y="100" width="180" height="120" class="loop-box"/>
+  <text x="390" y="130" class="step-title" text-anchor="middle">Main Loop</text>
+  <text x="390" y="155" class="step-text" text-anchor="middle">For turn in range(6)</text>
+  <text x="390" y="175" class="step-text" text-anchor="middle">Up to 6 turns</text>
+  <text x="390" y="195" class="step-text" text-anchor="middle">to solve</text>
 
-  <!-- Trim -->
-  <rect x="180" y="360" width="320" height="90" class="box"/>
-  <text x="205" y="400" class="text">Trim Candidates</text>
+  <!-- Row 1: Step 1 (1,1), Step 2 (1,2), Victory (1,3) -->
+  <!-- Step 1: Get Feedback (1,1) -->
+  <rect x="270" y="280" width="180" height="130" class="step-box"/>
+  <text x="360" y="310" class="step-title" text-anchor="middle">Step 1: Get Feedback</text>
+  <text x="360" y="335" class="function-name" text-anchor="middle">get_feedback()</text>
+  <text x="360" y="355" class="step-text" text-anchor="middle">Compare guess vs solution</text>
+  <text x="360" y="375" class="step-text" text-anchor="middle">Returns [0,1,2] per position</text>
+  <text x="360" y="395" class="step-text" text-anchor="middle">per position</text>
 
-  <!-- LLM -->
-  <rect x="180" y="480" width="320" height="90" class="box"/>
-  <text x="205" y="520" class="text">LLM Suggestion</text>
+  <!-- Step 2: Check Win (1,2) -->
+  <rect x="510" y="280" width="180" height="120" class="decision-box"/>
+  <text x="600" y="320" class="step-title" text-anchor="middle">Step 2: Check Win</text>
+  <text x="600" y="340" class="decision" text-anchor="middle">guess == solution?</text>
+  <text x="600" y="365" class="step-text" text-anchor="middle">If YES: Victory! Exit</text>
+  <text x="600" y="385" class="step-text" text-anchor="middle">If NO: Continue</text>
 
-  <!-- Validate -->
-  <rect x="180" y="600" width="320" height="90" class="box"/>
-  <text x="205" y="640" class="text">Validate Guess</text>
+  <!-- Victory (1,3) -->
+  <rect x="760" y="280" width="180" height="120" class="decision-box"/>
+  <text x="850" y="310" class="step-title" text-anchor="middle">Victory!</text>
+  <text x="850" y="335" class="step-text" text-anchor="middle">Print success message</text>
+  <text x="850" y="355" class="step-text" text-anchor="middle">Display game history</text>
+  <text x="850" y="375" class="step-text" text-anchor="middle">Exit loop</text>
 
-  <!-- Retry -->
-  <rect x="180" y="710" width="320" height="80" class="warn"/>
-  <text x="205" y="750" class="text">Retry / Fallback if invalid</text>
+  <!-- Row 2: Step 5 (2,0), Step 4 (2,1), Step 3 (2,2) -->
+  <!-- Step 5: Format (2,0) -->
+  <rect x="50" y="460" width="180" height="120" class="step-box"/>
+  <text x="140" y="490" class="step-title" text-anchor="middle">Step 5: Format</text>
+  <text x="140" y="515" class="function-name" text-anchor="middle">feedback_explanation()</text>
+  <text x="140" y="535" class="step-text" text-anchor="middle">Structure game state</text>
+  <text x="140" y="555" class="step-text" text-anchor="middle">Build LLM prompt</text>
 
-  <!-- Longer, lighter down arrows -->
-  <path class="arrow" d="M 340 210 L 340 250"/>
-  <path class="arrow" d="M 340 330 L 340 370"/>
-  <path class="arrow" d="M 340 450 L 340 490"/>
-  <path class="arrow" d="M 340 570 L 340 610"/>
-  <path class="arrow" d="M 340 690 L 340 730"/>
+  <!-- Step 4: Sample (2,1) -->
+  <rect x="290" y="460" width="180" height="120" class="step-box"/>
+  <text x="380" y="490" class="step-title" text-anchor="middle">Step 4: Sample</text>
+  <text x="380" y="515" class="function-name" text-anchor="middle">random_word_select()</text>
+  <text x="380" y="535" class="step-text" text-anchor="middle">Pick 20 random candidates</text>
+  <text x="380" y="555" class="step-text" text-anchor="middle">for LLM context</text>
 
-  <!-- Loop arrow around right side -->
-  <path class="arrow" d="M 500 750 L 620 750 L 620 165 L 500 165"/>
+  <!-- Step 3: Update Belief (2,2) -->
+  <rect x="530" y="460" width="180" height="120" class="step-box"/>
+  <text x="620" y="490" class="step-title" text-anchor="middle">Step 3: Update Belief</text>
+  <text x="620" y="515" class="function-name" text-anchor="middle">trim_list()</text>
+  <text x="620" y="535" class="step-text" text-anchor="middle">Filter candidates by feedback</text>
+  <text x="620" y="555" class="step-text" text-anchor="middle">Update history dict</text>
+
+  <!-- Row 3: Step 6 (3,0), Step 7 (3,1), Step 8 (3,2) -->
+  <!-- Step 6: LLM Generation (3,0) -->
+  <rect x="50" y="650" width="180" height="120" class="llm-box"/>
+  <text x="140" y="680" class="step-title" text-anchor="middle">Step 6: LLM Generation</text>
+  <text x="140" y="705" class="function-name" text-anchor="middle">OpenAI GPT-4o-mini</text>
+  <text x="140" y="725" class="step-text" text-anchor="middle">Temperature: 0</text>
+  <text x="140" y="735" class="step-text" text-anchor="middle">Proposes next guess</text>
+  <text x="140" y="765" class="step-text" text-anchor="middle">from valid candidates</text>
+
+  <!-- Step 7: Extract & Validate (3,1) -->
+  <rect x="290" y="650" width="220" height="120" class="step-box"/>
+  <text x="400" y="680" class="step-title" text-anchor="middle">Step 7: Extract &amp; Validate</text>
+  <text x="400" y="705" class="function-name" text-anchor="middle">extract_guess()</text>
+  <text x="400" y="725" class="step-text" text-anchor="middle">Parse LLM response</text>
+  <text x="400" y="735" class="step-text" text-anchor="middle">Check: guess in candidates?</text>
+  <text x="400" y="755" class="step-text" text-anchor="middle">If invalid: retry (max 5x)</text>
+
+  <!-- Step 8: Next Turn (3,2) -->
+  <rect x="560" y="650" width="180" height="120" class="step-box"/>
+  <text x="650" y="680" class="step-title" text-anchor="middle">Step 8: Next Turn</text>
+  <text x="650" y="705" class="step-text" text-anchor="middle">Valid guess obtained</text>
+  <text x="650" y="725" class="step-text" text-anchor="middle">Update guess variable</text>
+  <text x="650" y="755" class="step-text" text-anchor="middle">Continue to Step 1</text>
+
+  <!-- Row 4: Retry (4,0) -->
+  <!-- Retry Loop (4,0) -->
+  <rect x="50" y="840" width="180" height="130" class="loop-box"/>
+  <text x="140" y="870" class="step-title" text-anchor="middle">Retry Loop</text>
+  <text x="140" y="895" class="step-text" text-anchor="middle">If guess invalid:</text>
+  <text x="140" y="915" class="step-text" text-anchor="middle">1. Feed error to LLM</text>
+  <text x="140" y="935" class="step-text" text-anchor="middle">2. Regenerate (max 5x)</text>
+  <text x="140" y="955" class="step-text" text-anchor="middle">3. Fallback: random choice</text>
+
+  <!-- Flow Arrows -->
+  <!-- Initialization to Main Loop -->
+  <path class="arrow" d="M 230 160 L 300 160"/>
+  
+  <!-- Main Loop to Step 1 -->
+  <path class="arrow" d="M 400 220 L 400 280"/>
+  
+  <!-- Step 1 to Step 2 -->
+  <path class="arrow-data" d="M 450 300 L 510 300"/>
+  <text x="455" y="285" class="data-label">feedback</text>
+  
+  <!-- Step 2 to Step 3 -->
+  <path class="arrow" d="M 600 400 L 600 460"/>
+  
+  <!-- Step 2 to Victory -->
+  <path class="arrow-data" d="M 690 300 L 760 300"/>
+  <text x="700" y="295" class="data-label">solved!</text>
+  
+  <!-- Step 3 to Step 4 -->
+  <path class="arrow-data" d="M 530 530 L 470 530"/>
+  <text x="475" y="515" class="data-label">candidates</text>
+  
+  <!-- Step 4 to Step 5 -->
+  <path class="arrow" d="M 290 530 L 230 530"/>
+  
+  <!-- Step 5 to Step 6 -->
+  <path class="arrow" d="M 140 580 L 140 650"/>
+  
+  <!-- Step 6 to Step 7 -->
+  <path class="arrow" d="M 230 700 L 290 700"/>
+  <text x="240" y="690" class="data-label">LLM</text>
+  <text x="240" y="720" class="data-label">response</text>
+  
+  <!-- Step 7 to Retry -->
+  <path class="arrow-error" d="M 400 770 L 400 900 L 230 900"/>
+  <text x="300" y="890" class="data-label">invalid</text>
+  
+  <!-- Retry to Step 6 -->
+  <path class="arrow-error" d="M 140 840 L 140 770"/>
+  <text x="150" y="810" class="data-label">error feedback</text>
+  
+  <!-- Step 7 to Step 8 -->
+  <path class="arrow-data" d="M 510 700 L 560 700"/>
+  <text x="515" y="690" class="data-label">valid</text>
+  <text x="515" y="715" class="data-label">guess</text>
+  
+  <!-- Retry to Step 8 -->
+  <path class="arrow-error" d="M 230 920 L 650 920 L 650 770/>
+  <text x="515" y="910" class="data-label">fallback</text>
+  
+  <!-- Step 8 to Main Loop -->
+  <path class="arrow-loop" d="M 230 940 L 450 480 L 340 480 L 340 220"/>
+  <text x="395" y="500" class="data-label">next turn</text>
+
 </svg>
+
 
 The agent implements a retry mechanism that perfectly illustrates the "propose and verify" pattern. When the LLM suggests a guess, the system doesn't trust it blindly. Instead, it:  
 1. Extracts the guess from the LLM's response (which might be embedded in prose, JSON, or code blocks)
