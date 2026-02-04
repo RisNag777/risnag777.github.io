@@ -148,10 +148,7 @@ This reframes Wordle as a sequential inference problem rather than a language ta
 
   <!-- Main Agent Loop -->
   <rect x="50" y="840" width="700" height="120" class="deterministic"/>
-  <text x="400" y="870" class="component-title" text-anchor="middle">Main Agent Loop (wordle_agent)</text>
-  <text x="400" y="895" class="component-text" text-anchor="middle">1. Get feedback → 2. Trim candidates → 3. Sample examples → 4. Format prompt →</text>
-  <text x="400" y="915" class="component-text" text-anchor="middle">5. LLM proposes → 6. Extract & validate → 7. Retry if invalid → 8. Next turn</text>
-  <text x="400" y="940" class="component-text" text-anchor="middle">Repeat for up to 6 turns or until solution found</text>
+  <text x="400" y="900" class="component-title" text-anchor="middle">Agent guesses a word</text>
 
   <!-- Data Flow Arrows -->
   <!-- Data Source to Game Logic -->
@@ -203,7 +200,7 @@ This reframes Wordle as a sequential inference problem rather than a language ta
 
   <!-- Agent Loop back to Game Logic -->
   <path class="arrow-data" d="M 50 900 L 20 900 L 20 350 L 300 350"/>
-  <text x="30" y="700" class="data-label">next guess</text>
+  <text x="30" y="700" class="data-label">guess</text>
 
   <!-- Retry Loop to Agent Loop (fallback) -->
   <path class="arrow-error" d="M 750 800 L 800 800 L 800 900 L 750 900"/>
@@ -245,14 +242,30 @@ Here’s the core system loop:
 ```
 candidates = retrieve_word_list()
 solution = random.choice(candidates)
-...
+guess = random.choice([w for w in candidates if w != solution])
+
 for turn in range(6):
-    ...
     feedback = get_feedback(guess, solution)
-    ...
+    history[guess] = feedback
+    
+    if guess == solution:
+        print("Victory!")
+        break
+    
     candidates = trim_list(guess, feedback, candidates)
-    ...
+    random_candidates = random_word_select(candidates, num_words=20)
+    
+    # Format prompt and get LLM suggestion
+    prompt = feedback_explanation(turn, guess, feedback)
+    # ... LLM interaction ...
     tmp_guess = extract_guess(ai_response_content)
+    
+    # Validation and retry loop
+    if tmp_guess in candidates:
+        guess = tmp_guess
+    else:
+        # Retry with error feedback (max 5 attempts)
+        # Fallback to random if all retries fail
 ```
 
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="-100 0 1000 1000">
@@ -433,7 +446,7 @@ for turn in range(6):
   <text x="540" y="715" class="data-label">guess</text>
   
   <!-- Retry to Step 8 -->
-  <path class="arrow-error" d="M 230 920 L 650 920 L 650 770/>
+  <path class="arrow-error" d="M 230 920 L 650 920 L 650 770"/>
   <text x="515" y="910" class="data-label">fallback</text>
   
   <!-- Step 8 to Main Loop -->
