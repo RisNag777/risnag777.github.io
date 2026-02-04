@@ -439,10 +439,11 @@ for turn in range(6):
   <text x="515" y="910" class="data-label">fallback</text>
   
   <!-- Step 8 to Main Loop -->
-  <path class="arrow-loop" d="M 230 940 L 1000 940 L 1000 160 L 300 160"/>
-  <text x="800" y="990" class="data-label">next turn</text>
+  <path class="arrow-loop" d="M 50 940 L 10 940 L 10 280 L 300 220"/>
+  <text x="15" y="350" class="data-label">next turn</text>
 
 </svg>
+
 
 
 
