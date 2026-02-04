@@ -555,7 +555,7 @@ you get something that behaves like an agent almost automatically.
 The second lesson is less comfortable - LLMs are not rule engines. They're powerful heuristic guides, but they will confidently suggest illegal actions unless the system makes those actions impossible. The safest and most reliable pattern, used across mature AI systems, is simple. The model proposes, and deterministic code verifies.
 
 In this project, that principle shows up directly in the retry loop. When the LLM violates constraints, the system doesn't accept the guess or fail silently. Instead, it:
-- Catches the violation deterministically (if `tmp_guess` is in candidates)
+- Catches the violation deterministically (if `tmp_guess` is not in candidates)
 - Provides feedback to the LLM about what went wrong
 - Gives the model another chance to correct itself
 - Falls back to a random valid guess if correction fails
