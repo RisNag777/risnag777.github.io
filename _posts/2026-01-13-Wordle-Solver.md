@@ -5,9 +5,7 @@ title: "What Building a Wordle Solver Taught Me About AI Agents"
 
 Like most of the human race, towards the end of COVID, I was obsessed with Wordle. However, over the last year, after multiple broken streaks, I eventually fell off the wagon. Despite that, Wordle continues to be a big part of my life. My wife plays Wordle religiously every morning and our daily ritual is to play it together in bed before we kickstart our day. Sometimes, we're completely stumped and that's when my phone comes into play to 'unlock' an additional 5 chances!  
 
-During those moments, I started thinking about what it would actually mean for a machine to play Wordle well. It wouldn’t memorize patterns (that’s not how the game works), but it would maintain beliefs about possible solutions, update those beliefs with evidence from feedback, and choose its next action strategically. In other words, it would behave like an AI agent.
-
-Naturally, I decided to build an agentic Wordle solver! My goal was to have a system inspired by Wordle's own WordleBot, an algorithm that evaluates guesses based on how effectively they shrink the remaining solution space. Rather than hard-coding heuristics, I wanted to explore whether an agent could reason its way into selecting the next best guess at each step.  
+During those moments, I started thinking about what it would actually mean for a machine to play Wordle well. It wouldn’t memorize patterns (that’s not how the game works), but it would maintain beliefs about possible solutions, update those beliefs with evidence from feedback, and choose its next action strategically. Naturally, I decided to build an agentic Wordle solver! Rather than hard-coding heuristics, I wanted to explore whether an agent could reason its way into selecting the next best guess at each step.  
 
 ## System Design
 Wordle is a Belief-State Search Problem. A good Wordle solver is not making guesses. It is updating its beliefs.  
@@ -257,7 +255,7 @@ for turn in range(6):
     tmp_guess = extract_guess(ai_response_content)
 ```
 
-<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="1200" viewBox="0 0 1000 900">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="-100 0 1000 1000">
   <defs>
     <style>
       .title { font: 700 28px ui-sans-serif; fill: #111827; }
@@ -327,11 +325,11 @@ for turn in range(6):
   <text x="600" y="385" class="step-text" text-anchor="middle">If NO: Continue</text>
 
   <!-- Victory (1,3) -->
-  <rect x="760" y="280" width="180" height="120" class="decision-box"/>
-  <text x="850" y="310" class="step-title" text-anchor="middle">Victory!</text>
-  <text x="850" y="335" class="step-text" text-anchor="middle">Print success message</text>
-  <text x="850" y="355" class="step-text" text-anchor="middle">Display game history</text>
-  <text x="850" y="375" class="step-text" text-anchor="middle">Exit loop</text>
+  <rect x="540" y="100" width="180" height="120" class="decision-box"/>
+  <text x="630" y="130" class="step-title" text-anchor="middle">Victory!</text>
+  <text x="630" y="155" class="step-text" text-anchor="middle">Print success message</text>
+  <text x="630" y="175" class="step-text" text-anchor="middle">Display game history</text>
+  <text x="630" y="195" class="step-text" text-anchor="middle">Exit loop</text>
 
   <!-- Row 2: Step 5 (2,0), Step 4 (2,1), Step 3 (2,2) -->
   <!-- Step 5: Format (2,0) -->
@@ -403,8 +401,8 @@ for turn in range(6):
   <path class="arrow" d="M 600 400 L 600 460"/>
   
   <!-- Step 2 to Victory -->
-  <path class="arrow-data" d="M 690 300 L 760 300"/>
-  <text x="700" y="295" class="data-label">solved!</text>
+  <path class="arrow-data" d="M 610 280 L 610 220"/>
+  <text x="620" y="256" class="data-label">solved!</text>
   
   <!-- Step 3 to Step 4 -->
   <path class="arrow-data" d="M 530 530 L 470 530"/>
@@ -435,7 +433,7 @@ for turn in range(6):
   <text x="540" y="715" class="data-label">guess</text>
   
   <!-- Retry to Step 8 -->
-  <path class="arrow-error" d="M 230 920 L 650 920 L 650 770"/>
+  <path class="arrow-error" d="M 230 920 L 650 920 L 650 770/>
   <text x="515" y="910" class="data-label">fallback</text>
   
   <!-- Step 8 to Main Loop -->
@@ -443,6 +441,7 @@ for turn in range(6):
   <text x="15" y="350" class="data-label">next turn</text>
 
 </svg>
+
 
 
 
