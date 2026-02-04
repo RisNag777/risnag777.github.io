@@ -362,7 +362,7 @@ for turn in range(6):
   <text x="150" y="705" class="function-name" text-anchor="middle">OpenAI GPT-4o-mini</text>
   <text x="150" y="725" class="step-text" text-anchor="middle">Temperature: 0</text>
   <text x="150" y="745" class="step-text" text-anchor="middle">Proposes next guess</text>
-  <text x="150" y="755" class="step-text" text-anchor="middle">from valid candidates</text>
+  <text x="150" y="760" class="step-text" text-anchor="middle">from valid candidates</text>
 
   <!-- Step 7: Extract & Validate (3,1) -->
   <rect x="310" y="650" width="220" height="120" class="step-box"/>
@@ -435,14 +435,15 @@ for turn in range(6):
   <text x="540" y="715" class="data-label">guess</text>
   
   <!-- Retry to Step 8 -->
-  <path class="arrow-error" d="M 230 920 L 650 920 L 650 770/>
+  <path class="arrow-error" d="M 230 920 L 650 920 L 650 770"/>
   <text x="515" y="910" class="data-label">fallback</text>
   
   <!-- Step 8 to Main Loop -->
-  <path class="arrow-loop" d="M 50 940 L 10 940 L 10 280 L 300 220"/>
+  <path class="arrow-loop" d="M 50 940 L 10 940 L 10 300 L 300 220"/>
   <text x="15" y="350" class="data-label">next turn</text>
 
 </svg>
+
 
 
 
