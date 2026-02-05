@@ -22,7 +22,7 @@ At its core, the problem looks like this:
 | LLM | Reasoning engine operating over retrieved context |
 | System logic | Enforces that answers stay grounded in the textbook |
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" width="600" height="280">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-30 0 700 280" width="600" height="280">
   <defs>
     <style>
       .box { fill: #f8f9fa; stroke: #495057; stroke-width: 2; rx: 8; }
@@ -43,41 +43,41 @@ At its core, the problem looks like this:
   <text x="80" y="85" class="title" text-anchor="middle">Source of truth</text>
   
   <!-- Vector DB -->
-  <rect x="180" y="40" width="120" height="60" class="box box-knowledge"/>
-  <text x="240" y="65" class="label" text-anchor="middle">Vector DB</text>
-  <text x="240" y="85" class="title" text-anchor="middle">FAISS + embeddings</text>
+  <rect x="190" y="40" width="120" height="60" class="box box-knowledge"/>
+  <text x="250" y="65" class="label" text-anchor="middle">Vector DB</text>
+  <text x="250" y="85" class="title" text-anchor="middle">FAISS + embeddings</text>
   
   <!-- LLM -->
-  <rect x="340" y="40" width="120" height="60" class="box box-reasoning"/>
-  <text x="400" y="65" class="label" text-anchor="middle">LLM</text>
-  <text x="400" y="85" class="title" text-anchor="middle">Reasoning layer</text>
+  <rect x="360" y="40" width="120" height="60" class="box box-reasoning"/>
+  <text x="420" y="65" class="label" text-anchor="middle">LLM</text>
+  <text x="420" y="85" class="title" text-anchor="middle">Reasoning layer</text>
   
   <!-- System Logic -->
-  <rect x="500" y="40" width="80" height="60" class="box box-control"/>
-  <text x="540" y="65" class="label" text-anchor="middle">Logic</text>
-  <text x="540" y="85" class="title" text-anchor="middle">Grounding</text>
+  <rect x="540" y="40" width="80" height="60" class="box box-control"/>
+  <text x="580" y="65" class="label" text-anchor="middle">Logic</text>
+  <text x="580" y="85" class="title" text-anchor="middle">Grounding</text>
   
   <!-- Arrows -->
-  <path d="M 140 70 L 180 70" class="arrow"/>
-  <path d="M 300 70 L 340 70" class="arrow"/>
-  <path d="M 460 70 L 500 70" class="arrow"/>
+  <path d="M 140 70 L 190 70" class="arrow"/>
+  <path d="M 310 70 L 360 70" class="arrow"/>
+  <path d="M 480 70 L 540 70" class="arrow"/>
   
   <!-- Data flow labels -->
-  <text x="160" y="55" class="title" text-anchor="middle">chunks</text>
-  <text x="320" y="55" class="title" text-anchor="middle">context</text>
-  <text x="480" y="55" class="title" text-anchor="middle">answer</text>
+  <text x="165" y="55" class="title" text-anchor="middle">chunks</text>
+  <text x="335" y="55" class="title" text-anchor="middle">context</text>
+  <text x="510" y="55" class="title" text-anchor="middle">answer</text>
   
   <!-- Question input -->
-  <rect x="340" y="160" width="120" height="40" class="box" stroke-dasharray="4"/>
-  <text x="400" y="185" class="label" text-anchor="middle">Question</text>
-  <path d="M 400 160 L 400 100" class="arrow" stroke-dasharray="4"/>
+  <rect x="360" y="160" width="120" height="40" class="box" stroke-dasharray="4"/>
+  <text x="420" y="185" class="label" text-anchor="middle">Question</text>
+  <path d="M 420 160 L 420 100" class="arrow" stroke-dasharray="4"/>
 </svg>
 
 Instead of treating the LLM as a giant, all-knowing brain, this architecture treats it as something very different - a processor that reasons over information it is given. The knowledge itself lives outside the model, stored in a structured form that the system can search and control.
 
 The pipeline starts with the textbook. The PDF is split into chunks, converted into embeddings, and stored in a vector database. That database acts as a searchable memory. When a question comes in, the system doesn't immediately ask the model to answer. Instead, it first asks, "What parts of the book are relevant to this question?"
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 200" width="550" height="200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 0 750 200" width="550" height="200">
   <defs>
     <style>
       .stage { fill: #f8f9fa; stroke: #495057; stroke-width: 2; rx: 8; }
@@ -96,27 +96,27 @@ The pipeline starts with the textbook. The PDF is split into chunks, converted i
   <text x="70" y="130" class="code" text-anchor="middle">get_toc()</text>
   
   <!-- Chunks -->
-  <rect x="160" y="60" width="120" height="80" class="stage"/>
-  <text x="220" y="95" class="label" text-anchor="middle">Chunks</text>
-  <text x="220" y="115" class="code" text-anchor="middle">chunk_text()</text>
-  <text x="220" y="130" class="code" text-anchor="middle">~300 tokens, by chapter</text>
+  <rect x="160" y="60" width="160" height="80" class="stage"/>
+  <text x="240" y="95" class="label" text-anchor="middle">Chunks</text>
+  <text x="240" y="115" class="code" text-anchor="middle">chunk_text()</text>
+  <text x="240" y="130" class="code" text-anchor="middle">~300 tokens, by chapter</text>
   
   <!-- Embeddings -->
-  <rect x="320" y="60" width="120" height="80" class="stage"/>
-  <text x="380" y="95" class="label" text-anchor="middle">Embeddings</text>
-  <text x="380" y="115" class="code" text-anchor="middle">SentenceTransformer</text>
-  <text x="380" y="130" class="code" text-anchor="middle">all-MiniLM-L6-v2</text>
+  <rect x="360" y="60" width="130" height="80" class="stage"/>
+  <text x="425" y="95" class="label" text-anchor="middle">Embeddings</text>
+  <text x="425" y="115" class="code" text-anchor="middle">SentenceTransformer</text>
+  <text x="425" y="130" class="code" text-anchor="middle">all-MiniLM-L6-v2</text>
   
   <!-- FAISS Index -->
-  <rect x="480" y="60" width="120" height="80" class="stage"/>
-  <text x="540" y="95" class="label" text-anchor="middle">FAISS Index</text>
-  <text x="540" y="115" class="code" text-anchor="middle">IndexFlatL2</text>
-  <text x="540" y="130" class="code" text-anchor="middle">827 chunks</text>
+  <rect x="540" y="60" width="120" height="80" class="stage"/>
+  <text x="600" y="95" class="label" text-anchor="middle">FAISS Index</text>
+  <text x="600" y="115" class="code" text-anchor="middle">IndexFlatL2</text>
+  <text x="600" y="130" class="code" text-anchor="middle">827 chunks</text>
   
   <!-- Arrows -->
   <path d="M 120 100 L 160 100" class="arrow"/>
-  <path d="M 280 100 L 320 100" class="arrow"/>
-  <path d="M 440 100 L 480 100" class="arrow"/>
+  <path d="M 320 100 L 360 100" class="arrow"/>
+  <path d="M 490 100 L 540 100" class="arrow"/>
 </svg>
 
 In this implementation, the pipeline uses PyMuPDF to extract text and table-of-contents from the PDF, then chunks by paragraph (~300 tokens) while preserving chapter metadata. Each chunk becomes a vector via `SentenceTransformer` (all-MiniLM-L6-v2), stored in a FAISS index. For *Introductory Statistics 2e*, that yields 827 searchable chunks.
@@ -150,7 +150,7 @@ So the system treats answering as a process:
 5. **Stop or continue**  
    If the answer is sufficient, return it. If not, the system can refine the search and repeat.
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 380" width="500" height="380">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 410" width="500" height="380">
   <defs>
     <style>
       .step { fill: #fff; stroke: #495057; stroke-width: 2; rx: 6; }
@@ -164,38 +164,38 @@ So the system treats answering as a process:
     </marker>
   </defs>
   <!-- 1. Interpret -->
-  <rect x="150" y="20" width="200" height="50" class="step"/>
-  <text x="250" y="45" class="label" text-anchor="middle">1. Interpret the question</text>
-  <text x="250" y="62" class="small" text-anchor="middle">LLM selects relevant chapters from TOC</text>
+  <rect x="150" y="20" width="220" height="50" class="step"/>
+  <text x="260" y="45" class="label" text-anchor="middle">1. Interpret the question</text>
+  <text x="260" y="62" class="small" text-anchor="middle">LLM selects relevant chapters from TOC</text>
   
   <!-- 2. Retrieve -->
-  <rect x="150" y="90" width="200" height="50" class="step"/>
-  <text x="250" y="115" class="label" text-anchor="middle">2. Retrieve context</text>
-  <text x="250" y="132" class="small" text-anchor="middle">Vector search with chapter filter (top_k=5)</text>
+  <rect x="150" y="100" width="220" height="50" class="step"/>
+  <text x="260" y="125" class="label" text-anchor="middle">2. Retrieve context</text>
+  <text x="260" y="142" class="small" text-anchor="middle">Vector search with chapter filter (top_k=5)</text>
   
   <!-- 3. Synthesize -->
-  <rect x="150" y="160" width="200" height="50" class="step"/>
-  <text x="250" y="185" class="label" text-anchor="middle">3. Synthesize answer</text>
-  <text x="250" y="202" class="small" text-anchor="middle">LLM answers from chunks only</text>
+  <rect x="150" y="180" width="220" height="50" class="step"/>
+  <text x="260" y="205" class="label" text-anchor="middle">3. Synthesize answer</text>
+  <text x="260" y="222" class="small" text-anchor="middle">LLM answers from chunks only</text>
   
   <!-- 4. Evaluate -->
-  <rect x="150" y="230" width="200" height="50" class="step step-decision"/>
-  <text x="250" y="255" class="label" text-anchor="middle">4. Evaluate answer</text>
-  <text x="250" y="272" class="small" text-anchor="middle">Self-check: complete & grounded?</text>
+  <rect x="150" y="260" width="220" height="50" class="step step-decision"/>
+  <text x="260" y="285" class="label" text-anchor="middle">4. Evaluate answer</text>
+  <text x="260" y="302" class="small" text-anchor="middle">Self-check: complete & grounded?</text>
   
   <!-- 5. Stop or continue -->
-  <rect x="150" y="300" width="200" height="50" class="step"/>
-  <text x="250" y="325" class="label" text-anchor="middle">5. Stop or continue</text>
-  <text x="250" y="342" class="small" text-anchor="middle">YES � return | NO � refine & repeat</text>
+  <rect x="150" y="340" width="220" height="50" class="step"/>
+  <text x="260" y="365" class="label" text-anchor="middle">5. Stop or continue</text>
+  <text x="260" y="382" class="small" text-anchor="middle">YES => return | NO => refine & repeat</text>
   
   <!-- Arrows -->
-  <path d="M 250 70 L 250 90" class="arrow"/>
-  <path d="M 250 140 L 250 160" class="arrow"/>
-  <path d="M 250 210 L 250 230" class="arrow"/>
-  <path d="M 250 280 L 250 300" class="arrow"/>
+  <path d="M 250 70 L 250 100" class="arrow"/>
+  <path d="M 250 150 L 250 180" class="arrow"/>
+  <path d="M 250 230 L 250 260" class="arrow"/>
+  <path d="M 250 310 L 250 340" class="arrow"/>
   
   <!-- Loop back arrow (NO path) -->
-  <path d="M 150 255 L 80 255 L 80 135 L 150 135" class="arrow" stroke="#e03131" stroke-dasharray="4"/>
+  <path d="M 150 285 L 80 285 L 80 125 L 150 125" class="arrow" stroke="#e03131" stroke-dasharray="4"/>
   <text x="100" y="200" class="small" fill="#e03131">NO</text>
 </svg>
 
