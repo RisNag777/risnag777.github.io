@@ -3,6 +3,9 @@ layout: post
 title: "Designing an Agentic Textbook TA"
 ---
 
+![AI TA](https://github.com/user-attachments/assets/e0e1bf89-2956-4a89-b389-96bf713655bf)
+
+
 ## Introduction
 
 When you ask an LLM a technical question, it answers from whatever it absorbed during training. Sometimes that's useful. Sometimes it's outdated. Sometimes it's just wrong. And most of the time, you have no idea *where* the answer came from.
