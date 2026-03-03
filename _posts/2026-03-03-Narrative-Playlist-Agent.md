@@ -213,76 +213,61 @@ The main pipeline orchestrates all agents in a specific sequence:
   <text x="100" y="107" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="white">START</text>
   
   <!-- Step 1: Generate Phases -->
-  <rect x="200" y="70" width="180" height="60" rx="10" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+  <rect x="200" y="70" width="180" height="70" rx="10" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
   <text x="290" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1976d2">1. Generate Phases</text>
   <text x="290" y="115" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Narrative Agent</text>
   <text x="290" y="130" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">0-5%</text>
   
   <!-- Step 2: Assign Colors -->
-  <rect x="420" y="70" width="180" height="60" rx="10" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
+  <rect x="420" y="70" width="180" height="70" rx="10" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
   <text x="510" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#f57c00">2. Assign Colors</text>
   <text x="510" y="115" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Color Agent</text>
   <text x="510" y="130" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">5%</text>
   
   <!-- Step 3: Generate Queries -->
-  <rect x="640" y="70" width="180" height="60" rx="10" fill="#f1f8e9" stroke="#558b2f" stroke-width="2"/>
+  <rect x="640" y="70" width="180" height="70" rx="10" fill="#f1f8e9" stroke="#558b2f" stroke-width="2"/>
   <text x="730" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#558b2f">3. Generate Queries</text>
   <text x="730" y="115" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Query Agent</text>
   <text x="730" y="130" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">5-12.5%</text>
   
   <!-- Step 4: Search YouTube -->
-  <rect x="860" y="70" width="180" height="60" rx="10" fill="#fce4ec" stroke="#c2185b" stroke-width="2"/>
+  <rect x="860" y="70" width="180" height="70" rx="10" fill="#fce4ec" stroke="#c2185b" stroke-width="2"/>
   <text x="950" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#c2185b">4. Search YouTube</text>
   <text x="950" y="115" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">YouTube Agent</text>
   <text x="950" y="130" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">12.5-37.5%</text>
   
   <!-- Step 5: Filter -->
-  <rect x="1080" y="70" width="180" height="60" rx="10" fill="#e8eaf6" stroke="#3f51b5" stroke-width="2"/>
+  <rect x="1080" y="70" width="180" height="70" rx="10" fill="#e8eaf6" stroke="#3f51b5" stroke-width="2"/>
   <text x="1170" y="95" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#3f51b5">5. Filter</text>
   <text x="1170" y="115" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Semantic Filter</text>
   <text x="1170" y="130" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">37.5-50%</text>
   
-  <!-- Arrow down -->
-  <path d="M 1170 130 L 1170 200" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  
   <!-- Step 6: Assign to Phases -->
-  <rect x="1080" y="200" width="180" height="60" rx="10" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
+  <rect x="1080" y="200" width="180" height="70" rx="10" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
   <text x="1170" y="225" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#f9a825">6. Assign to Phases</text>
   <text x="1170" y="245" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Sequence Agent</text>
   <text x="1170" y="260" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">50-62.5%</text>
   
-  <!-- Arrow left -->
-  <path d="M 1080 230 L 860 230" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  
   <!-- Step 7: Order Within Phases -->
-  <rect x="640" y="200" width="180" height="60" rx="10" fill="#e0f2f1" stroke="#00695c" stroke-width="2"/>
+  <rect x="640" y="200" width="180" height="70" rx="10" fill="#e0f2f1" stroke="#00695c" stroke-width="2"/>
   <text x="730" y="225" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#00695c">7. Order Phases</text>
   <text x="730" y="245" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Ordering Agent</text>
   <text x="730" y="260" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">62.5-75%</text>
   
-  <!-- Arrow left -->
-  <path d="M 640 230 L 420 230" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  
   <!-- Step 8: Smooth -->
-  <rect x="200" y="200" width="180" height="60" rx="10" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+  <rect x="200" y="200" width="180" height="70" rx="10" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
   <text x="290" y="225" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#7b1fa2">8. Smooth</text>
   <text x="290" y="245" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Smoothing Agent</text>
   <text x="290" y="260" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">75-87.5%</text>
   
-  <!-- Arrow down -->
-  <path d="M 290 260 L 290 330" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  
   <!-- Step 9: Narrate -->
-  <rect x="200" y="330" width="180" height="60" rx="10" fill="#e1bee7" stroke="#8e24aa" stroke-width="2"/>
+  <rect x="200" y="330" width="180" height="70" rx="10" fill="#e1bee7" stroke="#8e24aa" stroke-width="2"/>
   <text x="290" y="355" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#8e24aa">9. Narrate</text>
   <text x="290" y="375" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Narrator Agent</text>
   <text x="290" y="390" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">87.5-100%</text>
   
-  <!-- Arrow right -->
-  <path d="M 380 360 L 1000 360" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  
   <!-- Output -->
-  <rect x="1000" y="330" width="180" height="60" rx="10" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <rect x="1000" y="330" width="180" height="70" rx="10" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
   <text x="1090" y="355" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Output</text>
   <text x="1090" y="375" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Playlist + Story</text>
   <text x="1090" y="390" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">100%</text>
@@ -326,45 +311,54 @@ The main pipeline orchestrates all agents in a specific sequence:
   <text x="1200" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">matched</text>
   
   <!-- Phase Buckets -->
-  <rect x="100" y="620" width="200" height="80" rx="5" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
-  <text x="200" y="645" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#f9a825">Phase Buckets</text>
-  <text x="200" y="670" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Songs grouped</text>
-  <text x="200" y="690" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">by phase</text>
+  <rect x="100" y="660" width="200" height="80" rx="5" fill="#fff9c4" stroke="#f9a825" stroke-width="2"/>
+  <text x="200" y="685" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#f9a825">Phase Buckets</text>
+  <text x="200" y="710" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Songs grouped</text>
+  <text x="200" y="730" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">by phase</text>
   
   <!-- Scored Playlist -->
-  <rect x="350" y="620" width="200" height="80" rx="5" fill="#e0f2f1" stroke="#00695c" stroke-width="2"/>
-  <text x="450" y="645" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#00695c">Scored Playlist</text>
-  <text x="450" y="670" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Songs with energy</text>
-  <text x="450" y="690" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">scores</text>
+  <rect x="350" y="660" width="200" height="80" rx="5" fill="#e0f2f1" stroke="#00695c" stroke-width="2"/>
+  <text x="450" y="685" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#00695c">Scored Playlist</text>
+  <text x="450" y="710" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Songs with energy</text>
+  <text x="450" y="730" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">scores</text>
   
   <!-- Smoothed Playlist -->
-  <rect x="600" y="620" width="200" height="80" rx="5" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
-  <text x="700" y="645" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#7b1fa2">Smoothed Playlist</text>
-  <text x="700" y="670" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Transitions</text>
-  <text x="700" y="690" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">optimized</text>
+  <rect x="600" y="660" width="200" height="80" rx="5" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+  <text x="700" y="685" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#7b1fa2">Smoothed Playlist</text>
+  <text x="700" y="710" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Transitions</text>
+  <text x="700" y="730" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">optimized</text>
   
   <!-- Final Output -->
-  <rect x="850" y="620" width="200" height="80" rx="5" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
-  <text x="950" y="645" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Final Playlist</text>
-  <text x="950" y="670" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Ordered songs +</text>
-  <text x="950" y="690" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">narrative story</text>
+  <rect x="850" y="660" width="200" height="80" rx="5" fill="#c8e6c9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="950" y="685" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Final Playlist</text>
+  <text x="950" y="710" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Ordered songs +</text>
+  <text x="950" y="730" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">narrative story</text>
   
   <!-- Story Segments -->
-  <rect x="1100" y="620" width="200" height="80" rx="5" fill="#e1bee7" stroke="#8e24aa" stroke-width="2"/>
-  <text x="1200" y="645" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#8e24aa">Story Segments</text>
-  <text x="1200" y="670" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Narrative text</text>
-  <text x="1200" y="690" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">per phase</text>
+  <rect x="1100" y="660" width="200" height="80" rx="5" fill="#e1bee7" stroke="#8e24aa" stroke-width="2"/>
+  <text x="1200" y="685" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#8e24aa">Story Segments</text>
+  <text x="1200" y="710" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Narrative text</text>
+  <text x="1200" y="730" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">per phase</text>
   
   <!-- Arrows for data flow -->
+  <path d="M 380 100 L 420 100" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 600 100 L 640 100" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 820 100 L 860 100" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 1040 100 L 1080 100" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 1170 140 L 1170 200" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 1080 230 L 820 230" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 640 230 L 380 230" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 290 270 L 290 330" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 380 360 L 1000 360" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
   <path d="M 300 540 L 350 540" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
   <path d="M 550 540 L 600 540" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
   <path d="M 800 540 L 850 540" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
   <path d="M 1050 540 L 1100 540" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  <path d="M 1100 580 L 200 580" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  <path d="M 300 660 L 350 660" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  <path d="M 550 660 L 600 660" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  <path d="M 800 660 L 850 660" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  <path d="M 1050 660 L 1100 660" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 1200 580 L 1200 620 L 200 620 L 200 660" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 300 700 L 350 700" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 550 700 L 600 700" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 800 700 L 850 700" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 1050 700 L 1100 700" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
   
   <!-- Arrow marker definition -->
   <defs>
