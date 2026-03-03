@@ -53,7 +53,6 @@ At a high level, the system is a knowledge pipeline wrapped around a reasoning e
 | LLM            | Reasoning engine over retrieved context       |
 | System logic   | Enforces grounding in the textbook            |
 
-```html
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-30 0 700 280" width="600" height="280">
   <defs>
     <style>
@@ -104,7 +103,6 @@ At a high level, the system is a knowledge pipeline wrapped around a reasoning e
   <text x="420" y="185" class="label" text-anchor="middle">Question</text>
   <path d="M 420 160 L 420 100" class="arrow" stroke-dasharray="4"/>
 </svg>
-```
 
 The LLM is not an all-knowing brain here. It's a processor that operates **inside** a controlled knowledge system, over context that the system chooses and provides.
 
@@ -194,7 +192,6 @@ Question
 5. Stop or (in future) continue with refined search
 ```
 
-```html
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 410" width="500" height="380">
   <defs>
     <style>
@@ -243,7 +240,6 @@ Question
   <path d="M 150 285 L 80 285 L 80 125 L 150 125" class="arrow" stroke="#e03131" stroke-dasharray="4"/>
   <text x="100" y="200" class="small" fill="#e03131">NO</text>
 </svg>
-```
 
 **Current implementation detail**: If the evaluation step returns `NO`, the agent stops and reports that it couldn't confidently answer. A future iteration could refine the search and loop back.
 
