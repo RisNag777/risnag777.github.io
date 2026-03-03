@@ -25,17 +25,17 @@ The Narrative Playlist Agent does exactly that:
 
 The system follows a multi-agent architecture where specialized AI agents handle different aspects of playlist generation. Here's the high-level architecture:
 
-<svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+<svg viewBox="0 0 1200 1000" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
-  <rect width="1200" height="800" fill="#f8f9fa"/>
+  <rect width="1200" height="1000" fill="#f8f9fa"/>
   
   <!-- Title -->
   <text x="600" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#2c3e50">Narrative Playlist Agent - System Architecture</text>
   
   <!-- User Layer -->
-  <rect x="50" y="80" width="1100" height="100" rx="10" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
-  <text x="600" y="120" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#1976d2">User Interface (Streamlit)</text>
-  <text x="600" y="150" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#424242">Prompt Input | Progress Bar | Results Display | Energy Arc Visualization</text>
+  <rect x="50" y="60" width="1100" height="100" rx="10" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+  <text x="600" y="100" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#1976d2">User Interface (Streamlit)</text>
+  <text x="600" y="130" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#424242">Prompt Input | Progress Bar | Results Display | Energy Arc Visualization</text>
   
   <!-- Pipeline Layer -->
   <rect x="50" y="200" width="1100" height="80" rx="10" fill="#fff3e0" stroke="#f57c00" stroke-width="2"/>
@@ -43,95 +43,95 @@ The system follows a multi-agent architecture where specialized AI agents handle
   <text x="600" y="260" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#424242">Orchestrates all agents | Manages progress | Handles cancellation</text>
   
   <!-- Agent Layer -->
-  <rect x="50" y="300" width="1100" height="400" rx="10" fill="#f1f8e9" stroke="#558b2f" stroke-width="2"/>
-  <text x="600" y="335" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#558b2f">AI Agents</text>
+  <rect x="50" y="320" width="1100" height="400" rx="10" fill="#f1f8e9" stroke="#558b2f" stroke-width="2"/>
+  <text x="600" y="355" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#558b2f">AI Agents</text>
   
   <!-- Row 1: Narrative Agents -->
-  <rect x="80" y="360" width="200" height="120" rx="5" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
-  <text x="180" y="385" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Narrative Agent</text>
-  <text x="180" y="410" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Generates story</text>
-  <text x="180" y="430" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">phases from</text>
-  <text x="180" y="450" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">user prompt</text>
-  <text x="180" y="470" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
+  <rect x="80" y="380" width="200" height="120" rx="5" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
+  <text x="180" y="405" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Narrative Agent</text>
+  <text x="180" y="430" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Generates story</text>
+  <text x="180" y="450" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">phases from</text>
+  <text x="180" y="470" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">user prompt</text>
+  <text x="180" y="490" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
   
-  <rect x="300" y="360" width="200" height="120" rx="5" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
-  <text x="400" y="385" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Color Agent</text>
-  <text x="400" y="410" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Assigns colors</text>
-  <text x="400" y="430" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">to phases based</text>
-  <text x="400" y="450" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">on emotion</text>
-  <text x="400" y="470" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
+  <rect x="300" y="380" width="200" height="120" rx="5" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
+  <text x="400" y="405" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Color Agent</text>
+  <text x="400" y="430" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Assigns colors</text>
+  <text x="400" y="450" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">to phases based</text>
+  <text x="400" y="470" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">on emotion</text>
+  <text x="400" y="490" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
   
-  <rect x="520" y="360" width="200" height="120" rx="5" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
-  <text x="620" y="385" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Query Agent</text>
-  <text x="620" y="410" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Generates diverse</text>
-  <text x="620" y="430" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">YouTube search</text>
-  <text x="620" y="450" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">queries</text>
-  <text x="620" y="470" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
+  <rect x="520" y="380" width="200" height="120" rx="5" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
+  <text x="620" y="405" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Query Agent</text>
+  <text x="620" y="430" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Generates diverse</text>
+  <text x="620" y="450" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">YouTube search</text>
+  <text x="620" y="470" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">queries</text>
+  <text x="620" y="490" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
   
-  <rect x="740" y="360" width="200" height="120" rx="5" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
-  <text x="840" y="385" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Narrator Agent</text>
-  <text x="840" y="410" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Generates story</text>
-  <text x="840" y="430" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">text explaining</text>
-  <text x="840" y="450" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">playlist arc</text>
-  <text x="840" y="470" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
+  <rect x="740" y="380" width="200" height="120" rx="5" fill="#ffffff" stroke="#4caf50" stroke-width="2"/>
+  <text x="840" y="405" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2e7d32">Narrator Agent</text>
+  <text x="840" y="430" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Generates story</text>
+  <text x="840" y="450" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">text explaining</text>
+  <text x="840" y="470" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">playlist arc</text>
+  <text x="840" y="490" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
   
   <!-- Row 2: YouTube & Filtering Agents -->
-  <rect x="80" y="500" width="200" height="120" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="2"/>
-  <text x="180" y="525" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">YouTube Agent</text>
-  <text x="180" y="550" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Searches YouTube</text>
-  <text x="180" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Filters by duration,</text>
-  <text x="180" y="590" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">view count</text>
-  <text x="180" y="610" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">yt-dlp</text>
+  <rect x="80" y="520" width="200" height="120" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="2"/>
+  <text x="180" y="545" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">YouTube Agent</text>
+  <text x="180" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Searches YouTube</text>
+  <text x="180" y="590" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Filters by duration,</text>
+  <text x="180" y="610" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">view count</text>
+  <text x="180" y="630" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">yt-dlp</text>
   
-  <rect x="300" y="500" width="200" height="120" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="2"/>
-  <text x="400" y="525" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">Semantic Filter</text>
-  <text x="400" y="550" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Filters songs by</text>
-  <text x="400" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">emotional fit</text>
-  <text x="400" y="590" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">(batch processing)</text>
-  <text x="400" y="610" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
+  <rect x="300" y="520" width="200" height="120" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="2"/>
+  <text x="400" y="545" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">Semantic Filter</text>
+  <text x="400" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Filters songs by</text>
+  <text x="400" y="590" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">emotional fit</text>
+  <text x="400" y="610" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">(batch processing)</text>
+  <text x="400" y="630" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
   
-  <rect x="520" y="500" width="200" height="120" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="2"/>
-  <text x="620" y="525" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">Sequence Agent</text>
-  <text x="620" y="550" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Assigns songs</text>
-  <text x="620" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">to phases</text>
-  <text x="620" y="590" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">(batch processing)</text>
-  <text x="620" y="610" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
+  <rect x="520" y="520" width="200" height="120" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="2"/>
+  <text x="620" y="545" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">Sequence Agent</text>
+  <text x="620" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Assigns songs</text>
+  <text x="620" y="590" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">to phases</text>
+  <text x="620" y="610" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">(batch processing)</text>
+  <text x="620" y="630" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
   
-  <rect x="740" y="500" width="200" height="120" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="2"/>
-  <text x="840" y="525" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">Ordering Agent</text>
-  <text x="840" y="550" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Scores & orders</text>
-  <text x="840" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">songs per phase</text>
-  <text x="840" y="590" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">(batch processing)</text>
-  <text x="840" y="610" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
+  <rect x="740" y="520" width="200" height="120" rx="5" fill="#ffffff" stroke="#2196f3" stroke-width="2"/>
+  <text x="840" y="545" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#1565c0">Ordering Agent</text>
+  <text x="840" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Scores & orders</text>
+  <text x="840" y="590" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">songs per phase</text>
+  <text x="840" y="610" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">(batch processing)</text>
+  <text x="840" y="630" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">GPT-4o-mini</text>
   
   <!-- Smoothing Agent -->
-  <rect x="960" y="500" width="200" height="120" rx="5" fill="#ffffff" stroke="#9c27b0" stroke-width="2"/>
-  <text x="1060" y="525" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#6a1b9a">Smoothing Agent</text>
-  <text x="1060" y="550" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Smooths energy</text>
-  <text x="1060" y="570" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">transitions</text>
-  <text x="1060" y="590" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">between songs</text>
-  <text x="1060" y="610" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">Algorithm</text>
+  <rect x="960" y="460" width="180" height="120" rx="5" fill="#ffffff" stroke="#9c27b0" stroke-width="2"/>
+  <text x="1050" y="485" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#6a1b9a">Smoothing Agent</text>
+  <text x="1050" y="510" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">Smooths energy</text>
+  <text x="1050" y="530" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">transitions</text>
+  <text x="1050" y="550" font-family="Arial, sans-serif" font-size="11" text-anchor="middle" fill="#424242">between songs</text>
+  <text x="1050" y="570" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#757575">Algorithm</text>
   
   <!-- External Services -->
-  <rect x="50" y="720" width="1100" height="60" rx="10" fill="#fce4ec" stroke="#c2185b" stroke-width="2"/>
-  <text x="600" y="750" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#c2185b">External Services</text>
+  <rect x="50" y="770" width="1100" height="110" rx="10" fill="#fce4ec" stroke="#c2185b" stroke-width="2"/>
+  <text x="600" y="800" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#c2185b">External Services</text>
   
-  <rect x="150" y="730" width="150" height="40" rx="5" fill="#ffffff" stroke="#e91e63" stroke-width="1"/>
-  <text x="225" y="755" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#424242">OpenAI API</text>
+  <rect x="150" y="820" width="150" height="40" rx="5" fill="#ffffff" stroke="#e91e63" stroke-width="1"/>
+  <text x="225" y="845" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#424242">OpenAI API</text>
   
-  <rect x="350" y="730" width="150" height="40" rx="5" fill="#ffffff" stroke="#e91e63" stroke-width="1"/>
-  <text x="425" y="755" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#424242">YouTube (yt-dlp)</text>
+  <rect x="400" y="820" width="150" height="40" rx="5" fill="#ffffff" stroke="#e91e63" stroke-width="1"/>
+  <text x="475" y="845" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#424242">YouTube (yt-dlp)</text>
   
-  <rect x="550" y="730" width="150" height="40" rx="5" fill="#ffffff" stroke="#e91e63" stroke-width="1"/>
-  <text x="625" y="755" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#424242">YouTube Data API</text>
+  <rect x="650" y="820" width="150" height="40" rx="5" fill="#ffffff" stroke="#e91e63" stroke-width="1"/>
+  <text x="725" y="845" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#424242">YouTube Data API</text>
   
-  <rect x="750" y="730" width="150" height="40" rx="5" fill="#ffffff" stroke="#e91e63" stroke-width="1"/>
-  <text x="825" y="755" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#424242">Matplotlib</text>
+  <rect x="900" y="820" width="150" height="40" rx="5" fill="#ffffff" stroke="#e91e63" stroke-width="1"/>
+  <text x="975" y="845" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#424242">Matplotlib</text>
   
   <!-- Arrows -->
-  <path d="M 600 180 L 600 200" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  <path d="M 600 280 L 600 300" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
-  <path d="M 600 700 L 600 720" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 600 160 L 600 200" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 600 280 L 600 320" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+  <path d="M 600 720 L 600 770" stroke="#424242" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
   
   <!-- Arrow marker definition -->
   <defs>
