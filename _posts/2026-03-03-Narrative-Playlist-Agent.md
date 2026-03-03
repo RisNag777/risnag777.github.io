@@ -3,6 +3,8 @@ layout: post
 title: "Building a Narrative Playlist Generator: From Concept to Reality"
 ---
 
+![Narrative Playlist Agent](https://github.com/user-attachments/assets/f971de46-8745-4026-839e-523c28f887b7)
+
 ## Introduction
 
 Music playlists have evolved from simple collections of songs to curated experiences that tell stories. This **Narrative Playlist Agent** is an AI-powered system that transforms a user's emotional prompt into a carefully sequenced playlist with a coherent emotional arc, just like a movie soundtrack for your life.
