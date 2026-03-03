@@ -3,25 +3,57 @@ layout: post
 title: "Designing an Agentic Textbook TA"
 ---
 
+## Introduction
+
 When you ask an LLM a technical question, it answers from whatever it absorbed during training. Sometimes that's useful. Sometimes it's outdated. Sometimes it's just wrong. And most of the time, you have no idea *where* the answer came from.
 
-This lack of control bothered me. If I'm reading a specific textbook and I have a question about the material, I don't want an answer stitched together from half-remembered internet patterns. I want a system that behaves the way a teacher or a TA would - open the book, find the relevant section, and reason from what's actually written there. For example, if I want to know about the Central Limit Theorem, I would like the answer to come from page 368 of the textbook!
+If I'm reading a specific textbook and I have a question about the material, I don't want an answer stitched together from half-remembered internet patterns. I want a system that behaves the way a teacher or a TA would: open the book, find the relevant section, and reason from what's actually written there. For example, if I want to know about the Central Limit Theorem, I'd like the answer to come from page 368 of the textbook.
 
 <img width="340" height="438" alt="image" src="https://github.com/user-attachments/assets/23e37905-0a97-4efa-bfed-11aed985eae7" />
 
-So I set out to build exactly that. A system where the model doesn't answer from memory, but from a textbook provided at runtime. However, the problem here is not about making the model smarter, it's about giving the model a structured way to access knowledge and constraining it to use that knowledge as its source of truth. Instead of asking, "Can the LLM answer this?", the question becomes "How do you turn an LLM into a reasoning system that consults a book before it speaks?"
+This blog post walks through how I built such a system, a **Textbook Teaching Assistant** that answers questions by consulting a textbook at runtime, not its own training-time memory. I'll cover the core idea, the architecture, the agent loop, what worked, what didn't, and how to run it yourself.
 
-## The Knowledge System.
+---
 
-At its core, the problem looks like this:
+## The Core Idea
 
-| Component | Role in the System |
-|-----------|--------------------|
-| Textbook | The source of truth (external knowledge) |
-| Retrieval system | Memory access mechanism |
-| LLM | Reasoning engine operating over retrieved context |
-| System logic | Enforces that answers stay grounded in the textbook |
+Traditional "ask an LLM" setups treat the model as if it's the whole system: you send a question, you get an answer, and you hope it's right.
 
+Here, the framing is different:
+
+- **The textbook is the source of truth.**
+- **The LLM is just the reasoning layer over that textbook.**
+- **The system logic enforces that answers stay grounded in the book.**
+
+Instead of asking "Can the LLM answer this?", the real question becomes:
+
+> How do you turn an LLM into a reasoning system that consults a book before it speaks?
+
+Concretely, the system:
+
+1. Processes a PDF textbook into semantically coherent chunks with chapter and page metadata.
+2. Embeds those chunks into a vector database (FAISS + sentence transformers).
+3. Uses the LLM to **select relevant chapters**, given a question.
+4. Uses **semantic search** over those chapters to find the most relevant chunks.
+5. Asks the LLM to **synthesize an answer only from those chunks**.
+6. Asks the LLM to **self-evaluate** whether the answer is complete and well-supported.
+
+The result is an agent that behaves less like a chatbot and more like a TA flipping through a textbook.
+
+---
+
+## System Architecture
+
+At a high level, the system is a knowledge pipeline wrapped around a reasoning engine:
+
+| Component      | Role in the System                            |
+|----------------|-----------------------------------------------|
+| Textbook       | The source of truth (external knowledge)      |
+| Retrieval      | Memory access mechanism (vector search)       |
+| LLM            | Reasoning engine over retrieved context       |
+| System logic   | Enforces grounding in the textbook            |
+
+```html
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-30 0 700 280" width="600" height="280">
   <defs>
     <style>
@@ -72,84 +104,97 @@ At its core, the problem looks like this:
   <text x="420" y="185" class="label" text-anchor="middle">Question</text>
   <path d="M 420 160 L 420 100" class="arrow" stroke-dasharray="4"/>
 </svg>
+```
 
-Instead of treating the LLM as a giant, all-knowing brain, this architecture treats it as something very different - a processor that reasons over information it is given. The knowledge itself lives outside the model, stored in a structured form that the system can search and control.
+The LLM is not an all-knowing brain here. It's a processor that operates **inside** a controlled knowledge system, over context that the system chooses and provides.
 
-The pipeline starts with the textbook. The PDF is split into chunks, converted into embeddings, and stored in a vector database. That database acts as a searchable memory. When a question comes in, the system doesn't immediately ask the model to answer. Instead, it first asks, "What parts of the book are relevant to this question?"
+---
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 0 750 200" width="550" height="200">
-  <defs>
-    <style>
-      .stage { fill: #f8f9fa; stroke: #495057; stroke-width: 2; rx: 8; }
-      .arrow { stroke: #495057; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
-      .label { font-family: system-ui, sans-serif; font-size: 14px; fill: #212529; }
-      .code { font-family: 'Consolas', 'Monaco', monospace; font-size: 11px; fill: #495057; }
-    </style>
-    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-      <polygon points="0 0, 10 3.5, 0 7" fill="#495057"/>
-    </marker>
-  </defs>
-  <!-- PDF -->
-  <rect x="20" y="60" width="100" height="80" class="stage"/>
-  <text x="70" y="95" class="label" text-anchor="middle">PDF</text>
-  <text x="70" y="115" class="code" text-anchor="middle">load_pdf()</text>
-  <text x="70" y="130" class="code" text-anchor="middle">get_toc()</text>
-  
-  <!-- Chunks -->
-  <rect x="160" y="60" width="160" height="80" class="stage"/>
-  <text x="240" y="95" class="label" text-anchor="middle">Chunks</text>
-  <text x="240" y="115" class="code" text-anchor="middle">chunk_text()</text>
-  <text x="240" y="130" class="code" text-anchor="middle">~300 tokens, by chapter</text>
-  
-  <!-- Embeddings -->
-  <rect x="360" y="60" width="130" height="80" class="stage"/>
-  <text x="425" y="95" class="label" text-anchor="middle">Embeddings</text>
-  <text x="425" y="115" class="code" text-anchor="middle">SentenceTransformer</text>
-  <text x="425" y="130" class="code" text-anchor="middle">all-MiniLM-L6-v2</text>
-  
-  <!-- FAISS Index -->
-  <rect x="540" y="60" width="120" height="80" class="stage"/>
-  <text x="600" y="95" class="label" text-anchor="middle">FAISS Index</text>
-  <text x="600" y="115" class="code" text-anchor="middle">IndexFlatL2</text>
-  <text x="600" y="130" class="code" text-anchor="middle">827 chunks</text>
-  
-  <!-- Arrows -->
-  <path d="M 120 100 L 160 100" class="arrow"/>
-  <path d="M 320 100 L 360 100" class="arrow"/>
-  <path d="M 490 100 L 540 100" class="arrow"/>
-</svg>
+## Key Components
 
-In this implementation, the pipeline uses PyMuPDF to extract text and table-of-contents from the PDF, then chunks by paragraph (~300 tokens) while preserving chapter metadata. Each chunk becomes a vector via `SentenceTransformer` (all-MiniLM-L6-v2), stored in a FAISS index. For *Introductory Statistics 2e*, that yields 827 searchable chunks.
+This project revolves around three main modules: PDF processing, vector search, and the agent.
 
-Only after retrieving context from the textbook does the model step in. At that point, its job is not to recall facts from training, but to read, synthesize, and explain what's already been found. In other words, the model is operating more like a reasoning layer sitting on top of a knowledge store, rather than a knowledge store itself.
+### 1. PDF Processing & Chunking (`load_data.py`)
 
-This shift, from "the model knows things" to "the model operates inside a knowledge system", is what turns a chatbot-style setup into something closer to a controlled reasoning system.
+The goal of this stage is to turn a messy PDF into clean, searchable chunks.
 
-## The Agent Loop
+- **PDF parsing**: Uses PyMuPDF (`fitz`) to:
+  - Extract text per page.
+  - Extract the table of contents (TOC) to identify chapters/sections.
+- **Chunking**:
+  - Splits text into paragraph-level chunks (~300 tokens).
+  - Preserves metadata: `chapter_title`, `page_num`, `book`.
+- **Output schema**: Each chunk looks like:
 
-A simple retrieval system would stop at:
+```json
+{
+  "chapter_title": "12.3 The Regression Equation",
+  "page_num": 638,
+  "chunk_text": "In this section, we define the regression equation...",
+  "book": "Introductory Statistics 2e"
+}
+```
 
-`question -> retrieve chunks -> answer`
+These chunks are saved as a JSON file (e.g., `textbook.pdf.json`).
 
-But that assumes the first retrieval step is enough. In practice, it often isn't. Some questions span multiple sections of a textbook. Others require definitions from one chapter and methods from another. A single pass at retrieval can miss important context.
+### 2. Vector Database (`vector_db.py`)
 
-So the system treats answering as a process:
+Once we have structured chunks, we build a semantic search index.
 
-1. **Interpret the question**  
-   The model helps determine which parts of the textbook are likely to be relevant.
+- **Embeddings**: Sentence Transformer `all-MiniLM-L6-v2`.
+- **Index**: FAISS `IndexFlatL2` for fast similarity search.
+- **Core methods**:
+  - `build_index()`: Load all textbook JSONs and build the index.
+  - `query(question, top_k=5, chapter_keywords=None)`:
+    - Embed the question.
+    - Optionally filter chunks to specific chapters.
+    - Return top-k results with metadata and distances.
+  - `list_chapters()`: List all chapter titles in sorted order.
 
-2. **Retrieve context**  
-   The system pulls chunks from the vector database corresponding to those sections.
+For *Introductory Statistics 2e*, this produces **827 searchable chunks**.
 
-3. **Synthesize an answer**  
-   The model generates a response based only on the retrieved material.
+### 3. Textbook Agent (`agent.py`)
 
-4. **Evaluate the answer**  
-   The system checks whether the answer appears complete and grounded in the available context.
+The `TextbookAgent` orchestrates the entire reasoning loop.
 
-5. **Stop or continue**  
-   If the answer is sufficient, return it. If not, the system can refine the search and repeat.
+- `choose_chapters(question, available_chapters)`:
+  - Asks the LLM to select chapter titles from the TOC that seem relevant.
+  - Returns a list of chapter titles.
+- `answer_question(question, top_k=5, model="gpt-4o-mini")`:
+  1. Get available chapters from the vector DB.
+  2. Use the LLM to pick the most relevant chapters.
+  3. Query the vector DB with `chapter_keywords` to focus retrieval.
+  4. Synthesize an answer from the retrieved chunks.
+  5. Ask the LLM to evaluate if the answer is complete.
+  6. Return `(answer, chunks)` (or `("", "")` if nothing suitable is found).
+- `synthesize_answer(question, chunks)`:
+  - Prompts the LLM to answer **only using the given chunks**.
+- `evaluate_answer(question, answer)`:
+  - Asks the LLM: "Is this answer COMPLETE and WELL-SUPPORTED? Return YES or NO."
 
+Each chunk is labeled with `[Chapter: X, Page: Y]`, so answers are traceable back to specific pages.
+
+---
+
+## Pipeline Flow
+
+At runtime, answering a question is not a single LLM call. It's a small agent loop:
+
+```text
+Question
+  ↓
+1. Interpret the question (chapter selection)
+  ↓
+2. Retrieve context (chapter-filtered vector search)
+  ↓
+3. Synthesize answer from chunks
+  ↓
+4. Evaluate answer (YES/NO)
+  ↓
+5. Stop or (in future) continue with refined search
+```
+
+```html
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 410" width="500" height="380">
   <defs>
     <style>
@@ -198,46 +243,77 @@ So the system treats answering as a process:
   <path d="M 150 285 L 80 285 L 80 125 L 150 125" class="arrow" stroke="#e03131" stroke-dasharray="4"/>
   <text x="100" y="200" class="small" fill="#e03131">NO</text>
 </svg>
-
-In the code, step 1 is implemented by asking the LLM to return a JSON array of chapter titles from the textbook's table of contents. Step 2 uses that to *filter* the vector search. Only chunks from selected chapters are considered, then the top 5 by L2 distance are retrieved. Step 4 uses a simple self-evaluation prompt: "Is this answer COMPLETE and WELL-SUPPORTED? Respond with ONLY ONE WORD: YES or NO."
-
-```
-# From agent.py: chapter selection narrows the search space
-chapters, consulted_chapters = self.find_chapters(question, available_chapters, consulted_chapters)
-results = self.db.query(question, top_k=5, chapter_keywords=chapters)
-answer = self.synthesize_answer(question, all_chunks)
-verdict = self.evaluate_answer(question, answer)  # YES or NO
 ```
 
-*(Currently, when the verdict is NO, the agent ends its computation)*
+**Current implementation detail**: If the evaluation step returns `NO`, the agent stops and reports that it couldn't confidently answer. A future iteration could refine the search and loop back.
 
-This structure turns the system into something that behaves less like a chatbot and more like an agent navigating a knowledge space. The model isn't just generating text, it's participating in a perception–action loop:
+---
 
-- **Perception**: retrieved textbook chunks  
-- **Action**: choosing how to use that information  
-- **Control**: system logic deciding whether to stop or keep searching  
+## Detailed Pipeline Steps
 
-That control flow shifts responsibility for knowledge from the model's parameters to the system's architecture.
+Putting it all together, one question goes through these stages:
 
-## The Real Role of the LLM
+1. **Parse and index the textbook (offline, once per book)**  
+   - Extract text and TOC via PyMuPDF.  
+   - Chunk text into ~300-token segments with chapter and page metadata.  
+   - Embed chunks with `SentenceTransformer(all-MiniLM-L6-v2)`.  
+   - Build a FAISS `IndexFlatL2` index.
 
-In this system, the LLM isn't the knowledge source.  
-It's the reasoning layer.
+2. **Interpret the question (chapter selection)**  
+   - Call the LLM with the question and a list of chapter titles.  
+   - Ask it to return a JSON array of chapters likely to be relevant.
 
-| Task | System |
-|------|--------|
-| Store knowledge | Textbook + vector database |
-| Retrieve relevant material | Embedding search |
-| Synthesize and explain | LLM |
-| Decide how to use context | LLM |
-| Enforce grounding | System logic |
+3. **Retrieve context (vector search)**  
+   - Query the vector DB with:
+     - The question embedding.
+     - `chapter_keywords` equal to the selected chapters.
+   - Return top `k` chunks ranked by L2 distance.
 
-The model never sees the entire textbook at once. It only sees the chunks the system retrieves. Its job is to read those chunks, connect the dots, and produce a coherent explanation.
+4. **Synthesize the answer**  
+   - Concatenate retrieved chunks with `[Chapter: X, Page: Y]` headers.
+   - Prompt the LLM to:
+     - Answer the question.
+     - Use **only** the provided textbook content (but still do its best if incomplete).
 
-The synthesis prompt enforces this explicitly:
+5. **Self-evaluate**  
+   - Ask the LLM: is this answer **complete and well-supported** by the context?  
+   - Force a one-word response: `YES` or `NO`.
 
-```
-# From agent.py - the model is instructed to answer only from context
+6. **Return or (future) refine**  
+   - If `YES`: return the answer plus the list of chunks.  
+   - If `NO`: return an empty answer or a fallback; a future version will refine the search and loop back.
+
+---
+
+## Technical Deep Dive
+
+### Chunking & TOC Alignment
+
+The quality of retrieval depends heavily on:
+
+- **TOC extraction**: If the PDF has a clean TOC, chapter boundaries are meaningful; if not, retrieval degrades.
+- **Chunk size**: ~300 tokens strikes a balance:
+  - Long enough to contain coherent ideas.
+  - Short enough to combine multiple chunks in a single LLM context window.
+- **Metadata**: Attaching `chapter_title` and `page_num` to each chunk allows:
+  - Chapter-level filtering before vector search.
+  - Page-level traceability in the final answer.
+
+### Vector Search Implementation
+
+The vector database:
+
+- Uses `all-MiniLM-L6-v2` for embeddings (a strong speed/quality trade-off).
+- Indexes all chunks via FAISS `IndexFlatL2`.
+- Filters by chapter **before** scoring:
+  - This drastically reduces the number of candidates.
+  - It also makes retrieval semantically sharper, since we're not competing across the entire book.
+
+### Synthesis Prompt
+
+The synthesis step makes the LLM behave like a TA reading the book, not like a general chatbot:
+
+```python
 prompt = f"""
 You are a helpful teaching assistant. Use the following textbook
 content to answer the question below.
@@ -251,67 +327,336 @@ Question: {question}
 """
 ```
 
-Each retrieved chunk is prefixed with `[Chapter: X, Page: Y]` so the model and user can trace answers back to specific pages. For a question like "What is regression and why is it useful?", the system might consult chapters like "12.3 The Regression Equation" and return chunks from pages 637–642, then synthesize an answer grounded in those passages.
+Every chunk in `context` is prefixed with something like:
 
-This flips the usual assumption about LLMs. Instead of asking the model to remember facts, the system gives it the facts and asks it to reason over them. Knowledge lives outside the model, and the model operates inside a controlled information environment.
+```text
+[Chapter: 12.3 The Regression Equation, Page: 638]
+...
+```
 
-## What This Project Really Shows
+This helps both the model and the user understand where each part of the answer comes from.
 
-At first glance, this looks like "LLM + vector database." But the deeper shift is architectural.
+### Self-Evaluation Prompt
 
-The system doesn't treat the model as the place where knowledge lives. It treats the model as a component inside a larger structure that manages knowledge explicitly. The textbook is the source of truth, the vector database is the memory layer, and the LLM is a reasoning module that operates over whatever information the system provides.
+The self-check is intentionally simple and binary:
 
-This is a different way of thinking about LLM limitations. The problem isn't just that models hallucinate. It's that we often use them as if they were self-contained knowledge systems. When we move knowledge out of the model and into the system, the role of the LLM becomes clearer and more manageable.
+```text
+Is this answer COMPLETE and WELL-SUPPORTED by the textbook content?
 
-This project isn't about making the model smarter. It's about building a structure in which the model's strengths (language understanding and synthesis) are amplified, while its weaknesses (unreliable memory and implicit assumptions) are constrained.
+Respond with ONLY ONE WORD: YES or NO.
+```
 
-## Lessons Learned Building Knowledge Systems
+This turns the LLM into a cheap, probabilistic quality gate. It doesn't guarantee correctness, but it's a useful extra layer that often flags incomplete answers.
 
-The biggest lesson from this project is that reliability doesn't come from the model alone, it comes from the system around it. Once knowledge is externalized into structured memory and access to that memory is controlled, the behavior of the model becomes more predictable.
+### Architectural Shift: LLM as Reasoning Layer
 
-The second lesson is that retrieval is not just a utility step, it's part of reasoning. Answering a question from documents is a navigation task: deciding where to look, pulling in context, and working with that information. Control flow around retrieval turns a static pipeline into an agent-like process.
+The central design decision is:
 
-Finally, intelligence often lives in the boundaries between components. The LLM brings flexible language reasoning. The vector database provides structured memory. The system logic enforces grounding. None of these pieces is sufficient on its own, but together they create behavior that feels more capable and reliable.
+- **Knowledge** lives in:
+  - The textbook.
+  - The chunked JSON.
+  - The vector index.
+- **Reasoning** lives in:
+  - The LLM calls (chapter selection, synthesis, evaluation).
+- **Control** lives in:
+  - The `TextbookAgent` logic (what to call when, and how to interpret results).
+
+This explicit separation makes the system more debuggable and controllable than a single "ask the LLM" call.
+
+---
+
+## What Worked Well
+
+- **Grounded answers**:  
+  Because all answers are derived from retrieved textbook chunks, it's much easier to spot and correct issues. You can literally see which pages the model used.
+
+- **Chapter-based filtering**:  
+  Using the LLM to select chapters before vector search significantly improves retrieval quality, especially for books with many chapters.
+
+- **Simple, composable prompts**:  
+  Splitting the agent loop into:
+  - Chapter selection
+  - Synthesis
+  - Evaluation  
+  made prompts shorter, clearer, and easier to iterate on.
+
+- **Traceability**:  
+  Including `[Chapter, Page]` in both the chunks and the synthesized answer gives the system a "show your work" property, similar to how a human TA would answer.
+
+---
+
+## What Didn't Work (and What I Learned)
+
+- **One-shot retrieval isn't always enough**  
+  A single retrieval pass sometimes misses important context, especially for:
+  - Multi-part questions.
+  - Concepts that are defined in one chapter and used in another.  
+  The current system stops after one retrieval; a future version will loop, refine, and re-retrieve.
+
+- **Over-reliance on TOC quality**  
+  When the PDF's TOC is noisy or missing, chapter selection becomes brittle.
+  - Lesson: the system should be able to fall back to alternative grouping strategies (e.g., purely page-based or embedding-based clustering).
+
+- **Prompt-only grounding is probabilistic**  
+  Despite clear instructions, the model can still sometimes blend in prior training knowledge.
+  - Lesson: prompts significantly reduce hallucinations but do not mathematically eliminate them; stronger constraints would require different tooling (e.g., tool-usage constraints, retrieval-only answer modes, etc.).
+
+- **Single-textbook assumption**  
+  The current implementation assumes "one textbook at a time".
+  - Extending to multiple books introduces new questions: how to handle conflicting explanations, multiple editions, and much larger indexes.
+
+---
 
 ## Limitations
 
-### Retrieval quality depends on chunking and TOC quality
+### Retrieval quality depends on chunking and TOC
 
-The system assumes that the textbook’s table of contents is well-structured and that paragraph-based chunks of ~300 tokens are semantically coherent. If the TOC is noisy or the PDF text extraction breaks paragraphs strangely, relevant content can land in awkward or fragmented chunks, which hurts retrieval and answer quality.
+- If the TOC is poor or text extraction is messy (e.g., PDFs with broken paragraphs), chunks can become:
+  - Too fragmented.
+  - Misaligned with chapters.
+- This hurts both chapter selection and vector search.
 
-### Local vector search is still approximate
+### Approximate vector search
 
-Even with a good embedding model and FAISS index, similarity search is approximate. Subtle conceptual questions, or questions that span multiple chapters in non-obvious ways, can still retrieve incomplete or slightly off-target chunks. The self-evaluation step can catch some of this, but it can’t fix fundamentally bad retrieval.
+- FAISS + sentence transformers work well in practice, but:
+  - Some subtle or cross-chapter questions still get slightly off-target chunks.
+  - The self-evaluation step can only flag some of these issues.
 
-### Latency and cost from multiple LLM calls
+### Multiple LLM calls per question
 
-Each question triggers several LLM calls: one to choose chapters, one to synthesize an answer, and one to self-evaluate it. That’s fine for a personal assistant or a classroom tool, but it means the system is slower and more expensive than a single-shot "just ask GPT" interaction, especially as the number of textbooks or concurrent users grows.
+- Each question triggers several calls:
+  - Chapter selection.
+  - Synthesis.
+  - Evaluation.
+- That's fine for a classroom or personal tool, but it's slower and more expensive than a bare single-shot LLM call.
 
-### Grounding is enforced by prompts, not hard constraints
+### Prompt-based grounding only
 
-The model is instructed to answer only from the retrieved context, and in practice this works well, but it’s still a probabilistic guarantee. Under some prompts or edge cases, the model can still hallucinate or blend in prior training. The system reduces this risk but doesn’t eliminate it.
+- Grounding is enforced via instructions, not hard constraints.
+- Under adversarial or tricky prompts, the model can still hallucinate.
 
-### Currently limited to a single textbook and domain
+### Single-textbook scope
 
-This implementation is tuned to one statistics textbook and a single embedding space. Extending it to multiple books, editions, or domains raises additional challenges: cross-book disambiguation, conflicting explanations, and larger indexes that increase retrieval complexity.
+- Currently tuned for one statistics textbook and one embedding space.
+- Multiple textbooks would require:
+  - Cross-book disambiguation.
+  - Smarter indexing and retrieval strategies.
+
+---
+
+## Code Highlights
+
+### Agent Orchestration
+
+The `TextbookAgent` glues together chapter selection, retrieval, synthesis, and evaluation:
+
+```python
+# From agent.py: chapter selection narrows the search space
+chapters, consulted_chapters = self.find_chapters(
+    question, available_chapters, consulted_chapters
+)
+results = self.db.query(
+    question,
+    top_k=5,
+    chapter_keywords=chapters
+)
+
+answer = self.synthesize_answer(question, all_chunks)
+verdict = self.evaluate_answer(question, answer)  # "YES" or "NO"
+```
+
+The design goal is for each step to be understandable and testable in isolation.
+
+### Synthesis Prompt (Grounded Answering)
+
+```python
+prompt = f"""
+You are a helpful teaching assistant. Use the following textbook
+content to answer the question below.
+Answer only based on the textbook content, but do your best even if
+the answer is not explicitly stated.
+
+Textbook content:
+{context}
+
+Question: {question}
+"""
+```
+
+---
+
+## Tutorial 1: Setting Up the Project Locally
+
+### Prerequisites
+
+- Python 3.8+
+- OpenAI API key
+- Git
+
+### Step 1: Clone the Repository
+
+```bash
+git clone <repository-url>
+cd autonomous-ta
+```
+
+### Step 2: Create a Virtual Environment
+
+```bash
+python -m venv venv
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+# source venv/bin/activate
+```
+
+### Step 3: Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+This includes:
+
+- `openai` – OpenAI API client
+- `sentence-transformers` – Text embeddings
+- `faiss-cpu` – Vector similarity search
+- `PyMuPDF` (`fitz`) – PDF parsing
+- `numpy`, `dotenv`, etc.
+
+### Step 4: Configure Environment Variables
+
+Create a `.env` file in the project root:
+
+```bash
+OPENAI_API_KEY=your_api_key_here
+```
+
+---
+
+## Tutorial 2: Using the Textbook TA
+
+### Step 1: Prepare Your Textbook
+
+- Place your PDF textbook in `data/raw/`.
+- The system will process any PDFs found there.
+
+### Step 2: Parse the Textbook
+
+```python
+from src.autonomous_ta.load_data import parse_book
+
+parse_book()
+```
+
+This will:
+
+- Extract text from all pages.
+- Extract the TOC.
+- Chunk the text into ~300-token segments.
+- Save the processed JSON file (e.g., `data/processed/textbook.pdf.json`).
+
+### Step 3: Initialize the Agent
+
+```python
+from src.autonomous_ta.agent import TextbookAgent
+
+agent = TextbookAgent(model="gpt-4o-mini")
+```
+
+The agent will:
+
+- Load the processed textbook data.
+- Build the vector index.
+- Get ready for queries.
+
+### Step 4: Ask Questions
+
+```python
+question = "What is regression and why is it useful? What are the disadvantages of using regression?"
+answer, chunks = agent.answer_question(question, top_k=5)
+
+print(answer)
+for c in chunks:
+    print(c["chapter"], c["page"])
+```
+
+You can also use the CLI:
+
+```bash
+python cli.py "Explain the central limit theorem" --model gpt-4o-mini --top-k 10 --verbose
+```
+
+---
+
+## Performance & Behavior (Qualitative)
+
+In practice, for a textbook like *Introductory Statistics 2e*:
+
+- **Index build time**: A one-time cost (seconds to minutes, depending on size).
+- **Per-question latency**:
+  - Vector search: fast (milliseconds).
+  - LLM calls: dominate latency (a few seconds each).
+- **Behavior**:
+  - For well-defined textbook questions (e.g., "What is a confidence interval?"), the system retrieves the right sections and produces grounded, page-cited answers.
+  - For vague or cross-cutting questions, the self-evaluation step often flags incomplete answers, which is preferable to confident hallucinations.
+
+---
+
+## Future Improvements
+
+### Architectural Enhancements
+
+- **Multi-textbook support**:
+  - Shared embedding space across multiple books.
+  - Source-aware retrieval and conflict handling.
+- **Iterative agent loop**:
+  - When evaluation returns `NO`, refine the question or chapter selection and try again.
+- **Smarter retrieval**:
+  - Combine chapter filters with learned rerankers.
+  - Use hybrid search (sparse + dense) for better coverage.
+
+### Reliability & UX
+
+- **Stronger grounding mechanisms**:
+  - Tooling that enforces retrieval-only answers more strictly than prompts alone.
+- **Caching and indexing strategies**:
+  - Cache embeddings and index shards for faster startup.
+- **Better TOC handling**:
+  - Fallback strategies when TOC is missing or malformed.
+
+---
 
 ## Conclusion
 
-Building this system changed how I think about LLMs. Their strength isn't in knowing everything. It's in reasoning over information when they're placed inside a structure that manages knowledge explicitly. When we stop treating the model as a standalone brain and start treating it as part of a larger knowledge system, the behavior shifts from guessing to grounded reasoning.
+Building this Textbook TA changed how I think about LLMs.
 
-In the end, the intelligence of the system doesn't live in the model or the database alone. It emerges from how structured memory and probabilistic reasoning are combined.
+Their real strength isn't in "knowing everything." It's in **reasoning over information** when you give them the right structure and constraints. When you move knowledge out of the model and into a system that manages memory, retrieval, and control flow, you get behavior that feels more like a careful TA and less like a guessing chatbot.
+
+The intelligence of this system doesn't live in the model or the database alone. It emerges from how structured memory (the textbook + vector DB) and probabilistic reasoning (the LLM) are combined under explicit control.
 
 ---
 
 ## Implementation at a Glance
 
-| Layer | Technology |
-|-------|------------|
-| PDF parsing | PyMuPDF (fitz), table-of-contents extraction |
-| Chunking | Paragraph-based, ~300 tokens, chapter metadata preserved |
-| Embeddings | SentenceTransformer `all-MiniLM-L6-v2` |
-| Vector index | FAISS `IndexFlatL2` |
-| LLM | GPT-4o-mini (OpenAI API) |
-| Chapter filtering | LLM selects from TOC -> filter before vector search |
+| Layer           | Technology                              |
+|-----------------|-----------------------------------------|
+| PDF parsing     | PyMuPDF (`fitz`), TOC extraction        |
+| Chunking        | Paragraph-based, ~300 tokens, chapters  |
+| Embeddings      | SentenceTransformer `all-MiniLM-L6-v2`  |
+| Vector index    | FAISS `IndexFlatL2`                     |
+| LLM             | GPT-4o-mini (OpenAI API)               |
+| Agent logic     | `TextbookAgent` (Python)               |
 
-The chunk schema: `{ chapter_title, page_num, chunk_text }`. Retrieval returns the top-k by L2 distance, with optional `chapter_keywords` to scope the search. The `TextbookAgent` class orchestrates the full loop: `choose_chapters` → `query` → `synthesize_answer` → `evaluate_answer`.
+---
+
+## Resources
+
+- **GitHub Repository**: `https://github.com/RisNag777/autonomous-ta`
+- **OpenAI API Docs**: `https://platform.openai.com/docs`
+- **Sentence Transformers**: `https://www.sbert.net/`
+- **FAISS**: `https://github.com/facebookresearch/faiss`
+- **PyMuPDF Docs**: `https://pymupdf.readthedocs.io/`
+
+*This project is a small step toward building more reliable, grounded AI systems where models reason over explicit knowledge, instead of pretending to be the knowledge themselves.*
+
