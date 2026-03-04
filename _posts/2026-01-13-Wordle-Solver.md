@@ -84,7 +84,7 @@ Here's the high-level architecture:
   <text x="450" y="65" class="subtitle" text-anchor="middle">Deterministic Core + Stochastic Policy Layer</text>
 
   <!-- Legend -->
-  <rect x="50" y="90" width="200" height="80" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1" rx="8"/>
+  <rect x="50" y="90" width="200" height="90" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1" rx="8"/>
   <text x="60" y="115" class="component-title">Legend</text>
   <rect x="60" y="125" width="60" height="20" class="deterministic"/>
   <text x="130" y="140" class="component-text">Deterministic</text>
@@ -110,22 +110,22 @@ Here's the high-level architecture:
   <text x="400" y="365" class="component-text" text-anchor="middle">Categorize feedback</text>
 
   <!-- Belief Update Module -->
-  <rect x="550" y="200" width="200" height="180" class="deterministic"/>
-  <text x="650" y="230" class="component-title" text-anchor="middle">Belief Update Module</text>
-  <text x="650" y="255" class="function-name" text-anchor="middle">trim_list()</text>
-  <text x="650" y="275" class="component-text" text-anchor="middle">Filters candidates by:</text>
-  <text x="650" y="290" class="component-text" text-anchor="middle">• Absent letters</text>
-  <text x="650" y="305" class="component-text" text-anchor="middle">• Bull positions</text>
-  <text x="650" y="320" class="component-text" text-anchor="middle">• Cow constraints</text>
-  <text x="650" y="335" class="component-text" text-anchor="middle">• Excluded positions</text>
-  <text x="650" y="360" class="function-name" text-anchor="middle">filter_candidates()</text>
-  <text x="650" y="375" class="component-text" text-anchor="middle">Generic filter helper</text>
+  <rect x="570" y="200" width="200" height="180" class="deterministic"/>
+  <text x="670" y="230" class="component-title" text-anchor="middle">Belief Update Module</text>
+  <text x="670" y="255" class="function-name" text-anchor="middle">trim_list()</text>
+  <text x="670" y="275" class="component-text" text-anchor="middle">Filters candidates by:</text>
+  <text x="670" y="290" class="component-text" text-anchor="middle">• Absent letters</text>
+  <text x="670" y="305" class="component-text" text-anchor="middle">• Bull positions</text>
+  <text x="670" y="320" class="component-text" text-anchor="middle">• Cow constraints</text>
+  <text x="670" y="335" class="component-text" text-anchor="middle">• Excluded positions</text>
+  <text x="670" y="360" class="function-name" text-anchor="middle">filter_candidates()</text>
+  <text x="670" y="375" class="component-text" text-anchor="middle">Generic filter helper</text>
 
   <!-- Internal State -->
   <rect x="300" y="420" width="450" height="80" class="data-box"/>
-  <text x="525" y="450" class="component-title" text-anchor="middle">Internal State (Belief State)</text>
-  <text x="525" y="475" class="component-text" text-anchor="middle">candidates: List[str] - Words consistent with all feedback</text>
-  <text x="525" y="495" class="component-text" text-anchor="middle">history: Dict[str, List[int]] - Guess -> Feedback mapping</text>
+  <text x="525" y="440" class="component-title" text-anchor="middle">Internal State (Belief State)</text>
+  <text x="525" y="465" class="component-text" text-anchor="middle">candidates: List[str] - Words consistent with all feedback</text>
+  <text x="525" y="485" class="component-text" text-anchor="middle">history: Dict[str, List[int]] - Guess -> Feedback mapping</text>
 
   <!-- Policy Layer - Sampling -->
   <rect x="50" y="540" width="200" height="100" class="deterministic"/>
@@ -142,13 +142,13 @@ Here's the high-level architecture:
   <text x="400" y="630" class="component-text" text-anchor="middle">for LLM consumption</text>
 
   <!-- LLM Layer -->
-  <rect x="550" y="520" width="200" height="140" class="stochastic"/>
-  <text x="650" y="550" class="component-title" text-anchor="middle">LLM Policy</text>
-  <text x="650" y="575" class="function-name" text-anchor="middle">OpenAI GPT-4o-mini</text>
-  <text x="650" y="595" class="component-text" text-anchor="middle">Temperature: 0</text>
-  <text x="650" y="615" class="component-text" text-anchor="middle">Role: Heuristic ranker</text>
-  <text x="650" y="635" class="component-text" text-anchor="middle">Proposes next guess</text>
-  <text x="650" y="655" class="component-text" text-anchor="middle">from valid candidates</text>
+  <rect x="570" y="520" width="200" height="140" class="stochastic"/>
+  <text x="670" y="540" class="component-title" text-anchor="middle">LLM Policy</text>
+  <text x="670" y="565" class="function-name" text-anchor="middle">OpenAI GPT-4o-mini</text>
+  <text x="670" y="585" class="component-text" text-anchor="middle">Temperature: 0</text>
+  <text x="670" y="605" class="component-text" text-anchor="middle">Role: Heuristic ranker</text>
+  <text x="670" y="625" class="component-text" text-anchor="middle">Proposes next guess</text>
+  <text x="670" y="645" class="component-text" text-anchor="middle">from valid candidates</text>
 
   <!-- Validation Layer -->
   <rect x="300" y="670" width="200" height="120" class="deterministic"/>
@@ -159,12 +159,12 @@ Here's the high-level architecture:
   <text x="400" y="780" class="function-name" text-anchor="middle">if guess in candidates</text>
 
   <!-- Retry Loop -->
-  <rect x="550" y="700" width="200" height="120" class="loop-box"/>
-  <text x="650" y="730" class="component-title" text-anchor="middle">Retry Loop</text>
-  <text x="650" y="755" class="component-text" text-anchor="middle">Max 5 attempts</text>
-  <text x="650" y="775" class="component-text" text-anchor="middle">Feed error back to LLM</text>
-  <text x="650" y="795" class="component-text" text-anchor="middle">Fallback: random choice</text>
-  <text x="650" y="810" class="component-text" text-anchor="middle">if all retries fail</text>
+  <rect x="570" y="700" width="200" height="120" class="loop-box"/>
+  <text x="670" y="730" class="component-title" text-anchor="middle">Retry Loop</text>
+  <text x="670" y="755" class="component-text" text-anchor="middle">Max 5 attempts</text>
+  <text x="670" y="775" class="component-text" text-anchor="middle">Feed error back to LLM</text>
+  <text x="670" y="795" class="component-text" text-anchor="middle">Fallback: random choice</text>
+  <text x="670" y="810" class="component-text" text-anchor="middle">if all retries fail</text>
 
   <!-- Main Agent Loop -->
   <rect x="50" y="840" width="700" height="120" class="deterministic"/>
@@ -177,8 +177,8 @@ Here's the high-level architecture:
   <text x="240" y="265" class="data-label">solution</text>
 
   <!-- Game Logic to Belief Update -->
-  <path class="arrow-data" d="M 500 290 L 550 290"/>
-  <text x="502" y="280" class="data-label">feedback</text>
+  <path class="arrow-data" d="M 500 290 L 570 290"/>
+  <text x="507" y="280" class="data-label">feedback</text>
 
   <!-- Belief Update to Internal State -->
   <path class="arrow-data" d="M 650 380 L 650 420"/>
@@ -193,12 +193,12 @@ Here's the high-level architecture:
   <text x="405" y="520" class="data-label">history, feedback</text>
 
   <!-- Policy Sampling to LLM -->
-  <path class="arrow" d="M 200 640 L 200 650 L 550 650"/>
+  <path class="arrow" d="M 200 640 L 200 650 L 570 650"/>
   <text x="225" y="665" class="data-label">20 examples</text>
 
   <!-- Policy Formatting to LLM -->
-  <path class="arrow" d="M 500 590 L 550 590"/>
-  <text x="501" y="580" class="data-label">formatted</text>
+  <path class="arrow" d="M 500 590 L 570 590"/>
+  <text x="505" y="580" class="data-label">formatted</text>
   <text x="510" y="605" class="data-label">prompt</text>
 
   <!-- LLM to Validation -->
@@ -206,9 +206,9 @@ Here's the high-level architecture:
   <text x="540" y="675" class="data-label">LLM response</text>
 
   <!-- Validation to Retry Loop (invalid) -->
-  <path class="arrow-error" d="M 500 750 L 550 750"/>
-  <text x="505" y="740" class="data-label">invalid</text>
-  <text x="505" y="760" class="data-label">guess</text>
+  <path class="arrow-error" d="M 500 750 L 570 750"/>
+  <text x="510" y="740" class="data-label">invalid</text>
+  <text x="510" y="760" class="data-label">guess</text>
 
   <!-- Retry Loop back to LLM -->
   <path class="arrow-error" d="M 680 700 L 680 660"/>
@@ -223,7 +223,7 @@ Here's the high-level architecture:
   <text x="30" y="700" class="data-label">guess</text>
 
   <!-- Retry Loop to Agent Loop (fallback) -->
-  <path class="arrow-error" d="M 750 800 L 800 800 L 800 900 L 750 900"/>
+  <path class="arrow-error" d="M 770 800 L 800 800 L 800 900 L 750 900"/>
   <text x="810" y="850" class="data-label">fallback</text>
 
 </svg>
