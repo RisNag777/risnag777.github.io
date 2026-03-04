@@ -517,16 +517,16 @@ Put together, the system forms a clear, iterative decision loop:
 
 </svg>
 
-At a high level, each turn does:
+At a high level, each turn:
 
-1. Compute feedback for the current guess
-2. Check if the solution is found
-3. Update the belief state (candidate list)
-4. Sample example candidates and format the prompt
-5. Ask the LLM to propose the next guess
-6. Extract and validate the guess
-7. Retry or fall back if needed
-8. Loop to the next turn
+1. Computes feedback for the current guess
+2. Checks if the solution is found
+3. Updates the belief state (candidate list)
+4. Samples example candidates and format the prompt
+5. Asks the LLM to propose the next guess
+6. Extracts and validate the guess
+7. Retries or fall back if needed
+8. Loops to the next turn
 
 ### Detailed Pipeline Steps
 
