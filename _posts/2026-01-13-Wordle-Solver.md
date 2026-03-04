@@ -910,7 +910,7 @@ Wordle turned out to be a perfect sandbox for these ideas: small enough to fully
 
 ## Resources
 
-- **GitHub Repository**: [https://github.com/RisNag777/auto-solver-daily-puzzle-1](https://github.com/RisNag777/auto-solver-daily-puzzle)
+- **GitHub Repository**: [https://github.com/RisNag777/auto-solver-daily-puzzle](https://github.com/RisNag777/auto-solver-daily-puzzle)
 - **OpenAI API Docs**: [https://platform.openai.com/docs](https://platform.openai.com/docs)
 
 *Feel free to fork, modify, and build on this project, especially if you want to explore new agent architectures on top of simple, well-defined games like Wordle.*
