@@ -630,7 +630,7 @@ for i, (ch, fb) in enumerate(zip(guess, feedback)):
 
 `get_feedback()` uses a two-pass algorithm for a reason:
 
-- **First pass**: mark bulls and decrement a `Counter` of letters in the solution  
+- **First pass**: mark bulls and decrement a counter of letters in the solution  
 - **Second pass**: mark cows only if `solution_counts[letter] > 0`
 
 Consider `EERIE` vs `CRANE`:
@@ -683,7 +683,7 @@ The retry loop is where the architecture earns its keep:
 
 This pattern turns the LLM into a **constrained policy proposal engine** instead of an untrusted oracle.
 
-From an **operational AI** perspective, this is the same reliability pattern you see in production agents that call internal APIs or tools: the model proposes a structured action, a deterministic validator checks schema and business constraints, failures trigger targeted retries, and only then does the action actually execute. Wordle is a toy domain, but the architecture—**propose -> validate -> retry -> fallback**—is exactly the kind of pattern you want when you're shipping enterprise agents that must not hallucinate API calls or corrupt downstream systems.
+From an **operational AI** perspective, this is the same reliability pattern you see in production agents that call internal APIs or tools: the model proposes a structured action, a deterministic validator checks schema and business constraints, failures trigger targeted retries, and only then does the action actually execute. Wordle is a toy domain, but the architecture, **propose -> validate -> retry -> fallback**, is exactly the kind of pattern you want when you're shipping enterprise agents that must not hallucinate API calls or corrupt downstream systems.
 
 ## What Worked Well
 
@@ -693,7 +693,7 @@ From an **operational AI** perspective, this is the same reliability pattern you
 - **Belief-state representation**:
   - Maintaining an explicit candidate list makes behavior easy to reason about
 - **Duplicate-letter handling**:
-  - `excluded_positions` plus bulls/cows maps correctly model tricky Wordle edge cases
+  - By combining `excluded_positions` with bull/cow mapping, the system maintains a belief state that correctly resolves duplicate-letter constraints.
 - **Propose/verify loop**:
   - Made the system robust to LLM hallucinations and constraint violations
 - **Prompt design**:
@@ -714,7 +714,7 @@ From an **operational AI** perspective, this is the same reliability pattern you
   - Early prompts tried to combine explanation, constraint reasoning, and candidate enumeration
   - Splitting responsibilities (game logic vs policy vs validation) made debugging and extension much easier
 
-The main meta-lesson: **agentic behavior is mostly architecture**—how you represent state, enforce rules, and control where the LLM is allowed to act.
+The core takeaway is that **Agentic behavior is a function of system design**. True autonomy requires a rigorous separation between the probabilistic policy (the LLM) and the deterministic environment (the state representation and transition rules)
 
 ## Tutorial 1: Setting Up the Project Locally
 
@@ -728,8 +728,8 @@ The main meta-lesson: **agentic behavior is mostly architecture**—how you repr
 ### Step 1: Clone the Repository
 
 ```bash
-git clone <your-repository-url>
-cd auto-solver-daily-puzzle-1
+git clone https://github.com/RisNag777/auto-solver-daily-puzzle.git
+cd auto-solver-daily-puzzle
 ```
 
 ### Step 2: Create and Activate a Virtual Environment
@@ -770,13 +770,13 @@ OPENAI_API_KEY=your_openai_api_key_here
 DATA_FOLDER=data  # optional, defaults to "data"
 ```
 
-Get your OpenAI API key from `https://platform.openai.com/api-keys`.
+Get your OpenAI API key from [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys).
 
 ### Step 5: Verify the Word List
 
 Ensure `data/words.txt` exists and contains one 5-letter word per line. If you want to use the canonical Wordle list, you can start from resources like:
 
-- `https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b`
+- [https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b](https://gist.github.com/cfreshman/a03ef2cba789d8cf00c08f767e0fad7b)
 
 ## Tutorial 2: Running the Wordle Agent
 
@@ -843,7 +843,7 @@ This solver has achieved a **100% success rate** in my tests on the standard Wor
 
 ### Why GPT-4o-mini at temperature 0?
 
-I intentionally chose **GPT-4o-mini** with **temperature = 0** to optimize for **unit economics** and **deterministic behavior** over raw creativity. The model is inexpensive enough to run many games or simulations without worrying about cost, and temperature 0 ensures that, given the same state, the policy behaves predictably. Exactly what you want when you're thinking like a production engineer, not just a tinkerer.
+I intentionally chose **GPT-4o-mini** with **temperature = 0** to optimize for **unit economics** and **deterministic behavior** over raw creativity. The model is inexpensive enough to run many games or simulations without worrying about cost, and temperature 0 ensures that, given the same state, the policy behaves predictably.
 
 ### Visualizing Belief-State Shrinkage
 
@@ -869,7 +869,7 @@ I didn't benchmark this as a research system, but qualitatively:
   - Given the same solution and initial conditions, the agent tends to follow similar trajectories
   - But because the initial guess and solution are random, each game still feels different
 
-The solver reliably plays "hard mode" Wordle, obeying all constraints—even when the LLM tries to cheat.
+The solver reliably plays "hard mode" Wordle, obeying all constraints (even when the LLM tries to cheat!)
 
 ## Future Improvements
 
@@ -904,14 +904,14 @@ The key lessons:
 - **Architecture matters more than any single prompt**: once you have a clean separation between model, state, and policy, agent-like behavior emerges naturally.
 - **LLMs are heuristic engines, not rule engines**: they're fantastic at proposing plausible options, but correctness must be enforced outside the model.
 - **Propose -> validate -> retry -> fallback** is a robust pattern for building reliable systems on top of probabilistic models.
-- Most of the "hard work" in an agent is in the "boring" parts: state representation, edge-case handling, and constraints.
+- Most of the hard work in an agent is in the "boring" parts: state representation, edge-case handling, and constraints.
 
 Wordle turned out to be a perfect sandbox for these ideas: small enough to fully understand, but rich enough to expose the difference between generative text and agentic behavior.
 
 ## Resources
 
-- **GitHub Repository**: `[https://github.com/RisNag777/auto-solver-daily-puzzle-1](https://github.com/RisNag777/auto-solver-daily-puzzle)`
-- **OpenAI API Docs**: `[https://platform.openai.com/docs](https://platform.openai.com/docs)`
+- **GitHub Repository**: [https://github.com/RisNag777/auto-solver-daily-puzzle-1](https://github.com/RisNag777/auto-solver-daily-puzzle)
+- **OpenAI API Docs**: [https://platform.openai.com/docs](https://platform.openai.com/docs)
 
-*Feel free to fork, modify, and build on this project—especially if you want to explore new agent architectures on top of simple, well-defined games like Wordle.*
+*Feel free to fork, modify, and build on this project, especially if you want to explore new agent architectures on top of simple, well-defined games like Wordle.*
 
