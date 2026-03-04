@@ -40,7 +40,7 @@ The loop becomes:
 5. Choose the next guess from that filtered belief state
 6. Repeat until the solution is found (≤ 6 guesses)
 
-Instead of treating Wordle as a language modeling task ("predict the next good word"), the system treats it as **sequential inference**: maintain a belief over possible worlds, observe feedback, update, and act.
+Instead of treating Wordle as a language modeling task (where the model predicts the next good word), the system treats it as **sequential inference**: maintaining a belief over possible words, observe feedback, update, and act.
 
 ## System Architecture
 
