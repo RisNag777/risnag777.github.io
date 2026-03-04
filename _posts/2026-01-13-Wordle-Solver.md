@@ -30,7 +30,7 @@ Reframed in those terms:
 
 The loop becomes:
 
-1. Start with a list of all possible solutions (e.g., the 2,315 canonical Wordle answers)
+1. Start with a list of all possible solutions (i.e., the 2,315 canonical Wordle answers)
 2. Pick an initial 5-letter guess
 3. Receive feedback:
    - `2` (Green / Bull): correct letter, correct position  
