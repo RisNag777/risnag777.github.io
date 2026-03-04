@@ -62,6 +62,8 @@ Here's the high-level architecture:
       .data-label { font: 500 12px ui-sans-serif; fill: #059669; }
       .deterministic { fill: #EEF2FF; stroke: #4F46E5; stroke-width: 2.5; rx: 12; ry: 12; }
       .stochastic { fill: #FFF7ED; stroke: #F59E0B; stroke-width: 2.5; stroke-dasharray: 5,3; rx: 12; ry: 12; }
+      .data_source { fill: #F0FDF4; stroke: #10B981; stroke-width: 2.5; rx: 12; ry: 12; }
+      .fallback { fill: #FEF3C7; stroke: #F59E0B; stroke-width: 2.5; rx: 12; ry: 12; }
       .data-box { fill: #F0FDF4; stroke: #10B981; stroke-width: 2; rx: 8; ry: 8; }
       .arrow { stroke: #111827; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
       .arrow-data { stroke: #059669; stroke-width: 2; fill: none; marker-end: url(#arrowhead-green); }
@@ -84,12 +86,16 @@ Here's the high-level architecture:
   <text x="450" y="65" class="subtitle" text-anchor="middle">Deterministic Core + Stochastic Policy Layer</text>
 
   <!-- Legend -->
-  <rect x="50" y="90" width="200" height="90" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1" rx="8"/>
+  <rect x="50" y="90" width="360" height="90" fill="#F9FAFB" stroke="#D1D5DB" stroke-width="1" rx="8"/>
   <text x="60" y="115" class="component-title">Legend</text>
   <rect x="60" y="125" width="60" height="20" class="deterministic"/>
   <text x="130" y="140" class="component-text">Deterministic</text>
   <rect x="60" y="150" width="60" height="20" class="stochastic"/>
   <text x="130" y="165" class="component-text">Stochastic/LLM</text>
+  <rect x="260" y="125" width="60" height="20" class="data_source"/>
+  <text x="330" y="140" class="component-text">Data Source</text>
+  <rect x="260" y="150" width="60" height="20" class="fallback"/>
+  <text x="330" y="165" class="component-text">Fallback</text>
 
   <!-- Data Source -->
   <rect x="50" y="200" width="180" height="100" class="data-box"/>
