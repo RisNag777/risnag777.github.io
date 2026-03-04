@@ -125,7 +125,7 @@ Here's the high-level architecture:
   <rect x="300" y="420" width="450" height="80" class="data-box"/>
   <text x="525" y="450" class="component-title" text-anchor="middle">Internal State (Belief State)</text>
   <text x="525" y="475" class="component-text" text-anchor="middle">candidates: List[str] - Words consistent with all feedback</text>
-  <text x="525" y="495" class="component-text" text-anchor="middle">history: Dict[str, List[int]] - Guess → Feedback mapping</text>
+  <text x="525" y="495" class="component-text" text-anchor="middle">history: Dict[str, List[int]] - Guess -> Feedback mapping</text>
 
   <!-- Policy Layer - Sampling -->
   <rect x="50" y="540" width="200" height="100" class="deterministic"/>
@@ -531,7 +531,7 @@ At a high level, each turn does:
 
 2. **Step 1 – Get Feedback**
    - Use `get_feedback()` to compute `[0, 1, 2, 0, 2]`-style feedback
-   - Update a `history` dictionary mapping guess → feedback
+   - Update a `history` dictionary mapping guess -> feedback
 
 3. **Step 2 – Check Win Condition**
    - If `guess == solution`:
@@ -582,7 +582,7 @@ At a high level, each turn does:
      - Pick a random candidate as a safe fallback
    - Proceed to the next turn
 
-This loop embodies a classic pattern: **propose → validate → retry → fallback**.
+This loop embodies a classic pattern: **propose -> validate -> retry -> fallback**.
 
 ## Technical Deep Dive
 
@@ -677,7 +677,7 @@ The retry loop is where the architecture earns its keep:
 
 This pattern turns the LLM into a **constrained policy proposal engine** instead of an untrusted oracle.
 
-From an **operational AI** perspective, this is the same reliability pattern you see in production agents that call internal APIs or tools: the model proposes a structured action, a deterministic validator checks schema and business constraints, failures trigger targeted retries, and only then does the action actually execute. Wordle is a toy domain, but the architecture—**propose → validate → retry → fallback**—is exactly the kind of pattern you want when you're shipping enterprise agents that must not hallucinate API calls or corrupt downstream systems.
+From an **operational AI** perspective, this is the same reliability pattern you see in production agents that call internal APIs or tools: the model proposes a structured action, a deterministic validator checks schema and business constraints, failures trigger targeted retries, and only then does the action actually execute. Wordle is a toy domain, but the architecture—**propose -> validate -> retry -> fallback**—is exactly the kind of pattern you want when you're shipping enterprise agents that must not hallucinate API calls or corrupt downstream systems.
 
 ## What Worked Well
 
@@ -858,7 +858,7 @@ I didn't benchmark this as a research system, but qualitatively:
 - The deterministic core is trivial CPU-wise; it's just list filtering and simple counters
 - The main latency comes from LLM calls:
   - 1–5 calls per turn, depending on whether retries are needed
-  - 6 turns max → typically well within interactive latency
+  - 6 turns max -> typically well within interactive latency
 - With `temperature=0`, behavior is **consistent**:
   - Given the same solution and initial conditions, the agent tends to follow similar trajectories
   - But because the initial guess and solution are random, each game still feels different
@@ -897,7 +897,7 @@ The key lessons:
 
 - **Architecture matters more than any single prompt**: once you have a clean separation between model, state, and policy, agent-like behavior emerges naturally.
 - **LLMs are heuristic engines, not rule engines**: they're fantastic at proposing plausible options, but correctness must be enforced outside the model.
-- **Propose → validate → retry → fallback** is a robust pattern for building reliable systems on top of probabilistic models.
+- **Propose -> validate -> retry -> fallback** is a robust pattern for building reliable systems on top of probabilistic models.
 - Most of the "hard work" in an agent is in the "boring" parts: state representation, edge-case handling, and constraints.
 
 Wordle turned out to be a perfect sandbox for these ideas: small enough to fully understand, but rich enough to expose the difference between generative text and agentic behavior.
