@@ -293,7 +293,7 @@ Picks a small sample (default 20) from the remaining candidates to show the LLM:
 
 #### 6. `feedback_explanation()` (`wordle_agent.py`)
 
-Takes the current guess and feedback and converts them into a human-readable explanation for the LLM, e.g.:
+Takes the current guess and feedback and converts them into a human-readable explanation for the LLM:
 
 - Which letters are absent
 - Which letters are bulls (and at which indices)
