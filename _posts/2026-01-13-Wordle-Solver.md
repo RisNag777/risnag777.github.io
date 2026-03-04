@@ -17,7 +17,7 @@ This post walks through that journey: the core idea, the system architecture, th
 
 At its heart, Wordle is a **belief-state search problem**.
 
-A good Wordle solver isn't "making guesses" so much as **updating its beliefs** about the hidden word. Each guess and its feedback carve away impossible words until only the true solution remains.
+A good Wordle solver is, in reality, **updating its beliefs** about the hidden word. Each guess and its feedback carve away impossible words until only the true solution remains.
 
 Reframed in those terms:
 
