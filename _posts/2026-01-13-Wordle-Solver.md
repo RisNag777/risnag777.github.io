@@ -330,7 +330,7 @@ This function is where deterministic game logic and stochastic policy come toget
 
 Put together, the system forms a clear, iterative decision loop:
 
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="-100 0 1000 1000">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="-100 0 1000 1000">
   <defs>
     <style>
       .title { font: 700 28px ui-sans-serif; fill: #111827; }
