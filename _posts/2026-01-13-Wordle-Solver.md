@@ -22,7 +22,7 @@ My first instinct was to build a prompt for `gpt-4o-mini`. The prompt defined:
 - Constraint Enforcement
 
 The prompt turned out to be a total dud.  
-After guessing "baked" and receiving feedback [🟨, 🟩, ⬜, ⬜, ⬜], the model confidently proposed "batty". However, despite knowing that "b" was yellow, it was in the exact same position in both words!
+After guessing "BAKED" and receiving feedback [🟨, 🟩, ⬜, ⬜, ⬜], the model confidently proposed "BATTY". However, despite knowing that "B" was yellow, it was in the exact same position in both words!
 
 ### Refining the Logic
 
@@ -41,10 +41,11 @@ This was a deterministic problem that I was trying to solve with a non-determini
 
 ### Adding Deterministic Tools
 
-I found a list of all possible (2315) Wordle words and used that as my search space. I also added tools to reduce the search space based on all constraints. In order to deal with the issue of repeated letters, the tools processed the constraints in order from green, to yellow, to grey. The tools worked really well but there was one lingering problem: I could not pass all 2315 words to the LLM. That would unnecessarily increase the number of tokens used by the model. Instead, I had a tool generate a random sample of 20 words which respected all constraints and would tell the model to pick its next guess from words similar to the ones in the random sample.  
+I found a list of all possible (2315) Wordle words and used that as my search space. I also added tools to reduce the search space based on all constraints. In order to deal with the issue of repeated letters, the tools processed the constraints in order from green, to yellow, to grey.
+These tools worked really well but there was one lingering problem: I could not pass all 2315 words to the LLM. That would unnecessarily increase the number of tokens used by the model. Instead, I had a tool generate a random sample of 20 words which respected all constraints and would tell the model to pick its next guess from words similar to the ones in the random sample.  
 
 ### The Takeaway
 
-Even with all this, there were cases where the agent still made bad guesses that didn't match the hard-mode constraints. To top this all of, I could've easily replaced the LLM with a random number generator and solved Wordle within 6 guesses. This wasn't really the big, unequivocal success that would change the way the world played Wordle, but a useful thing for me to learn early in this journey. Not every problem can be solved by an LLM, but also, not every problem **needs** an LLM. An LLM cannot be used effectively when there is an extremely limiting set of hard constraints that needs to be applied in order to get deterministic results. An LLM works best for problems that require a fuzzy solution, i.e., one where there is room for interpretation.
+Even with all this, there were cases where the agent still made bad guesses that didn't match the hard-mode constraints. To top this all of, I could've easily replaced the LLM with a random number generator and still solved Wordle within 6 guesses. This wasn't really the big, unequivocal success that would change the way the world played Wordle, but a useful thing for me to learn early in this journey. Not every problem can be solved by an LLM, but also, not every problem **needs** an LLM. An LLM cannot be used effectively when there is an extremely limiting set of hard constraints that needs to be applied in order to get deterministic results. An LLM works best for problems that require a fuzzy solution, i.e., one where there is room for interpretation.
 
 My main takeaway from this project is that agentic design is about more than just the model. The tools that supply the inputs to and process the outputs from the model are extremely important. They are the difference between just asking ChatGPT vs building your own Agentic Workflow. My first foray into building an agent was an unsuccessful one, but despite that, it was an extremely fruitful one.
