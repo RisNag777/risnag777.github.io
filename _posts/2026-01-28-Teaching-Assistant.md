@@ -12,7 +12,12 @@ c. Able to answer your questions in a way that you actually understand and not i
 
 If it's unclear, I had a nightmare that played out exactly like this. In the dream, my favorite football team's star player died and, because it was a nightmare, the exam *still* wasn't postponed. Once I woke up and processed the trauma, I thought about the exam scenario. Nowadays, a student could just open up ChatGPT or Gemini and ask their question, but there's a catch. When the LLM has the entire internet to pull from, you're never 100% certain if the answer is "textbook-accurate". So then, what if the LLM specifically "learned" from your textbook? What if it gave you the answer and also was able to point to the exact chapter, page and paragraph so you could cross check it? That would've been quite the godsend for me back in college. That's what I set out to build.
 
-![question](https://github.com/user-attachments/assets/041b059d-132a-4b97-a620-91cd45ef67fe)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/041b059d-132a-4b97-a620-91cd45ef67fe" 
+       alt="User Input Question Interface" 
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+  <p><i>The Interface.</i></p>
+</div>
 
 ### The Pipeline: Parsing and Retrieval
 
@@ -36,9 +41,19 @@ Finally, the app displays the verified answer alongside the top n relevant chunk
 
 ![Architecture Diagram](../assets/auto_ta/multi-agent_orchestration.svg)
 
-![Answer](https://github.com/user-attachments/assets/7cffcd01-9ed6-49fc-932a-00ed95ac5166)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/7cffcd01-9ed6-49fc-932a-00ed95ac5166" 
+       alt="Generated Answer and Textbook Chunks" 
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 90%;">
+  <p><i>The Scholar’s synthesis.</i></p>
+</div>
 
-![Textbook Chunk](https://github.com/user-attachments/assets/4a98b657-1178-4c92-a174-2c7976022f1a)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/4a98b657-1178-4c92-a174-2c7976022f1a" 
+       alt="Textbook Chunk Metadata" 
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 90%;">
+  <p><i>Raw textbook chunks retrieved by Faiss and verified by the Auditor.</i></p>
+</div>
 
 ### What's Next?
 
