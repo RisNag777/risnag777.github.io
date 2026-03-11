@@ -20,7 +20,7 @@ I used [openstax.org](https://openstax.org/) to source free textbooks that I par
 To turn my text into these vectors, I encoded the `chunk_text` using [`all-MiniLM-L6_v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) from HuggingFace's Sentence-Transformers library.
 > It maps sentences & paragraphs to a 384 dimensional dense vector space and can be used for tasks like clustering or semantic search. - [HuggingFace](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)
 
-Now, the search space is ready. The textbook has been parsed into encoded chunks which have been fed to the vector database. When a user asks a question, is is similarly encoded and Faiss finds the top n most relevant chunks and presents them to the user. This is where the agent comes into play.
+Now, the search space is ready. The textbook has been parsed into encoded chunks which have been fed to the vector database. When a user asks a question, it is similarly encoded and Faiss finds the top n most relevant chunks and presents them to the user. This is where the agent comes into play.
 
 ### Multi-Agent Orchestration
 
