@@ -52,7 +52,8 @@ To keep the system fast and the logic transparent, I bypassed heavy agent framew
 
 1. The Librarian: Before searching the entire textbook, this agent analyzes the list of chapters against the user's question. It tells Faiss exactly which chapters to focus on, thereby improving search speed and reducing the search space.
 2. The Scholar: Once Faiss retrieves the top n most relevant chunks from the chapters picked by the Librarian, the Scholar reads the raw text chunks and synthesizes a comprehensive answer.
-3. The Auditor: This agent evaluates the Scholar's answer and confirms that it is **well-supported** by the source text.  
+3. The Auditor: This agent evaluates the Scholar's answer and confirms that it is **well-supported** by the source text.
+   
 Finally, the app displays the verified answer alongside the top n relevant chunks from the textbook.
 
 <div align="center">
