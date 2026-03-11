@@ -7,7 +7,7 @@ title: "Designing an Agentic Textbook TA"
   <img src="https://github.com/user-attachments/assets/e0e1bf89-2956-4a89-b389-96bf713655bf" 
        alt="User Input Question Interface" 
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
-</div><br><br>
+</div><br>
 
 
 Let's do a quick flashback to our college days. Picture it: You're cramming last minute after not touching your textbook (if you even had one) for the last 3 months. In that last minute rush, if you have any questions about the topics you're studying, your only real option is to call up that one smart friend at 2 in the morning, and pray that they are -
@@ -38,7 +38,7 @@ Now, the search space is ready. The textbook has been parsed into encoded chunks
   <img src="https://github.com/user-attachments/assets/5f42a736-dad9-42c4-bcce-a74748dafbd9" 
        alt="User Input Question Interface" 
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
-</div><br><br>
+</div><br>
 
 ### Multi-Agent Orchestration
 
@@ -48,7 +48,7 @@ To keep the system fast and the logic transparent, I bypassed heavy agent framew
   <img src="https://github.com/user-attachments/assets/42c6e21d-8b83-45be-a571-fd4789d1c5da" 
        alt="User Input Question Interface" 
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
-</div><br><br>
+</div><br>
 
 1. The Librarian: Before searching the entire textbook, this agent analyzes the list of chapters against the user's question. It tells Faiss exactly which chapters to focus on, thereby improving search speed and reducing the search space.
 2. The Scholar: Once Faiss retrieves the top n most relevant chunks from the chapters picked by the Librarian, the Scholar reads the raw text chunks and synthesizes a comprehensive answer.
