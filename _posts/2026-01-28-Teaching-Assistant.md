@@ -3,7 +3,11 @@ layout: post
 title: "Designing an Agentic Textbook TA"
 ---
 
-![AI TA](https://github.com/user-attachments/assets/e0e1bf89-2956-4a89-b389-96bf713655bf)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/e0e1bf89-2956-4a89-b389-96bf713655bf" 
+       alt="User Input Question Interface" 
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+</div>
 
 Let's do a quick flashback to our college days. Picture it: You're cramming last minute after not touching your textbook (if you even had one) for the last 3 months. In that last minute rush, if you have any questions about the topics you're studying, your only real option is to call up that one smart friend at 2 in the morning, and pray that they are -
 a. Awake
