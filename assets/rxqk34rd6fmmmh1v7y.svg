@@ -1,0 +1,41 @@
+<svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#ffffff" />
+  
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4a5568" />
+    </marker>
+  </defs>
+
+  <text x="400" y="40" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#2d3748">Autonomous TA Agent Architecture</text>
+
+  <rect x="325" y="70" width="150" height="50" rx="8" fill="#edf2f7" stroke="#4a5568" stroke-width="2" />
+  <text x="400" y="100" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#2d3748">User Question</text>
+
+  <rect x="325" y="160" width="150" height="50" rx="8" fill="#ebf8ff" stroke="#3182ce" stroke-width="2" />
+  <text x="400" y="190" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#2c5282">1. The Librarian</text>
+  
+  <rect x="325" y="250" width="150" height="60" rx="8" fill="#faf5ff" stroke="#805ad5" stroke-width="2" />
+  <text x="400" y="275" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#553c9a">Faiss Vector DB</text>
+  <text x="400" y="295" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#553c9a">(Filtered by Chapters)</text>
+
+  <rect x="220" y="360" width="150" height="50" rx="8" fill="#f0fff4" stroke="#38a169" stroke-width="2" />
+  <text x="295" y="390" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#22543d">2. The Scholar</text>
+
+  <rect x="430" y="360" width="150" height="50" rx="8" fill="#fff5f5" stroke="#e53e3e" stroke-width="2" />
+  <text x="505" y="390" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#742a2a">3. The Auditor</text>
+
+  <line x1="400" y1="120" x2="400" y2="140" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowhead)" />
+  <line x1="400" y1="210" x2="400" y2="230" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  <path d="M 400 310 L 400 330 L 295 330 L 295 340" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowhead)" />
+  <path d="M 370 385 L 410 385" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowhead)" />
+  
+  <path d="M 400 310 L 400 330 L 505 330 L 505 340" fill="none" stroke="#4a5568" stroke-width="2" stroke-dasharray="4" marker-end="url(#arrowhead)" />
+
+  <rect x="325" y="440" width="150" height="40" rx="20" fill="#2d3748" />
+  <text x="400" y="465" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">Verified Answer</text>
+  <line x1="505" y1="410" x2="505" y2="460" stroke="#4a5568" stroke-width="2" />
+  <line x1="505" y1="460" x2="495" y2="460" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowhead)" />
+
+</svg>
