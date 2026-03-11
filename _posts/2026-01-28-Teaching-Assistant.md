@@ -10,9 +10,9 @@ title: "Designing an Agentic Textbook Teaching Assistant"
 </div><br>
 
 
-Let's do a quick flashback to our college days in the pre-AI era. Picture it: You're cramming last minute after not touching your textbook (if you even had one) for the last 3 months. In that last minute rush, if you have any questions about the topics you're studying, your only real option is to call up that one smart friend at 2 in the morning, and pray that they are -
-a. Awake
-b. Attentive
+Let's do a quick flashback to our college days in the pre-AI era. Picture it: You're cramming last minute after not touching your textbook (if you even had one) for the last 3 months. In that last minute rush, if you have any questions about the topics you're studying, your only real option is to call up that one smart friend at 2 in the morning, and pray that they are -  
+a. Awake  
+b. Attentive  
 c. Able to answer your questions in a way that you actually understand and not in a way that made you realize that there was no way that you would ever understand anything ever again and so you would have no choice but to close the book, give up, hope that someone famous would die tomorrow (leading the exam to get postponed) and go to sleep.
 
 If it's unclear, I had a nightmare that played out exactly like this. In the dream, my favorite football team's star player died and, because it was a nightmare, the exam *still* wasn't postponed. Once I woke up and processed the trauma, I thought about the exam scenario. Nowadays, a student could just open up ChatGPT or Gemini and ask their question, but there's a catch. When the LLM has the entire internet to pull from, you're never 100% certain if the answer is "textbook-accurate". So then, what if the LLM specifically "learned" from your textbook? What if it gave you the answer and also was able to point to the exact chapter, page and paragraph so you could cross check it? That would've been quite the godsend for me back in college. That's what I set out to build.
