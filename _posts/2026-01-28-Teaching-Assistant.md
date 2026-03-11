@@ -12,6 +12,9 @@ c. Able to answer your questions in a way that you actually understand and not i
 
 If it's unclear, I had a nightmare that played out exactly like this. In the dream, my favorite football team's star player died and, because it was a nightmare, the exam *still* wasn't postponed. Once I woke up and processed the trauma, I thought about the exam scenario. Nowadays, a student could just open up ChatGPT or Gemini and ask their question, but there's a catch. When the LLM has the entire internet to pull from, you're never 100% certain if the answer is "textbook-accurate". So then, what if the LLM specifically "learned" from your textbook? What if it gave you the answer and also was able to point to the exact chapter, page and paragraph so you could cross check it? That would've been quite the godsend for me back in college. That's what I set out to build.
 
+![question](https://github.com/user-attachments/assets/041b059d-132a-4b97-a620-91cd45ef67fe)
+
+
 ### The Pipeline: Parsing and Retrieval
 
 I used [openstax.org](https://openstax.org/) to source free textbooks that I parsed using [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/). Since passing an entire textbook into the LLM's context window is both expensive and inefficient, I broke the text into chunks capturing `chapter_title` and `page_num` in addition to `chunk_text`. I made use of a vector database (Faiss - Facebook AI Similarity Search) to pinpoint the most relevant chapters to further reduce the number of tokens being passed to the LLM.
@@ -29,6 +32,10 @@ To keep the system fast and the logic transparent, I bypassed heavy agent framew
 2. The Scholar: Once Faiss retrieves the top n most relevant chunks from the chapters picked by the Librarian, the Scholar reads the raw text chunks and synthesizes a comprehensive answer.
 3. The Auditor: This agent evaluates the Scholar's answer and confirms that it is **well-supported** by the source text.  
 Finally, the app displays the verified answer alongside the top n relevant chunks from the textbook.
+
+![Answer](https://github.com/user-attachments/assets/7cffcd01-9ed6-49fc-932a-00ed95ac5166)
+
+![Textbook Chunk](https://github.com/user-attachments/assets/4a98b657-1178-4c92-a174-2c7976022f1a)
 
 ### What's Next?
 
