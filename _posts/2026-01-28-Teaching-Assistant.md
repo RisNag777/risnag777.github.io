@@ -34,12 +34,13 @@ Now, the search space is ready. The textbook has been parsed into encoded chunks
 ### Multi-Agent Orchestration
 
 To keep the system fast and the logic transparent, I bypassed heavy agent frameworks in favor of direct orchestration using the OpenAI SDK. By building a custom state machine, I gained total control over the handoffs between three specialized agents:
+
+![Architecture Diagram](../assets/auto_ta/multi-agent_orchestration.svg)
+
 1. The Librarian: Before searching the entire textbook, this agent analyzes the list of chapters against the user's question. It tells Faiss exactly which chapters to focus on, thereby improving search speed and reducing the search space.
 2. The Scholar: Once Faiss retrieves the top n most relevant chunks from the chapters picked by the Librarian, the Scholar reads the raw text chunks and synthesizes a comprehensive answer.
 3. The Auditor: This agent evaluates the Scholar's answer and confirms that it is **well-supported** by the source text.  
 Finally, the app displays the verified answer alongside the top n relevant chunks from the textbook.
-
-![Architecture Diagram](../assets/auto_ta/multi-agent_orchestration.svg)
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/7cffcd01-9ed6-49fc-932a-00ed95ac5166" 
