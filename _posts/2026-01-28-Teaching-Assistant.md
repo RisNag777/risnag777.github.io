@@ -10,7 +10,7 @@ title: "Designing an Agentic Textbook Teaching Assistant"
 </div><br>
 
 
-Let's do a quick flashback to our college days. Picture it: You're cramming last minute after not touching your textbook (if you even had one) for the last 3 months. In that last minute rush, if you have any questions about the topics you're studying, your only real option is to call up that one smart friend at 2 in the morning, and pray that they are -
+Let's do a quick flashback to our college days in the pre-AI era. Picture it: You're cramming last minute after not touching your textbook (if you even had one) for the last 3 months. In that last minute rush, if you have any questions about the topics you're studying, your only real option is to call up that one smart friend at 2 in the morning, and pray that they are -
 a. Awake
 b. Attentive
 c. Able to answer your questions in a way that you actually understand and not in a way that made you realize that there was no way that you would ever understand anything ever again and so you would have no choice but to close the book, give up, hope that someone famous would die tomorrow (leading the exam to get postponed) and go to sleep.
