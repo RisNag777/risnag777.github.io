@@ -29,13 +29,15 @@ To turn my text into these vectors, I encoded the `chunk_text` using [`all-MiniL
 
 Now, the search space is ready. The textbook has been parsed into encoded chunks which have been fed to the vector database. When a user asks a question, it is similarly encoded and Faiss finds the top n most relevant chunks and presents them to the user. This is where the agent comes into play.
 
-![Architecture Diagram](../assets/auto_ta/pipeline.svg)
+![Pipeline](https://github.com/user-attachments/assets/5f42a736-dad9-42c4-bcce-a74748dafbd9)
+
 
 ### Multi-Agent Orchestration
 
 To keep the system fast and the logic transparent, I bypassed heavy agent frameworks in favor of direct orchestration using the OpenAI SDK. By building a custom state machine, I gained total control over the handoffs between three specialized agents:
 
-![Architecture Diagram](../assets/auto_ta/multi-agent_orchestration.svg)
+![multi-agent_architecture](https://github.com/user-attachments/assets/42c6e21d-8b83-45be-a571-fd4789d1c5da)
+
 
 1. The Librarian: Before searching the entire textbook, this agent analyzes the list of chapters against the user's question. It tells Faiss exactly which chapters to focus on, thereby improving search speed and reducing the search space.
 2. The Scholar: Once Faiss retrieves the top n most relevant chunks from the chapters picked by the Librarian, the Scholar reads the raw text chunks and synthesizes a comprehensive answer.
