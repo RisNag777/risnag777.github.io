@@ -14,7 +14,6 @@ If it's unclear, I had a nightmare that played out exactly like this. In the dre
 
 ![question](https://github.com/user-attachments/assets/041b059d-132a-4b97-a620-91cd45ef67fe)
 
-
 ### The Pipeline: Parsing and Retrieval
 
 I used [openstax.org](https://openstax.org/) to source free textbooks that I parsed using [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/). Since passing an entire textbook into the LLM's context window is both expensive and inefficient, I broke the text into chunks capturing `chapter_title` and `page_num` in addition to `chunk_text`. I made use of a vector database (Faiss - Facebook AI Similarity Search) to pinpoint the most relevant chapters to further reduce the number of tokens being passed to the LLM.
