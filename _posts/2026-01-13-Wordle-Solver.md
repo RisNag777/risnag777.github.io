@@ -3,7 +3,11 @@ layout: post
 title: "What Building a Wordle Solver Taught Me About AI Agents"
 ---
 
-![Wordle](https://github.com/user-attachments/assets/bcf01716-7c22-461b-91e8-6162716f42d4)
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/bcf01716-7c22-461b-91e8-6162716f42d4" 
+       alt="User Input Question Interface" 
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+</div><br>
 
 Like most of the human race, towards the end of COVID, I was obsessed with Wordle. Over time my own streaks faded, but the game never really left me. My wife still plays Wordle religiously every morning, and our daily ritual is to solve it together in bed before we kickstart our day. On the days we're completely stumped, my phone quietly becomes our unofficial "six extra lives".
 
