@@ -24,6 +24,8 @@ To turn my text into these vectors, I encoded the `chunk_text` using [`all-MiniL
 
 Now, the search space is ready. The textbook has been parsed into encoded chunks which have been fed to the vector database. When a user asks a question, it is similarly encoded and Faiss finds the top n most relevant chunks and presents them to the user. This is where the agent comes into play.
 
+![Architecture Diagram](../assets/auto_ta/pipeline.svg)
+
 ### Multi-Agent Orchestration
 
 To keep the system fast and the logic transparent, I bypassed heavy agent frameworks in favor of direct orchestration using the OpenAI SDK. By building a custom state machine, I gained total control over the handoffs between three specialized agents:
@@ -32,7 +34,7 @@ To keep the system fast and the logic transparent, I bypassed heavy agent framew
 3. The Auditor: This agent evaluates the Scholar's answer and confirms that it is **well-supported** by the source text.  
 Finally, the app displays the verified answer alongside the top n relevant chunks from the textbook.
 
-![Architecture Diagram](../assets/multi-agent_orchestration.svg)
+![Architecture Diagram](../assets/auto_ta/multi-agent_orchestration.svg)
 
 ![Answer](https://github.com/user-attachments/assets/7cffcd01-9ed6-49fc-932a-00ed95ac5166)
 
