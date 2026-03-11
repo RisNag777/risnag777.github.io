@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Designing an Agentic Textbook TA"
+title: "Designing an Agentic Textbook Teaching Assistant"
 ---
 
 <div align="center">
