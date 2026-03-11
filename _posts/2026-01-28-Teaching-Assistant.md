@@ -32,6 +32,8 @@ To keep the system fast and the logic transparent, I bypassed heavy agent framew
 3. The Auditor: This agent evaluates the Scholar's answer and confirms that it is **well-supported** by the source text.  
 Finally, the app displays the verified answer alongside the top n relevant chunks from the textbook.
 
+![Architecture Diagram](../assets/multi-agent_orchestration.svg)
+
 ![Answer](https://github.com/user-attachments/assets/7cffcd01-9ed6-49fc-932a-00ed95ac5166)
 
 ![Textbook Chunk](https://github.com/user-attachments/assets/4a98b657-1178-4c92-a174-2c7976022f1a)
