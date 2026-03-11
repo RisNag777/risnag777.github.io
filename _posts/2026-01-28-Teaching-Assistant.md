@@ -26,7 +26,7 @@ If it's unclear, I had a nightmare that played out exactly like this. In the dre
 
 ### The Pipeline: Parsing and Retrieval
 
-I used [openstax.org](https://openstax.org/) to source free textbooks that I parsed using [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/). Since passing an entire textbook into the LLM's context window is both expensive and inefficient, I broke the text into chunks capturing `chapter_title` and `page_num` in addition to `chunk_text`. I made use of a vector database (Faiss - Facebook AI Similarity Search) to pinpoint the most relevant chapters to further reduce the number of tokens being passed to the LLM.
+I used [openstax.org](https://openstax.org/) to source free textbooks that I parsed using [PyMuPDF](https://pymupdf.readthedocs.io/en/latest/). Since passing an entire textbook into the LLM's context window is both expensive and inefficient, I broke the text into chunks capturing `chapter_title` and `page_num` in addition to `chunk_text`. I made use of a vector database ([Faiss](https://github.com/facebookresearch/faiss) - Facebook AI Similarity Search) to pinpoint the most relevant chapters to further reduce the number of tokens being passed to the LLM.
 > So, given a set of vectors, we can index them using Faiss — then using another vector (the query vector), we search for the most similar vectors within the index. - [Pinecone.io](https://www.pinecone.io/learn/series/faiss/faiss-tutorial/)
 
 To turn my text into these vectors, I encoded the `chunk_text` using [`all-MiniLM-L6_v2`](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) from HuggingFace's Sentence-Transformers library.
