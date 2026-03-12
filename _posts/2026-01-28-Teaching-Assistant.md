@@ -21,7 +21,7 @@ If it's unclear, I had a nightmare that played out exactly like this. In the dre
   <img src="https://github.com/user-attachments/assets/041b059d-132a-4b97-a620-91cd45ef67fe" 
        alt="User Input Question Interface" 
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
-  <p><i>The Interface.</i></p>
+  <p><i>The interface of the Autonomous Teaching Assistant</i></p>
 </div>
 
 ### The Pipeline: Parsing and Retrieval
