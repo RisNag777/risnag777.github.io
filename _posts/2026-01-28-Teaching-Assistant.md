@@ -60,14 +60,14 @@ Finally, the app displays the verified answer alongside the top n relevant chunk
   <img src="https://github.com/user-attachments/assets/7cffcd01-9ed6-49fc-932a-00ed95ac5166" 
        alt="Generated Answer and Textbook Chunks" 
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 90%;">
-  <p><i>The Scholar’s synthesis.</i></p>
+  <p><i>The Scholar’s synthesis</i></p>
 </div>
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/4a98b657-1178-4c92-a174-2c7976022f1a" 
        alt="Textbook Chunk Metadata" 
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 90%;">
-  <p><i>Raw textbook chunks retrieved by Faiss and verified by the Auditor.</i></p>
+  <p><i>Raw textbook chunks retrieved by Faiss and verified by the Auditor</i></p>
 </div>
 
 ### What's Next?
