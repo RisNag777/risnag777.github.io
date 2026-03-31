@@ -47,7 +47,7 @@ Because of the scale of an eight-agent "Production Crew," I transitioned from ma
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/a3f95bbe-5a2e-4246-883b-dce0f18060da" 
-       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px;">
 </div>
 
 ### Future Roadmap
