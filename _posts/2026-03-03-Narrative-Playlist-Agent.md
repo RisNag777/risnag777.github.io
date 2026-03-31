@@ -17,6 +17,12 @@ While using this feature, I began to imagine a different scenario. What if, inst
   <p><i>The narrative flow for the generated playlist</i></p>
 </div>
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/ef1e16ea-1a78-4ad6-b5cd-0a7dbf416f44" 
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+  <p><i>The energy arc for the generated playlist</i></p>
+</div>
+
 ### The Production Crew
 To bring my vision to life, I made use of a Production Crew of 8 specialized agents, each with a distinct role in the creative pipeline -
 1. The Music Supervisor - translates the user's vibe into 4-6 emotional phases (like acts in a movie plot)
