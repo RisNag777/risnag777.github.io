@@ -5,7 +5,7 @@ title: "Building a Narrative Playlist Generator: From Concept to Reality"
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/f971de46-8745-4026-839e-523c28f887b7" 
-       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 500px;">
 </div><br>
 
 We've all used the AI-generated playlist features on Spotify or YouTube Music. You enter a prompt asking for a type of music that you want to listen to because you either don't want to spend the time looking for a specific playlist or you just have a vibe in mind (and a vibe is truly hard to search for). You enter your 'vibe' prompt and the app delivers as per expectation. For example: if my vibe is "sleepy", then YouTube Music gives me slow, soft songs. Almost like a lullaby to put me to sleep.
