@@ -20,14 +20,15 @@ There are 4 specialized agents that work in tandem to make this possible -
 <div align="center">
   <img src="https://github.com/user-attachments/assets/017bc528-9094-403b-ad3e-d652bd163311"
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
-  <p><i>The narrative flow for the generated playlist</i></p>
+  <p><i>The "Like" entered by the user</i></p>
 </div>
 
 <div align="center">
-  <img width="1507" height="769" alt="taste_grid_1" src="https://github.com/user-attachments/assets/bba6d688-b3ac-4189-a738-9a1bca04f9af" />
-  <img width="1507" height="769" alt="taste_grid_2" src="https://github.com/user-attachments/assets/00955947-77a4-470f-8704-55d5eb5d079a" />
+  <img src="https://github.com/user-attachments/assets/bba6d688-b3ac-4189-a738-9a1bca04f9af"
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
-  <p><i>The narrative flow for the generated playlist</i></p>
+  <img src="https://github.com/user-attachments/assets/00955947-77a4-470f-8704-55d5eb5d079a"
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+  <p><i>The generated recommendation grid</i></p>
 </div>
 
 <div align="center">
