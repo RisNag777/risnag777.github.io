@@ -4,7 +4,7 @@ title: "Crafting an Entertainment Oracle"
 ---
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/f971de46-8745-4026-839e-523c28f887b7" 
+  <img src="https://github.com/user-attachments/assets/513ebe51-66cc-4529-9d56-8fab4f75f7b5" 
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 500px;">
 </div><br>
 
