@@ -8,7 +8,7 @@ title: "Crafting an Entertainment Oracle"
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
 </div><br>
 
-When we use Netflix, or YouTube, or Spotify, the algorithm that tells recommends our next watch or listen is platform dependent. It makes sense, they want to keep you on their app. However, that prevents these recommendations from being truly multimodal. I wanted to build a recommender that you could report to about a piece of media that you liked and it would give you a multimodal recommendation ie, a book, a tv show, a movie, a song, an album and a podcast. I also wanted to treat the user's "taste" as an evolving beast. It's too simplistic to say that I like rock music or comedy movies. Within those genres, there's a lot of nuance that gets missed and could lead to poor recommendations.
+When we use Netflix, or YouTube, or Spotify, the algorithm that recommends our next watch or listen is platform dependent. It makes sense, they want to keep you on their app. However, that prevents these recommendations from being truly multimodal. I wanted to build a recommender that you could report to about a piece of media that you liked and it would give you a multimodal recommendation ie, a book, a tv show, a movie, a song, an album and a podcast. I also wanted to treat the user's "taste" as an evolving beast. It's too simplistic to say that I like rock music or comedy movies. Within those genres, there's a lot of nuance that gets missed and could lead to poor recommendations.
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/017bc528-9094-403b-ad3e-d652bd163311"
