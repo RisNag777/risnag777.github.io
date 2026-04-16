@@ -41,7 +41,8 @@ There are 4 specialized agents that work in tandem to make this possible -
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/58838203-a6f4-4642-b9c9-b77d88ed849d"
-       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 300px;">
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+  <p><i>System Architecture</i></p>
 </div>
 
 ### Future Roadmap
