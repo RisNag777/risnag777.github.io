@@ -24,10 +24,12 @@ There are 4 specialized agents that work in tandem to make this possible -
 </div>
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/bba6d688-b3ac-4189-a738-9a1bca04f9af"
-       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
-  <img src="https://github.com/user-attachments/assets/00955947-77a4-470f-8704-55d5eb5d079a"
-       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+  <div style="display: inline-block; border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%; overflow: hidden;">
+    <img src="https://github.com/user-attachments/assets/bba6d688-b3ac-4189-a738-9a1bca04f9af" 
+         style="width: 100%; display: block;">
+    <img src="https://github.com/user-attachments/assets/00955947-77a4-470f-8704-55d5eb5d079a" 
+         style="width: 100%; display: block; border-top: 1px solid #f0f0f0;">
+  </div>
   <p><i>The generated recommendation grid</i></p>
 </div>
 
