@@ -45,6 +45,10 @@ There are 4 specialized agents that work in tandem to make this possible -
   <p><i>System Architecture</i></p>
 </div>
 
+### Major Takeaways
+- I quickly learned that asking an LLM for a recommendation is easy, but ensuring that it provides a recommendation that actually exists in a real-world API is the real challenge. This is why the feedback loop in the Tool Dispatcher is one of the most critical parts of the entire code.
+- The Normalizer ensures that the user's "Memory Vault" does not devolve into a giant mess of synonyms.
+
 ### Future Roadmap
 - User Feedback: Allow a user to "rate" the system's recommendations
 - Expand to a more structured database: Currently I am just using a JSON file to track user tastes
