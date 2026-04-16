@@ -34,9 +34,9 @@ There are 4 specialized agents that work in tandem to make this possible -
 </div>
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/ef1e16ea-1a78-4ad6-b5cd-0a7dbf416f44" 
+  <img src="https://github.com/user-attachments/assets/955e2efb-f8a4-46d7-ae79-9860581d9ed4" 
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
-  <p><i>The energy arc for the generated playlist</i></p>
+  <p><i>The updated taste profile after the generated recommendations</i></p>
 </div>
 
 <div align="center">
