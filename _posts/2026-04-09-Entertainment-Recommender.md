@@ -18,7 +18,14 @@ There are 4 specialized agents that work in tandem to make this possible -
 4. The Tool Dispatcher - While the Entertainment Brain makes a plan, this agent executes that plan. It acts as an MCP (Model Context Protocol) to retrieve metadata from different APIs: [TMDB (The Movie Database)](https://www.themoviedb.org/) for movies and TV shows, [LastFM](https://www.last.fm/home) for songs and albums, [Google Books](https://books.google.com/) for books and [iTunes](https://www.apple.com/itunes/) for podcasts. If the recommendation could not be found on the above APIs (if the agent looked for "Avengers 2" rather than "Avengers: Age of Ultron" or if the recommended song was too niche for LastFM), the Dispatcher signals the Entertainment Brain to try again and to come up with a different recommendation while following the same constraints as last time. This feedback loop is crucial as it ensures that the recommendation grid is never broken, making the system significantly robust.
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/da04256e-ec60-4d9a-bb02-2f69ec7c3d4a" 
+  <img src="https://github.com/user-attachments/assets/017bc528-9094-403b-ad3e-d652bd163311"
+       style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
+  <p><i>The narrative flow for the generated playlist</i></p>
+</div>
+
+<div align="center">
+  <img width="1507" height="769" alt="taste_grid_1" src="https://github.com/user-attachments/assets/bba6d688-b3ac-4189-a738-9a1bca04f9af" />
+  <img width="1507" height="769" alt="taste_grid_2" src="https://github.com/user-attachments/assets/00955947-77a4-470f-8704-55d5eb5d079a" />
        style="border: 1px solid #d0d7de; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 80%;">
   <p><i>The narrative flow for the generated playlist</i></p>
 </div>
